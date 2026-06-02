@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate } from "react-router";
 import { AppShell } from "./components/layout/AppShell";
 import { LoginScreen } from "./components/auth/LoginScreen";
+import { RoleSelectionScreen } from "./components/auth/RoleSelectionScreen";
 import { ForgotPasswordScreen } from "./components/auth/ForgotPasswordScreen";
 
 // Admin
@@ -60,6 +61,10 @@ export const router = createBrowserRouter([
   {
     path: "/login",
     Component: LoginScreen,
+  },
+  {
+    path: "/role-selection",
+    Component: RoleSelectionScreen,
   },
   {
     path: "/forgot-password",

@@ -1,8 +1,19 @@
-import { Outlet } from "react-router";
+import { Outlet, Navigate } from "react-router";
 import { Sidebar } from "./Sidebar";
 import { Header } from "./Header";
+import { useAuth } from "../../context/AuthContext";
 
 export function AppShell() {
+  const { user } = useAuth();
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (!user.role) {
+    return <Navigate to="/role-selection" replace />;
+  }
+
   return (
     <div className="flex h-screen overflow-hidden" style={{ backgroundColor: "#F9FAFB" }}>
       <Sidebar />

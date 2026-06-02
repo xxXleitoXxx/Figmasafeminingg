@@ -55,11 +55,11 @@ const roleLabels: Record<Role, string> = {
 };
 
 export function Sidebar() {
-  const { user, logout } = useAuth();
+  const { user, logout, clearRole } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
-  if (!user) return null;
+  if (!user || !user.role) return null;
 
   const items = navByRole[user.role];
 
@@ -129,15 +129,32 @@ export function Sidebar() {
             <div className="text-xs opacity-60 truncate">{roleLabels[user.role]}</div>
           </div>
         </div>
-        <button
-          onClick={() => { logout(); navigate("/login"); }}
-          className="w-full text-xs py-1.5 rounded-lg text-left px-2 transition-colors"
-          style={{ color: "rgba(255,255,255,0.5)" }}
-          onMouseEnter={e => (e.currentTarget as HTMLButtonElement).style.color = "white"}
-          onMouseLeave={e => (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.5)"}
-        >
-          → Sign out
-        </button>
+        <div className="flex flex-col gap-1">
+          <button
+            onClick={() => clearRole()}
+            className="w-full text-xs py-1.5 rounded-lg text-left px-2 transition-colors"
+            style={{ color: "rgba(255,255,255,0.7)", backgroundColor: "rgba(255,255,255,0.05)" }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLButtonElement).style.color = "white";
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor = "rgba(255,255,255,0.1)";
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.7)";
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor = "rgba(255,255,255,0.05)";
+            }}
+          >
+            ⟲ Cambiar rol
+          </button>
+          <button
+            onClick={() => { logout(); navigate("/login"); }}
+            className="w-full text-xs py-1.5 rounded-lg text-left px-2 transition-colors mt-1"
+            style={{ color: "rgba(255,255,255,0.5)" }}
+            onMouseEnter={e => (e.currentTarget as HTMLButtonElement).style.color = "white"}
+            onMouseLeave={e => (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.5)"}
+          >
+            → Sign out
+          </button>
+        </div>
       </div>
     </div>
   );

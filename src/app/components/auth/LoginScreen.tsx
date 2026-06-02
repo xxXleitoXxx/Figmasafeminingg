@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { Eye, EyeOff } from "lucide-react";
 import { useAuth, Role } from "../../context/AuthContext";
@@ -12,20 +12,29 @@ const ROLE_PATHS: Record<Role, string> = {
 };
 
 export function LoginScreen() {
-  const { login } = useAuth();
+  const { user, login } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("demo@safemining.com");
   const [password, setPassword] = useState("password123");
   const [showPass, setShowPass] = useState(false);
-  const [role, setRole] = useState<Role>("admin");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      if (user.role) {
+        navigate(ROLE_PATHS[user.role]);
+      } else {
+        navigate("/role-selection");
+      }
+    }
+  }, [user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     await new Promise(r => setTimeout(r, 800));
-    login(role);
-    navigate(ROLE_PATHS[role]);
+    login(email);
+    navigate("/role-selection");
     setLoading(false);
   };
 
@@ -88,26 +97,6 @@ export function LoginScreen() {
                   {showPass ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
-            </div>
-
-            {/* Demo role selector */}
-            <div>
-              <label className="block text-sm font-medium mb-1" style={{ color: colors.textSecondary }}>
-                Demo: Select role
-              </label>
-              <select
-                value={role}
-                onChange={e => setRole(e.target.value as Role)}
-                className="w-full px-4 py-3 rounded-lg border text-sm outline-none transition-all appearance-none cursor-pointer"
-                style={{ borderColor: colors.border, color: colors.textPrimary, backgroundColor: colors.bg }}
-                onFocus={e => { e.currentTarget.style.borderColor = colors.primary; }}
-                onBlur={e => { e.currentTarget.style.borderColor = colors.border; }}
-              >
-                <option value="admin">System Administrator</option>
-                <option value="company">Company Administrator</option>
-                <option value="coordinator">Coordinator</option>
-                <option value="employee">Employee / Trainee</option>
-              </select>
             </div>
 
             {/* Sign In button */}

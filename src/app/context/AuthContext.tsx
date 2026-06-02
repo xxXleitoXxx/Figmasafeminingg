@@ -6,22 +6,26 @@ export interface AuthUser {
   id: string;
   name: string;
   email: string;
-  role: Role;
+  role: Role | null;
+  availableRoles: Role[];
   company?: string;
   avatar?: string;
 }
 
 interface AuthContextType {
   user: AuthUser | null;
-  login: (role: Role) => void;
+  login: (email: string) => void;
+  selectRole: (role: Role) => void;
+  clearRole: () => void;
   logout: () => void;
 }
 
-const MOCK_USERS: Record<Role, AuthUser> = {
-  admin: { id: "1", name: "Carlos Mendoza", email: "admin@safemining.com", role: "admin" },
-  company: { id: "2", name: "Laura Gómez", email: "laura@minera-andina.com", role: "company", company: "Minera Andina S.A." },
-  coordinator: { id: "3", name: "Roberto Silva", email: "roberto@minera-andina.com", role: "coordinator", company: "Minera Andina S.A." },
-  employee: { id: "4", name: "Juan Pérez", email: "juan@minera-andina.com", role: "employee", company: "Minera Andina S.A." },
+const MOCK_USER_BASE = {
+  id: "1", 
+  name: "Carlos Mendoza", 
+  email: "demo@safemining.com",
+  company: "Minera Andina S.A.",
+  availableRoles: ["admin", "company", "coordinator", "employee"] as Role[]
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -29,10 +33,29 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
 
-  const login = (role: Role) => setUser(MOCK_USERS[role]);
+  const login = (email: string) => {
+    setUser({
+      ...MOCK_USER_BASE,
+      email,
+      role: null
+    });
+  };
+
+  const selectRole = (role: Role) => {
+    if (user && user.availableRoles.includes(role)) {
+      setUser({ ...user, role });
+    }
+  };
+
+  const clearRole = () => {
+    if (user) {
+      setUser({ ...user, role: null });
+    }
+  };
+
   const logout = () => setUser(null);
 
-  return <AuthContext.Provider value={{ user, login, logout }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ user, login, selectRole, clearRole, logout }}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {
