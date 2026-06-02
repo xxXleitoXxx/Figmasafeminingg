@@ -1,0 +1,144 @@
+import { ReactNode } from "react";
+import { useNavigate, useLocation } from "react-router";
+import { useAuth, Role } from "../../context/AuthContext";
+import {
+  LayoutDashboard, Building2, Users, Play, Shield, BarChart2, Settings,
+  Briefcase, ClipboardList, FileText, UserCircle, GraduationCap, BookOpen, Award
+} from "lucide-react";
+
+interface NavItem {
+  label: string;
+  icon: ReactNode;
+  path: string;
+}
+
+const navByRole: Record<Role, NavItem[]> = {
+  admin: [
+    { label: "Dashboard", icon: <LayoutDashboard size={18} />, path: "/admin" },
+    { label: "Companies", icon: <Building2 size={18} />, path: "/admin/companies" },
+    { label: "Administrators", icon: <Users size={18} />, path: "/admin/users" },
+    { label: "Simulations", icon: <Play size={18} />, path: "/admin/simulations" },
+    { label: "Roles", icon: <Shield size={18} />, path: "/admin/roles" },
+    { label: "Reports", icon: <BarChart2 size={18} />, path: "/admin/reports" },
+    { label: "Configuration", icon: <Settings size={18} />, path: "/admin/config" },
+  ],
+  company: [
+    { label: "Dashboard", icon: <LayoutDashboard size={18} />, path: "/company" },
+    { label: "Users", icon: <Users size={18} />, path: "/company/users" },
+    { label: "Roles", icon: <Shield size={18} />, path: "/company/roles" },
+    { label: "Programs", icon: <Briefcase size={18} />, path: "/company/programs" },
+    { label: "Simulations", icon: <Play size={18} />, path: "/company/simulations" },
+    { label: "Reports", icon: <BarChart2 size={18} />, path: "/company/reports" },
+    { label: "My Profile", icon: <UserCircle size={18} />, path: "/company/profile" },
+  ],
+  coordinator: [
+    { label: "Dashboard", icon: <LayoutDashboard size={18} />, path: "/coordinator" },
+    { label: "My Programs", icon: <Briefcase size={18} />, path: "/coordinator/programs" },
+    { label: "Simulations", icon: <Play size={18} />, path: "/coordinator/simulations" },
+    { label: "Employees", icon: <Users size={18} />, path: "/coordinator/employees" },
+    { label: "Exams", icon: <ClipboardList size={18} />, path: "/coordinator/exams" },
+    { label: "Reports", icon: <BarChart2 size={18} />, path: "/coordinator/reports" },
+    { label: "My Profile", icon: <UserCircle size={18} />, path: "/coordinator/profile" },
+  ],
+  employee: [
+    { label: "My Training", icon: <GraduationCap size={18} />, path: "/employee" },
+    { label: "My Certificates", icon: <Award size={18} />, path: "/employee/certificates" },
+    { label: "My Profile", icon: <UserCircle size={18} />, path: "/employee/profile" },
+  ],
+};
+
+const roleLabels: Record<Role, string> = {
+  admin: "System Administrator",
+  company: "Company Admin",
+  coordinator: "Coordinator",
+  employee: "Trainee",
+};
+
+export function Sidebar() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  if (!user) return null;
+
+  const items = navByRole[user.role];
+
+  const isActive = (path: string) => {
+    if (path === `/admin` || path === `/company` || path === `/coordinator` || path === `/employee`) {
+      return location.pathname === path;
+    }
+    return location.pathname.startsWith(path);
+  };
+
+  return (
+    <div
+      className="flex flex-col h-full"
+      style={{ width: 240, backgroundColor: "#1A365D", color: "white", flexShrink: 0 }}
+    >
+      {/* Logo */}
+      <div className="px-6 py-5 border-b border-white/10">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#F97316" }}>
+            <span className="text-white font-bold text-sm">⛏</span>
+          </div>
+          <div>
+            <div className="font-bold text-sm leading-tight">SafeMining VR</div>
+            <div className="text-xs opacity-60 leading-tight">Training Platform</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Nav items */}
+      <nav className="flex-1 px-3 py-4 overflow-y-auto">
+        <div className="space-y-1">
+          {items.map(item => (
+            <button
+              key={item.path}
+              onClick={() => navigate(item.path)}
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-left"
+              style={{
+                backgroundColor: isActive(item.path) ? "rgba(255,255,255,0.12)" : "transparent",
+                color: isActive(item.path) ? "white" : "rgba(255,255,255,0.7)",
+                borderLeft: isActive(item.path) ? "3px solid #F97316" : "3px solid transparent",
+              }}
+              onMouseEnter={e => {
+                if (!isActive(item.path)) (e.currentTarget as HTMLButtonElement).style.backgroundColor = "rgba(255,255,255,0.06)";
+              }}
+              onMouseLeave={e => {
+                if (!isActive(item.path)) (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent";
+              }}
+            >
+              {item.icon}
+              <span>{item.label}</span>
+            </button>
+          ))}
+        </div>
+      </nav>
+
+      {/* User info + logout */}
+      <div className="px-4 py-4 border-t border-white/10">
+        <div className="flex items-center gap-3 mb-3">
+          <div
+            className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
+            style={{ backgroundColor: "#F97316" }}
+          >
+            {user.name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2)}
+          </div>
+          <div className="min-w-0">
+            <div className="text-sm font-medium truncate">{user.name}</div>
+            <div className="text-xs opacity-60 truncate">{roleLabels[user.role]}</div>
+          </div>
+        </div>
+        <button
+          onClick={() => { logout(); navigate("/login"); }}
+          className="w-full text-xs py-1.5 rounded-lg text-left px-2 transition-colors"
+          style={{ color: "rgba(255,255,255,0.5)" }}
+          onMouseEnter={e => (e.currentTarget as HTMLButtonElement).style.color = "white"}
+          onMouseLeave={e => (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.5)"}
+        >
+          → Sign out
+        </button>
+      </div>
+    </div>
+  );
+}
