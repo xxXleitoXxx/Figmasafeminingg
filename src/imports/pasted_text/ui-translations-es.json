@@ -1,0 +1,485 @@
+Necesito traducir TODO el texto visible del frontend (UI) de mi proyecto wireframe "SafeMining VR" del inglés al español. El proyecto es una plataforma de gestión de entrenamientos de seguridad minera con realidad virtual. Tiene 4 roles de usuario y múltiples pantallas. 
+
+REGLA CRÍTICA: Los endpoints, rutas URL, nombres de variables, IDs técnicos, y estructura backend se MANTIENEN EN INGLÉS. Solo se traduce el texto visible para el usuario final en la interfaz.
+
+NO traducir:
+- Rutas/paths: /admin, /company, /coordinator, /employee, /login, /forgot-password, /role-selection
+- Nombres de variables o keys de código
+- Nombres de marcas: "SafeMining VR" (se mantiene como nombre propio)
+- Correos electrónicos de ejemplo
+- CUIT/identificadores fiscales
+- URLs y dominios
+
+SÍ traducir: todo texto, label, botón, título, subtítulo, placeholder, mensaje, tooltip, notificación, encabezado de tabla, estado (badge), descripción y texto de ayuda visible al usuario.
+
+---
+
+## TRADUCCIONES POR SECCIÓN
+
+### BRANDING Y ELEMENTOS GLOBALES
+- "Mining Safety Training Platform" → "Plataforma de Entrenamiento en Seguridad Minera"
+- "Training Platform" → "Plataforma de Entrenamiento"
+- "© 2025 SafeMining VR. All rights reserved." → "© 2025 SafeMining VR. Todos los derechos reservados."
+- "Search..." → "Buscar..."
+- "Notifications" → "Notificaciones"
+- "new" → "nuevas"
+- "View all notifications" → "Ver todas las notificaciones"
+
+### NOTIFICACIONES DEL HEADER
+- "New employee registered: Ana Torres" → "Nuevo empleado registrado: Ana Torres"
+- "Program 'Fire Safety 2025' expires in 7 days" → "El programa 'Seguridad contra Incendios 2025' vence en 7 días"
+- "Juan Pérez completed VR Simulation" → "Juan Pérez completó la Simulación VR"
+- "Certificate issued for Laura García" → "Certificado emitido para Laura García"
+- "System backup completed successfully" → "Copia de seguridad del sistema completada exitosamente"
+
+### NAVEGACIÓN SIDEBAR — Administrador del Sistema
+- "Dashboard" → "Panel Principal"
+- "Companies" → "Empresas"
+- "Administrators" → "Administradores"
+- "Simulations" → "Simulaciones"
+- "Roles" → "Roles"
+- "Reports" → "Reportes"
+- "Configuration" → "Configuración"
+
+### NAVEGACIÓN SIDEBAR — Administrador de Empresa
+- "Dashboard" → "Panel Principal"
+- "Users" → "Usuarios"
+- "Roles" → "Roles"
+- "Programs" → "Programas"
+- "Simulations" → "Simulaciones"
+- "Reports" → "Reportes"
+- "My Profile" → "Mi Perfil"
+
+### NAVEGACIÓN SIDEBAR — Coordinador
+- "Dashboard" → "Panel Principal"
+- "My Programs" → "Mis Programas"
+- "Simulations" → "Simulaciones"
+- "Employees" → "Empleados"
+- "Exams" → "Exámenes"
+- "Reports" → "Reportes"
+- "My Profile" → "Mi Perfil"
+
+### NAVEGACIÓN SIDEBAR — Empleado
+- "My Training" → "Mi Entrenamiento"
+- "My Certificates" → "Mis Certificados"
+- "My Profile" → "Mi Perfil"
+
+### ETIQUETAS DE ROLES (Sidebar footer)
+- "System Administrator" → "Administrador del Sistema"
+- "Company Admin" → "Administrador de Empresa"
+- "Coordinator" → "Coordinador"
+- "Trainee" → "Trabajador en Formación"
+- "Sign out" → "Cerrar sesión"
+- "Cambiar rol" → (ya está en español, mantener)
+
+---
+
+### PANTALLA: LOGIN (AUTH-01)
+- "Sign in to your account" → "Iniciar sesión en tu cuenta"
+- "Email address" → "Correo electrónico"
+- "Password" → "Contraseña"
+- "Sign In" → "Iniciar Sesión"
+- "Signing in..." → "Iniciando sesión..."
+- "Forgot your password?" → "¿Olvidaste tu contraseña?"
+
+### PANTALLA: SELECCIÓN DE ROL (AUTH-02)
+- "Select Your Role" → "Selecciona Tu Rol"
+- "Welcome back, [Name]. Please select a role to continue." → "Bienvenido de nuevo, [Name]. Por favor selecciona un rol para continuar."
+- "System Administrator" → "Administrador del Sistema"
+- "Manage companies, users, and global catalog" → "Gestiona empresas, usuarios y catálogo global"
+- "Company Administrator" → "Administrador de Empresa"
+- "Manage your company's roles and programs" → "Gestiona los roles y programas de tu empresa"
+- "Coordinator" → "Coordinador"
+- "Assign training and monitor exams" → "Asigna entrenamientos y supervisa exámenes"
+- "Trainee / Employee" → "Trabajador / Empleado"
+- "Access your training and certificates" → "Accede a tu entrenamiento y certificados"
+- "Sign out" → "Cerrar sesión"
+
+### PANTALLA: RECUPERAR CONTRASEÑA (AUTH-03)
+- "Back to login" → "Volver al inicio de sesión"
+- "Reset Password" → "Restablecer Contraseña"
+- "Enter your email address and we'll send you a link to reset your password." → "Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña."
+- "Email address" → "Correo electrónico"
+- "Send Reset Link" → "Enviar Enlace de Restablecimiento"
+- "Sending..." → "Enviando..."
+- "Check your email" → "Revisa tu correo"
+- "We sent a password reset link to [email]. Check your inbox and follow the instructions." → "Enviamos un enlace de restablecimiento a [email]. Revisa tu bandeja de entrada y sigue las instrucciones."
+- "Back to Sign In" → "Volver a Iniciar Sesión"
+
+---
+
+### PANTALLA: PANEL DEL ADMINISTRADOR DEL SISTEMA (ADMIN-01)
+- "System Dashboard" → "Panel del Sistema"
+- "Platform-wide overview and analytics" → "Vista general y analíticas de la plataforma"
+- "Active Companies" → "Empresas Activas"
+- "+3 this month" → "+3 este mes"
+- "Total VR Sessions" → "Sesiones VR Totales"
+- "+12% vs last month" → "+12% vs mes anterior"
+- "Active Users" → "Usuarios Activos"
+- "+87 this month" → "+87 este mes"
+- "Programs in Progress" → "Programas en Curso"
+- "-5 completed" → "-5 completados"
+- "VR Session Executions – Last 30 Days" → "Ejecuciones de Sesiones VR – Últimos 30 Días"
+- "Sessions by Company" → "Sesiones por Empresa"
+- "Most Executed Simulations" → "Simulaciones Más Ejecutadas"
+- Encabezados de tabla: "#", "Simulation" → "Simulación", "Category" → "Categoría", "Executions" → "Ejecuciones", "Approval Rate" → "Tasa de Aprobación", "Status" → "Estado"
+- "Recent Activity" → "Actividad Reciente"
+- "New company registered: Yamana Gold Chile" → "Nueva empresa registrada: Yamana Gold Chile"
+- "User Juan Pérez completed simulation 'Fire Evacuation'" → "El usuario Juan Pérez completó la simulación 'Evacuación por Incendio'"
+- "Program 'Safety Basics Q2' activated by Laura Gómez" → "Programa 'Seguridad Básica Q2' activado por Laura Gómez"
+- "Certificate issued to Ana Torres – Minera Andina" → "Certificado emitido para Ana Torres – Minera Andina"
+- "Simulation 'Chemical Spill' updated to v2.1" → "Simulación 'Derrame Químico' actualizada a v2.1"
+- "System backup completed successfully" → "Copia de seguridad completada exitosamente"
+- "Anglo American: 12 new employees enrolled" → "Anglo American: 12 nuevos empleados inscritos"
+- Tiempos: "2 min ago" → "Hace 2 min", "14 min ago" → "Hace 14 min", "1 hour ago" → "Hace 1 hora", "2 hours ago" → "Hace 2 horas", "3 hours ago" → "Hace 3 horas", "5 hours ago" → "Hace 5 horas", "Yesterday" → "Ayer"
+
+### NOMBRES DE SIMULACIONES (traducir a español)
+- "Fire Evacuation – Underground" → "Evacuación por Incendio – Subterráneo"
+- "Energy Lockout/Tagout" → "Bloqueo/Etiquetado de Energía"
+- "Confined Space Entry" → "Entrada a Espacios Confinados"
+- "Chemical Spill Response" → "Respuesta a Derrames Químicos"
+- "Equipment Safety Checklist" → "Lista de Verificación de Seguridad de Equipos"
+
+### CATEGORÍAS DE SIMULACIONES
+- "Fire" → "Incendio"
+- "Energy" → "Energía"
+- "Confined" → "Confinados"
+- "Chemical" → "Químicos"
+- "General" → "General"
+
+---
+
+### PANTALLA: EMPRESAS (ADMIN-02)
+- "Companies" → "Empresas"
+- "X total companies" → "X empresas en total"
+- "New Company" → "Nueva Empresa"
+- "Search companies..." → "Buscar empresas..."
+- Filtros: "all" → "todas", "active" → "activas", "inactive" → "inactivas"
+- Encabezados: "Company" → "Empresa", "CUIT" → "CUIT", "Contact Email" → "Email de Contacto", "Status" → "Estado", "Admins" → "Administradores", "Registration Date" → "Fecha de Registro", "Actions" → "Acciones"
+- Tooltips: "View" → "Ver", "Edit" → "Editar", "Deactivate" → "Desactivar", "Activate" → "Activar"
+- "No companies found" → "No se encontraron empresas"
+- "Try adjusting your search or filters" → "Intenta ajustar tu búsqueda o filtros"
+- "Showing X of Y companies" → "Mostrando X de Y empresas"
+- "Previous" → "Anterior"
+- "Next" → "Siguiente"
+
+### PANTALLA: DETALLE DE EMPRESA (ADMIN-03)
+- "Razón Social" → "Razón Social" (mantener)
+- "Trade Name" → "Nombre Comercial"
+- "Contact Email" → "Email de Contacto"
+- "Status" → "Estado"
+- "Assigned Company Administrators" → "Administradores de Empresa Asignados"
+- "Assign Administrator" → "Asignar Administrador"
+- "Save Changes" → "Guardar Cambios"
+- "Cancel" → "Cancelar"
+
+### PANTALLA: USUARIOS DEL SISTEMA (ADMIN-04)
+- "Company Administrators" → "Administradores de Empresa"
+- "New Admin" → "Nuevo Administrador"
+- Encabezados: "Name" → "Nombre", "Email" → "Email", "Company" → "Empresa", "Status" → "Estado", "Created At" → "Fecha de Creación", "Actions" → "Acciones"
+
+### PANTALLA: CATÁLOGO DE SIMULACIONES (ADMIN-06)
+- "VR Simulations" → "Simulaciones VR"
+- "New Simulation" → "Nueva Simulación"
+- Filtros de categoría: "Fire Evacuation" → "Evacuación por Incendio", "Energy Lockout" → "Bloqueo de Energía", "Confined Spaces" → "Espacios Confinados", "General" → "General"
+- Dificultad: "Basic" → "Básico", "Intermediate" → "Intermedio", "Advanced" → "Avanzado"
+- "~12 min" → "~12 min" (mantener formato)
+
+### PANTALLA: DETALLE DE SIMULACIÓN (ADMIN-07)
+- "Name" → "Nombre"
+- "Description" → "Descripción"
+- "Category" → "Categoría"
+- "Difficulty" → "Dificultad"
+- "Duration Estimate" → "Duración Estimada"
+- "Version" → "Versión"
+- "Unity Scene ID / Asset Bundle URL" → (mantener en inglés – backend)
+- "Evaluation Metrics" → "Métricas de Evaluación"
+- "Metric Name" → "Nombre de Métrica"
+- "Default Weight (%)" → "Peso por Defecto (%)"
+- "Default Approval Threshold" → "Umbral de Aprobación por Defecto"
+- "Add Metric" → "Agregar Métrica"
+- "Total Weight: 100/100" → "Peso Total: 100/100"
+- "Save" → "Guardar"
+- "Cancel" → "Cancelar"
+
+### PANTALLA: ROLES GLOBALES (ADMIN-08)
+- "System Roles" → "Roles del Sistema"
+- "New Role" → "Nuevo Rol"
+- "Base Roles" → "Roles Base"
+- "Additional Roles" → "Roles Adicionales"
+- "Permissions count" → "Cant. Permisos"
+- "Active Users" → "Usuarios Activos"
+
+### PANTALLA: REPORTES GLOBALES (ADMIN-09)
+- "Global Reports" → "Reportes Globales"
+- "Total sessions" → "Sesiones totales"
+- "Approval rate" → "Tasa de aprobación"
+- "Active companies" → "Empresas activas"
+- "Certificates issued" → "Certificados emitidos"
+- "Simulation Executions" → "Ejecuciones de Simulación"
+- "Performance by Company" → "Rendimiento por Empresa"
+- Encabezados: "Company" → "Empresa", "Sessions" → "Sesiones", "Approved" → "Aprobados", "Rejected" → "Rechazados", "Approval Rate %" → "Tasa de Aprobación %", "Avg Attempts" → "Intentos Promedio"
+- "Export CSV" → "Exportar CSV"
+- "Export PDF" → "Exportar PDF"
+
+### PANTALLA: CONFIGURACIÓN (ADMIN-10)
+- "System Configuration" → "Configuración del Sistema"
+- "Manage platform-wide settings and parameters" → "Gestiona los ajustes y parámetros de la plataforma"
+- Tabs: "General" → "General", "Security" → "Seguridad", "Certificate Template" → "Plantilla de Certificado"
+- "General Settings" → "Ajustes Generales"
+- "Platform Name" → "Nombre de la Plataforma"
+- "Issuing Entity" → "Entidad Emisora"
+- "Logo" → "Logo"
+- "Click to upload logo (PNG, SVG)" → "Clic para subir logo (PNG, SVG)"
+- "Contact Email" → "Email de Contacto"
+- "Save General Settings" → "Guardar Ajustes Generales"
+- "Security Settings" → "Ajustes de Seguridad"
+- "JWT Expiry – Web (hours)" → "Expiración JWT – Web (horas)"
+- "JWT Expiry – VR Headset (hours)" → "Expiración JWT – Visor VR (horas)"
+- "Max Login Attempts Before Block" → "Máx. Intentos de Inicio Antes de Bloqueo"
+- "Block Duration (minutes)" → "Duración del Bloqueo (minutos)"
+- "Save Security Settings" → "Guardar Ajustes de Seguridad"
+- "Certificate Template" → "Plantilla de Certificado"
+- "Introduction Text" → "Texto de Introducción"
+- "This is to certify that the following individual has successfully completed the required VR safety training." → "Se certifica que la siguiente persona ha completado exitosamente el entrenamiento de seguridad VR requerido."
+- "Visible Fields" → "Campos Visibles"
+- "Employee Name" → "Nombre del Empleado"
+- "Company" → "Empresa"
+- "Program Name" → "Nombre del Programa"
+- "Completion Date" → "Fecha de Finalización"
+- "Score" → "Puntaje"
+- "Coordinator" → "Coordinador"
+- "Digital Signature Text" → "Texto de Firma Digital"
+- "Chief Safety Officer" → "Director de Seguridad"
+- "Footer Text" → "Texto de Pie de Página"
+- "Save Template" → "Guardar Plantilla"
+- "Preview Certificate" → "Vista Previa del Certificado"
+- "Certificate of Completion" → "Certificado de Finalización"
+- "Configuration saved successfully" → "Configuración guardada exitosamente"
+
+---
+
+### PANTALLA: PANEL DE EMPRESA (CEMP-01)
+- "Overview of training activities and employee progress" → "Resumen de actividades de entrenamiento y progreso de empleados"
+- "Active Users" → "Usuarios Activos"
+- "+5 this month" → "+5 este mes"
+- "Active Programs" → "Programas Activos"
+- "Completion Rate" → "Tasa de Finalización"
+- "+8% vs last month" → "+8% vs mes anterior"
+- "Certificates Issued" → "Certificados Emitidos"
+- "+28 this month" → "+28 este mes"
+- "Program Completion Overview" → "Resumen de Finalización de Programas"
+- "Completion" → "Finalización"
+- "Pending Actions" → "Acciones Pendientes"
+- "Employees with expiring deadlines" → "Empleados con plazos por vencer"
+- "Xd left" → "X días restantes"
+- "Simulation Failure Rate" → "Tasa de Reprobación de Simulaciones"
+- "Recent Assignments" → "Asignaciones Recientes"
+- Encabezados: "Employee" → "Empleado", "Program" → "Programa", "Assigned" → "Asignado", "Status" → "Estado"
+
+### PANTALLA: USUARIOS DE EMPRESA (CEMP-02)
+- "Users" → "Usuarios"
+- "New User" → "Nuevo Usuario"
+- Tabs: "All" → "Todos", "Coordinators" → "Coordinadores", "Employees" → "Empleados"
+- Encabezados: "Name" → "Nombre", "Email" → "Email", "Role" → "Rol", "Status" → "Estado", "Registration Date" → "Fecha de Registro", "Last Activity" → "Última Actividad", "Actions" → "Acciones"
+- "Bulk Assign Role" → "Asignar Rol Masivamente"
+- "Welcome email will be sent automatically" → "Se enviará un email de bienvenida automáticamente"
+
+### PANTALLA: ROLES DE EMPRESA (CEMP-04)
+- "Company Roles" → "Roles de la Empresa"
+- "Standard Roles" → "Roles Estándar"
+- "Custom Roles" → "Roles Personalizados"
+- "New Custom Role" → "Nuevo Rol Personalizado"
+
+### PANTALLA: PROGRAMAS (CEMP-05)
+- "Training Programs" → "Programas de Entrenamiento"
+- "New Program" → "Nuevo Programa"
+- "Clone Program" → "Clonar Programa"
+- Filtros: "Draft" → "Borrador", "Active" → "Activo", "Closed" → "Cerrado"
+
+### PANTALLA: CREAR/EDITAR PROGRAMA (CEMP-06)
+- Pasos: "Basic Info" → "Información Básica", "Content" → "Contenido", "Settings" → "Configuración", "Review" → "Revisión"
+- "Name" → "Nombre"
+- "Description" → "Descripción"
+- "Start Date" → "Fecha de Inicio"
+- "End Date" → "Fecha de Fin"
+- "Available Content" → "Contenido Disponible"
+- "VR Simulations" → "Simulaciones VR"
+- "Exams" → "Exámenes"
+- "Program Structure" → "Estructura del Programa"
+- "Required/Optional" → "Obligatorio/Opcional"
+- "Max Attempts" → "Intentos Máximos"
+- "Configure Metrics" → "Configurar Métricas"
+- "Assign to Coordinators" → "Asignar a Coordinadores"
+- "Assign to Employees now" → "Asignar a Empleados ahora"
+- "Notification settings" → "Configuración de notificaciones"
+- "Activate Program" → "Activar Programa"
+- "Save as Draft" → "Guardar como Borrador"
+
+### PANTALLA: ASIGNAR PROGRAMA (CEMP-07)
+- "Individual Assignment" → "Asignación Individual"
+- "Bulk Assignment" → "Asignación Masiva"
+- "Select All Active Employees" → "Seleccionar Todos los Empleados Activos"
+- "X employees will be assigned to [Program Name]" → "X empleados serán asignados a [Nombre del Programa]"
+- "Assign" → "Asignar"
+
+### PANTALLA: PROGRESO DE EMPLEADOS (CEMP-08)
+- "Employee Progress" → "Progreso del Empleado"
+- Encabezados: "Employee" → "Empleado", "Status" → "Estado", "Progress" → "Progreso", "VR Sessions" → "Sesiones VR", "Exams Taken" → "Exámenes Realizados", "Last Activity" → "Última Actividad", "Certificate" → "Certificado", "Actions" → "Acciones"
+
+### PANTALLA: REPORTES DE EMPRESA (CEMP-09)
+- Tabs: "By Employee" → "Por Empleado", "By Program" → "Por Programa", "By Simulation" → "Por Simulación"
+
+---
+
+### PANTALLA: PANEL DEL COORDINADOR (COORD-01)
+- "My Programs" → "Mis Programas"
+- "Employees Requiring Attention" → "Empleados que Requieren Atención"
+
+### PANTALLA: GESTIÓN DE EXÁMENES (COORD-03)
+- "Theoretical Exams" → "Exámenes Teóricos"
+- "New Exam" → "Nuevo Examen"
+- Tabs: "Exams" → "Exámenes", "Question Bank" → "Banco de Preguntas"
+- Encabezados: "Name" → "Nombre", "Questions" → "Preguntas", "Attempts Allowed" → "Intentos Permitidos", "Used in X programs" → "Usado en X programas", "Status" → "Estado", "Actions" → "Acciones"
+- "New Question" → "Nueva Pregunta"
+- "Question Order: Fixed / Random" → "Orden de Preguntas: Fijo / Aleatorio"
+
+---
+
+### PANTALLA: PANEL DEL EMPLEADO (EMP-01)
+- "Welcome back, [Name]!" → "¡Bienvenido de nuevo, [Name]!"
+- "Continue your safety training" → "Continúa tu entrenamiento de seguridad"
+- "Completed Programs" → "Programas Completados"
+- "Pending Simulations" → "Simulaciones Pendientes"
+- "Certificates Earned" → "Certificados Obtenidos"
+- "Your Programs" → "Tus Programas"
+- "Deadline:" → "Fecha límite:"
+- "Xd left!" → "¡X días restantes!"
+- "Continue →" → "Continuar →"
+- "Start →" → "Iniciar →"
+- "View Certificate" → "Ver Certificado"
+
+### PANTALLA: DETALLE DE PROGRAMA (EMP-02)
+- "Launch VR" → "Iniciar VR"
+- "Take Exam" → "Realizar Examen"
+- "X / Y attempts used" → "X / Y intentos utilizados"
+- "Locked" → "Bloqueado"
+- "Download Certificate" → "Descargar Certificado"
+
+### PANTALLA: INTERFAZ DE EXAMEN (EMP-03)
+- "Fire Safety Theory Exam" → "Examen Teórico de Seguridad contra Incendios"
+- "Started:" → "Iniciado:"
+- "Question X of Y" → "Pregunta X de Y"
+- "Question X" → "Pregunta X"
+- "← Previous" → "← Anterior"
+- "X of Y answered" → "X de Y respondidas"
+- "Next →" → "Siguiente →"
+- "Submit Exam →" → "Entregar Examen →"
+- "Please answer all questions before submitting." → "Por favor responde todas las preguntas antes de entregar."
+
+PREGUNTAS DEL EXAMEN (traducir al español):
+- "What is the FIRST action you should take when a fire alarm sounds in an underground mine operation?" → "¿Cuál es la PRIMERA acción que debes tomar cuando suena una alarma de incendio en una operación minera subterránea?"
+- Opciones de respuesta: traducir todas al español
+- "Which of the following is the correct order for using a fire extinguisher (PASS technique)?" → "¿Cuál es el orden correcto para usar un extintor (técnica PASS)?"
+- "In an underground mine, what does the 'muster point' refer to?" → "En una mina subterránea, ¿a qué se refiere el 'punto de reunión'?"
+- "What minimum distance should be maintained between evacuation personnel and a smoke-filled area?" → "¿Qué distancia mínima se debe mantener entre el personal de evacuación y un área llena de humo?"
+- "During a fire emergency, which type of extinguisher should NOT be used on electrical fires?" → "Durante una emergencia de incendio, ¿qué tipo de extintor NO debe usarse en incendios eléctricos?"
+
+### PANTALLA: RESULTADOS DEL EXAMEN (EMP-04)
+- "APPROVED" → "APROBADO"
+- "NOT APPROVED" → "NO APROBADO"
+- "Congratulations! You've successfully passed this exam." → "¡Felicitaciones! Has aprobado exitosamente este examen."
+- "You need 75% or higher to pass. Review the material and try again." → "Necesitas 75% o más para aprobar. Revisa el material e intenta de nuevo."
+- "Attempts remaining: X" → "Intentos restantes: X"
+- "Question Breakdown" → "Desglose de Preguntas"
+- "Your answer:" → "Tu respuesta:"
+- "(not answered)" → "(sin responder)"
+- "Correct:" → "Correcta:"
+- "Return to Program" → "Volver al Programa"
+- "Retry Exam" → "Reintentar Examen"
+
+### PANTALLA: MIS CERTIFICADOS (EMP-05)
+- "My Certificates" → "Mis Certificados"
+- "X certificates earned" → "X certificados obtenidos"
+- "No certificates yet" → "Sin certificados aún"
+- "Complete a training program to earn your first certificate of achievement." → "Completa un programa de entrenamiento para obtener tu primer certificado."
+- "Certificate of Completion" → "Certificado de Finalización"
+- "has successfully completed" → "ha completado exitosamente"
+- "Company" → "Empresa"
+- "Completion Date" → "Fecha de Finalización"
+- "Final Score" → "Puntaje Final"
+- "Coordinator" → "Coordinador"
+- "Download PDF" → "Descargar PDF"
+
+### PANTALLA: MI PERFIL (EMP-06)
+- "My Profile" → "Mi Perfil"
+- "Manage your account information and security settings" → "Administra tu información de cuenta y ajustes de seguridad"
+- "Personal Information" → "Información Personal"
+- "First Name" → "Nombre"
+- "Last Name" → "Apellido"
+- "Email" → "Correo Electrónico"
+- "Email cannot be changed. Contact your administrator." → "El correo no puede cambiarse. Contacta a tu administrador."
+- "Company" → "Empresa"
+- "Role" → "Rol"
+- "Employee / Trainee" → "Empleado / Trabajador en Formación"
+- "Company Administrator" → "Administrador de Empresa"
+- "Coordinator" → "Coordinador"
+- "System Administrator" → "Administrador del Sistema"
+- "Save Profile" → "Guardar Perfil"
+- "Security" → "Seguridad"
+- "Change Password" → "Cambiar Contraseña"
+- "Current Password" → "Contraseña Actual"
+- "New Password" → "Nueva Contraseña"
+- "Confirm New Password" → "Confirmar Nueva Contraseña"
+- "Minimum 8 characters" → "Mínimo 8 caracteres"
+- "Update Password" → "Actualizar Contraseña"
+- "Account Activity" → "Actividad de la Cuenta"
+- "Last login" → "Último inicio de sesión"
+- "Account created" → "Cuenta creada"
+- "Sessions this month" → "Sesiones este mes"
+- "Profile updated successfully" → "Perfil actualizado exitosamente"
+- "Passwords don't match" → "Las contraseñas no coinciden"
+- "Password must be at least 8 characters" → "La contraseña debe tener al menos 8 caracteres"
+- "Password updated successfully" → "Contraseña actualizada exitosamente"
+
+---
+
+### ESTADOS (STATUS BADGES) — Traducir todos
+- "active" → "activo"
+- "inactive" → "inactivo"
+- "pending" → "pendiente"
+- "approved" → "aprobado"
+- "rejected" → "rechazado"
+- "draft" → "borrador"
+- "closed" → "cerrado"
+- "completed" → "completado"
+- "failed" → "reprobado"
+- "in progress" → "en progreso"
+- "not started" → "no iniciado"
+- "locked" → "bloqueado"
+
+### COMPONENTES COMPARTIDOS (MODALES Y CONFIRMACIONES)
+- "Confirm" → "Confirmar"
+- "Cancel" → "Cancelar"
+- "Delete" → "Eliminar"
+- "Save" → "Guardar"
+- "Close" → "Cerrar"
+
+### NOMBRES DE PROGRAMAS DE ENTRENAMIENTO (traducir)
+- "Fire Safety & Evacuation Q2 2025" → "Seguridad contra Incendios y Evacuación Q2 2025"
+- "LOTO Procedures – Level 2" → "Procedimientos LOTO – Nivel 2"
+- "PPE Basics Onboarding" → "Introducción a EPP Básico"
+- "Introduction to Mine Safety" → "Introducción a la Seguridad Minera"
+
+---
+
+## INSTRUCCIONES FINALES
+
+1. Aplica TODAS las traducciones listadas arriba a cada frame/pantalla del archivo Figma
+2. Revisa CADA capa de texto en TODAS las pantallas y componentes
+3. NO modifiques colores, posiciones, tamaños ni estilos tipográficos
+4. NO traduzcas el nombre de marca "SafeMining VR"
+5. NO traduzcas rutas URL, emails, ni identificadores técnicos
+6. Verifica que no quede NINGÚN texto en inglés visible para el usuario final (excepto nombre de marca y datos técnicos)
+7. Ajusta el ancho de los contenedores de texto si la traducción al español es más larga que el original en inglés
+8. Mantén la consistencia terminológica en todo el proyecto (usar siempre las mismas traducciones para el mismo término)

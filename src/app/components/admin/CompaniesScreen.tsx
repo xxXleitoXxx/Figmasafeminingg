@@ -109,27 +109,27 @@ export function CompaniesScreen() {
                 <td className="px-5 py-3.5">
                   <span className="font-semibold" style={{ color: colors.textPrimary }}>{c.admins}</span>
                 </td>
-                <td className="px-5 py-3.5 text-xs" style={{ color: colors.textSecondary }}>{new Date(c.regDate).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</td>
+                <td className="px-5 py-3.5 text-xs" style={{ color: colors.textSecondary }}>{new Date(c.regDate).toLocaleDateString("es-ES", { year: "numeric", month: "short", day: "numeric" })}</td>
                 <td className="px-5 py-3.5">
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => navigate(`/admin/companies/${c.id}`)}
                       className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors"
-                      title="View"
+                      title="Ver"
                     >
                       <Eye size={16} style={{ color: colors.textSecondary }} />
                     </button>
                     <button
                       onClick={() => navigate(`/admin/companies/${c.id}`)}
                       className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors"
-                      title="Edit"
+                      title="Editar"
                     >
                       <Pencil size={16} style={{ color: colors.textSecondary }} />
                     </button>
                     <button
                       onClick={() => toggleStatus(c.id)}
                       className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors"
-                      title={c.status === "active" ? "Deactivate" : "Activate"}
+                      title={c.status === "active" ? "Desactivar" : "Activar"}
                     >
                       <ToggleLeft size={16} style={{ color: c.status === "active" ? colors.success : colors.error }} />
                     </button>

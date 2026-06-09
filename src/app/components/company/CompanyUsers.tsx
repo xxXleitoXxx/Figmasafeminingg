@@ -166,7 +166,7 @@ export function CompanyUsers() {
                   <span className="text-xs font-medium px-2.5 py-1 rounded-full" style={{ backgroundColor: `${ROLE_COLORS[u.role]}15`, color: ROLE_COLORS[u.role] }}>{u.role}</span>
                 </td>
                 <td className="px-5 py-3.5"><StatusBadge status={u.status} /></td>
-                <td className="px-5 py-3.5 text-xs" style={{ color: colors.textSecondary }}>{new Date(u.regDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</td>
+                <td className="px-5 py-3.5 text-xs" style={{ color: colors.textSecondary }}>{new Date(u.regDate).toLocaleDateString("es-ES", { month: "short", day: "numeric", year: "numeric" })}</td>
                 <td className="px-5 py-3.5 text-xs" style={{ color: colors.textSecondary }}>{u.lastActivity}</td>
                 <td className="px-5 py-3.5">
                   <div className="flex items-center gap-2">

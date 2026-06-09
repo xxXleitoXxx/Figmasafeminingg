@@ -34,37 +34,37 @@ interface ContentItem {
 const AVAILABLE_SIMS = [
   {
     id: 1,
-    name: "Fire Evacuation – Underground",
-    category: "Fire",
+    name: "Evacuación de Incendio – Subterráneo",
+    category: "Fuego",
     duration: "~14 min",
   },
   {
     id: 2,
-    name: "Energy Lockout/Tagout",
-    category: "Energy",
+    name: "Bloqueo/Etiquetado de Energía",
+    category: "Energía",
     duration: "~18 min",
   },
   {
     id: 3,
-    name: "Confined Space Entry",
-    category: "Confined",
+    name: "Entrada a Espacios Confinados",
+    category: "Confinados",
     duration: "~22 min",
   },
   {
     id: 4,
-    name: "Chemical Spill Response",
-    category: "Chemical",
+    name: "Respuesta a Derrames Químicos",
+    category: "Químicos",
     duration: "~12 min",
   },
 ];
 
 const AVAILABLE_EXAMS = [
-  { id: 10, name: "Fire Safety Theory Exam", questions: 15 },
-  { id: 11, name: "LOTO Knowledge Assessment", questions: 20 },
-  { id: 12, name: "PPE Identification Test", questions: 10 },
+  { id: 10, name: "Examen Teórico de Seguridad contra Incendios", questions: 15 },
+  { id: 11, name: "Evaluación de Conocimientos LOTO", questions: 20 },
+  { id: 12, name: "Prueba de Identificación de EPP", questions: 10 },
 ];
 
-const STEPS = ["Basic Info", "Content", "Settings", "Review"];
+const STEPS = ["Información Básica", "Contenido", "Ajustes", "Revisión"];
 
 function StepIndicator({ step }: { step: number }) {
   return (
@@ -124,10 +124,10 @@ export function ProgramCreate() {
   const [toast, setToast] = useState<string | null>(null);
 
   const [basicInfo, setBasicInfo] = useState({
-    name: isNew ? "" : "Fire Safety & Evacuation Q2 2025",
+    name: isNew ? "" : "Seguridad y Evacuación de Incendios Q2 2025",
     description: isNew
       ? ""
-      : "Comprehensive fire safety training for underground operations.",
+      : "Entrenamiento integral de seguridad contra incendios para operaciones subterráneas.",
     startDate: isNew ? "" : "2025-04-01",
     endDate: isNew ? "" : "2025-06-30",
     status: "draft",
@@ -140,13 +140,13 @@ export function ProgramCreate() {
           {
             id: 1,
             type: "simulation",
-            name: "Fire Evacuation – Underground",
+            name: "Evacuación de Incendio – Subterráneo",
             maxAttempts: 3,
           },
           {
             id: 10,
             type: "exam",
-            name: "Fire Safety Theory Exam",
+            name: "Examen Teórico de Seguridad contra Incendios",
             maxAttempts: 2,
           },
         ],
@@ -192,8 +192,8 @@ export function ProgramCreate() {
   const handleSave = (activate = false) => {
     setToast(
       activate
-        ? "Program activated!"
-        : "Program saved as draft",
+        ? "¡Programa activado!"
+        : "Programa guardado como borrador",
     );
     setTimeout(() => {
       setToast(null);
@@ -206,15 +206,15 @@ export function ProgramCreate() {
       <Breadcrumb
         items={[
           {
-            label: "Programs",
+            label: "Programas",
             onClick: () => navigate("/company/programs"),
           },
-          { label: isNew ? "New Program" : "Edit Program" },
+          { label: isNew ? "Nuevo Programa" : "Editar Programa" },
         ]}
       />
       <PageHeader
         title={
-          isNew ? "Create Training Program" : "Edit Program"
+          isNew ? "Crear Programa de Entrenamiento" : "Editar Programa"
         }
       />
 
@@ -223,10 +223,10 @@ export function ProgramCreate() {
       {/* Step 0: Basic Info */}
       {step === 0 && (
         <Card className="max-w-2xl">
-          <SectionLabel>Basic Information</SectionLabel>
+          <SectionLabel>Información Básica</SectionLabel>
           <div className="space-y-4">
             <InputField
-              label="Program Name"
+              label="Nombre del Programa"
               value={basicInfo.name}
               onChange={(v) =>
                 setBasicInfo((p) => ({ ...p, name: v }))
@@ -237,7 +237,7 @@ export function ProgramCreate() {
                 className="block text-sm font-medium mb-1"
                 style={{ color: colors.textPrimary }}
               >
-                Description
+                Descripción
               </label>
               <textarea
                 value={basicInfo.description}
@@ -254,7 +254,7 @@ export function ProgramCreate() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <InputField
-                label="Start Date"
+                label="Fecha de Inicio"
                 type="date"
                 value={basicInfo.startDate}
                 onChange={(v) =>
@@ -262,7 +262,7 @@ export function ProgramCreate() {
                 }
               />
               <InputField
-                label="End Date"
+                label="Fecha de Fin"
                 type="date"
                 value={basicInfo.endDate}
                 onChange={(v) =>
@@ -278,11 +278,11 @@ export function ProgramCreate() {
       {step === 1 && (
         <div className="grid grid-cols-2 gap-6">
           <Card>
-            <SectionLabel>Available Content</SectionLabel>
+            <SectionLabel>Contenido Disponible</SectionLabel>
             <div className="flex gap-1 mb-4">
               {[
-                { key: "sims", label: "VR Simulations" },
-                { key: "exams", label: "Exams" },
+                { key: "sims", label: "Simulaciones VR" },
+                { key: "exams", label: "Exámenes" },
               ].map((tab) => (
                 <button
                   key={tab.key}
@@ -426,7 +426,7 @@ export function ProgramCreate() {
                             color: colors.textSecondary,
                           }}
                         >
-                          {item.type}
+                          {item.type === "simulation" ? "Simulación" : "Examen"}
                         </p>
                       </div>
                       <button
@@ -439,15 +439,6 @@ export function ProgramCreate() {
                       </button>
                     </div>
                     <div className="flex gap-4">
-                      <label className="flex items-center gap-2 text-xs cursor-pointer">
-                        <span
-                          style={{
-                            color: colors.textSecondary,
-                          }}
-                        >
-                        
-                        </span>
-                      </label>
                       <div className="flex items-center gap-1.5">
                         <span
                           className="text-xs"

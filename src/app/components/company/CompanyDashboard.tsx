@@ -81,7 +81,7 @@ export function CompanyDashboard() {
                   className="text-xs font-semibold px-2 py-0.5 rounded-full text-white"
                   style={{ backgroundColor: p.daysLeft <= 3 ? colors.error : colors.secondary }}
                 >
-                  {p.daysLeft}d rest
+                  {p.daysLeft}d restantes
                 </span>
               </div>
             ))}

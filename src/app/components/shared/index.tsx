@@ -58,7 +58,7 @@ export function StatusBadge({ status }: { status: string }) {
   );
 }
 
-// ─── Stat Card ────────────────────────────────────────────────────────────────
+// ─── Stat Card ───────────────────────────────────��────────────────────────────
 interface StatCardProps {
   label: string;
   value: string | number;
@@ -87,7 +87,7 @@ export function StatCard({ label, value, icon, trend, color = colors.primary }: 
   );
 }
 
-// ─── Page Header ─────────────────────────────────────────────────────────────
+// ─── Page Header ────────────────────────────────────────────────���────────────
 interface PageHeaderProps {
   title: string;
   subtitle?: string;
@@ -322,7 +322,7 @@ export function Avatar({ name, size = 32 }: { name: string; size?: number }) {
 }
 
 // ─── Confirm Modal ────────────────────────────────────────────────────────────
-export function ConfirmModal({ title, description, onConfirm, onCancel, confirmLabel = "Confirm", dangerous = false }: {
+export function ConfirmModal({ title, description, onConfirm, onCancel, confirmLabel = "Confirmar", dangerous = false }: {
   title: string; description: string; onConfirm: () => void; onCancel: () => void;
   confirmLabel?: string; dangerous?: boolean;
 }) {
@@ -338,7 +338,7 @@ export function ConfirmModal({ title, description, onConfirm, onCancel, confirmL
         </div>
         <p className="text-sm mb-6" style={{ color: colors.textSecondary }}>{description}</p>
         <div className="flex justify-end gap-3">
-          <OutlinedBtn onClick={onCancel}>Cancel</OutlinedBtn>
+          <OutlinedBtn onClick={onCancel}>Cancelar</OutlinedBtn>
           {dangerous ? (
             <DestructiveBtn onClick={onConfirm}>{confirmLabel}</DestructiveBtn>
           ) : (

@@ -3,9 +3,9 @@ import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, R
 import { PageHeader, StatCard, StatusBadge, colors, Card } from "../shared";
 
 const executionData = [
-  { day: "May 1", sessions: 32 }, { day: "May 5", sessions: 45 }, { day: "May 8", sessions: 38 },
-  { day: "May 12", sessions: 62 }, { day: "May 15", sessions: 55 }, { day: "May 18", sessions: 70 },
-  { day: "May 22", sessions: 58 }, { day: "May 25", sessions: 83 }, { day: "May 26", sessions: 77 },
+  { day: "1 May", sessions: 32 }, { day: "5 May", sessions: 45 }, { day: "8 May", sessions: 38 },
+  { day: "12 May", sessions: 62 }, { day: "15 May", sessions: 55 }, { day: "18 May", sessions: 70 },
+  { day: "22 May", sessions: 58 }, { day: "25 May", sessions: 83 }, { day: "26 May", sessions: 77 },
 ];
 
 const companyData = [
@@ -17,11 +17,11 @@ const companyData = [
 ];
 
 const topSimulations = [
-  { rank: 1, name: "Fire Evacuation – Underground", category: "Fire", executions: 432, approvalRate: 87, status: "active" },
-  { rank: 2, name: "Energy Lockout/Tagout", category: "Energy", executions: 398, approvalRate: 79, status: "active" },
-  { rank: 3, name: "Confined Space Entry", category: "Confined", executions: 312, approvalRate: 91, status: "active" },
-  { rank: 4, name: "Chemical Spill Response", category: "Chemical", executions: 276, approvalRate: 73, status: "active" },
-  { rank: 5, name: "Equipment Safety Checklist", category: "General", executions: 241, approvalRate: 95, status: "draft" },
+  { rank: 1, name: "Evacuación de Incendio – Subterráneo", category: "Incendio", executions: 432, approvalRate: 87, status: "active" },
+  { rank: 2, name: "Bloqueo/Etiquetado de Energía", category: "Energía", executions: 398, approvalRate: 79, status: "active" },
+  { rank: 3, name: "Entrada a Espacios Confinados", category: "Confinados", executions: 312, approvalRate: 91, status: "active" },
+  { rank: 4, name: "Respuesta a Derrames Químicos", category: "Químicos", executions: 276, approvalRate: 73, status: "active" },
+  { rank: 5, name: "Lista de Verificación de Seguridad de Equipos", category: "General", executions: 241, approvalRate: 95, status: "draft" },
 ];
 
 const recentActivity = [
