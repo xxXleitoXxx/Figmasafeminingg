@@ -145,7 +145,7 @@ export function AdminUsersScreen() {
                 <td className="px-5 py-3.5" style={{ color: colors.textSecondary }}>{u.email}</td>
                 <td className="px-5 py-3.5" style={{ color: colors.textSecondary }}>{u.company}</td>
                 <td className="px-5 py-3.5"><StatusBadge status={u.status} /></td>
-                <td className="px-5 py-3.5 text-xs" style={{ color: colors.textSecondary }}>{new Date(u.createdAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</td>
+                <td className="px-5 py-3.5 text-xs" style={{ color: colors.textSecondary }}>{new Date(u.createdAt).toLocaleDateString("es-ES", { year: "numeric", month: "short", day: "numeric" })}</td>
                 <td className="px-5 py-3.5">
                   <div className="flex items-center gap-2">
                     <button onClick={() => { setEditUser(u); setShowDrawer(true); }} className="p-1.5 rounded-lg hover:bg-gray-100"><Pencil size={15} style={{ color: colors.textSecondary }} /></button>

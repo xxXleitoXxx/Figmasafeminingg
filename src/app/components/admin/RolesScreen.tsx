@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Plus, ChevronDown, ChevronUp, Pencil } from "lucide-react";
-import { PageHeader, PrimaryBtn, StatusBadge, colors, Card } from "../shared";
+import { PageHeader, PrimaryBtn, StatusBadge, colors, Card, permissionTranslations } from "../shared";
 
 const MODULES = ["Usuarios", "Empresas", "Simulaciones", "Programas", "Reportes", "Configuración"];
 
@@ -91,7 +91,7 @@ export function RolesScreen() {
                                 style={{ accentColor: colors.primary }}
                               />
                               <span className="text-xs" style={{ color: colors.textPrimary }}>
-                                {perm.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase())}
+                                {permissionTranslations[perm] ?? perm.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase())}
                               </span>
                             </label>
                           ))}

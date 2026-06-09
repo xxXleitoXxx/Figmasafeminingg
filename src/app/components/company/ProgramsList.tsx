@@ -12,7 +12,7 @@ const PROGRAMS = [
   {
     id: 2, name: "Procedimientos LOTO – Nivel 2", status: "activo", created: "15 Mar, 2025",
     coordinator: "Elena Vega", simulations: 2, exams: 2, enrolled: 18, completion: 54,
-    startDate: "15 Mar, 2025", endDate: "31 May, 2025"
+    startDate: "15 Mar, 2025", endDate: "31 Mayo, 2025"
   },
   {
     id: 3, name: "Protocolo Entrada Espacio Confinado", status: "activo", created: "10 Ene, 2025",
@@ -25,7 +25,7 @@ const PROGRAMS = [
     startDate: "1 Feb, 2025", endDate: "31 Mar, 2025"
   },
   {
-    id: 5, name: "Seguridad de Manejo de Químicos", status: "borrador", created: "20 May, 2025",
+    id: 5, name: "Seguridad de Manejo de Químicos", status: "borrador", created: "20 Mayo, 2025",
     coordinator: "Roberto Silva", simulations: 2, exams: 1, enrolled: 0, completion: 0,
     startDate: "1 Jun, 2025", endDate: "31 Ago, 2025"
   },

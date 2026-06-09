@@ -29,6 +29,7 @@ const statusStyles: Record<string, { bg: string; text: string }> = {
   cerrado: { bg: "#E5E7EB", text: "#374151" },
   completado: { bg: "#D1FAE5", text: "#065F46" },
   fallido: { bg: "#FEE2E2", text: "#991B1B" },
+  reprobado: { bg: "#FEE2E2", text: "#991B1B" },
   "en progreso": { bg: "#DBEAFE", text: "#1E40AF" },
   "no iniciado": { bg: "#F1F5F9", text: "#475569" },
   bloqueado: { bg: "#E5E7EB", text: "#6B7280" },
@@ -46,14 +47,73 @@ const statusStyles: Record<string, { bg: string; text: string }> = {
   locked: { bg: "#E5E7EB", text: "#6B7280" },
 };
 
+export const statusTranslations: Record<string, string> = {
+  active: "activo",
+  inactive: "inactivo",
+  pending: "pendiente",
+  approved: "aprobado",
+  rejected: "rechazado",
+  draft: "borrador",
+  closed: "cerrado",
+  completed: "completado",
+  failed: "reprobado",
+  "in progress": "en progreso",
+  "not started": "no iniciado",
+  locked: "bloqueado",
+  activo: "activo",
+  inactivo: "inactivo",
+  pendiente: "pendiente",
+  aprobado: "aprobado",
+  rechazado: "rechazado",
+  borrador: "borrador",
+  cerrado: "cerrado",
+  completado: "completado",
+  fallido: "reprobado",
+  reprobado: "reprobado",
+  "en progreso": "en progreso",
+  "no iniciado": "no iniciado",
+  bloqueado: "bloqueado",
+};
+
+export const permissionTranslations: Record<string, string> = {
+  view_users: "Ver usuarios",
+  create_users: "Crear usuarios",
+  edit_users: "Editar usuarios",
+  delete_users: "Eliminar usuarios",
+  assign_roles: "Asignar roles",
+  view_companies: "Ver empresas",
+  create_companies: "Crear empresas",
+  edit_companies: "Editar empresas",
+  deactivate_companies: "Desactivar empresas",
+  view_simulations: "Ver simulaciones",
+  create_simulations: "Crear simulaciones",
+  edit_simulations: "Editar simulaciones",
+  manage_metrics: "Gestionar métricas",
+  view_programs: "Ver programas",
+  create_programs: "Crear programas",
+  assign_programs: "Asignar programas",
+  close_programs: "Cerrar programas",
+  view_global_reports: "Ver reportes globales",
+  view_company_reports: "Ver reportes de empresa",
+  export_reports: "Exportar reportes",
+  edit_configuration: "Editar configuración",
+  manage_templates: "Gestionar plantillas",
+  view_audit_log: "Ver registro de auditoría",
+  create_user_employee: "Crear usuario empleado",
+  view_reports: "Ver reportes",
+  view_settings: "Ver ajustes",
+};
+
 export function StatusBadge({ status }: { status: string }) {
-  const s = statusStyles[status.toLowerCase()] ?? { bg: "#F1F5F9", text: "#475569" };
+  const normalized = status.toLowerCase();
+  const translated = statusTranslations[normalized] ?? status;
+  const s = statusStyles[normalized] ?? { bg: "#F1F5F9", text: "#475569" };
   return (
     <span
       style={{ backgroundColor: s.bg, color: s.text }}
       className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize"
     >
-      {status}
+      {translated}
     </span>
   );
 }

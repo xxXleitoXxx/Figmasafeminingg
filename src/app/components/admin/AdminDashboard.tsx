@@ -1,11 +1,13 @@
+import { useState } from "react";
 import { Building2, Play, Users, ClipboardList } from "lucide-react";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { PageHeader, StatCard, StatusBadge, colors, Card } from "../shared";
+import { TextField } from "@mui/material";
 
 const executionData = [
-  { day: "1 May", sessions: 32 }, { day: "5 May", sessions: 45 }, { day: "8 May", sessions: 38 },
-  { day: "12 May", sessions: 62 }, { day: "15 May", sessions: 55 }, { day: "18 May", sessions: 70 },
-  { day: "22 May", sessions: 58 }, { day: "25 May", sessions: 83 }, { day: "26 May", sessions: 77 },
+  { day: "1 Mayo", sessions: 32, date: "2025-05-01" }, { day: "5 Mayo", sessions: 45, date: "2025-05-05" }, { day: "8 Mayo", sessions: 38, date: "2025-05-08" },
+  { day: "12 Mayo", sessions: 62, date: "2025-05-12" }, { day: "15 Mayo", sessions: 55, date: "2025-05-15" }, { day: "18 Mayo", sessions: 70, date: "2025-05-18" },
+  { day: "22 Mayo", sessions: 58, date: "2025-05-22" }, { day: "25 Mayo", sessions: 83, date: "2025-05-25" }, { day: "26 Mayo", sessions: 77, date: "2025-05-26" },
 ];
 
 const companyData = [
@@ -35,9 +37,44 @@ const recentActivity = [
 ];
 
 export function AdminDashboard() {
+  const [startDate, setStartDate] = useState("2025-05-01");
+  const [endDate, setEndDate] = useState("2025-05-31");
+
+  const filteredExecutionData = executionData.filter(d => {
+    if (startDate && d.date < startDate) return false;
+    if (endDate && d.date > endDate) return false;
+    return true;
+  });
+
   return (
     <div>
       <PageHeader title="Panel del Sistema" subtitle="Resumen y análisis de toda la plataforma" />
+
+      {/* Filters */}
+      <div className="bg-white rounded-xl border p-4 mb-6 flex items-center gap-4 flex-wrap" style={{ borderColor: colors.border }}>
+        <div className="flex flex-col gap-1">
+          <label className="text-xs font-medium" style={{ color: colors.textSecondary }}>Rango de Fechas</label>
+          <div className="flex gap-2 items-center">
+            <TextField
+              type="date"
+              size="small"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+              InputLabelProps={{ shrink: true }}
+              sx={{ '& .MuiInputBase-root': { fontSize: '0.875rem', borderRadius: '0.5rem', height: '34px' }, '& .MuiOutlinedInput-notchedOutline': { borderColor: colors.border } }}
+            />
+            <span className="text-xs" style={{ color: colors.textSecondary }}>a</span>
+            <TextField
+              type="date"
+              size="small"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              InputLabelProps={{ shrink: true }}
+              sx={{ '& .MuiInputBase-root': { fontSize: '0.875rem', borderRadius: '0.5rem', height: '34px' }, '& .MuiOutlinedInput-notchedOutline': { borderColor: colors.border } }}
+            />
+          </div>
+        </div>
+      </div>
 
       {/* KPI Cards */}
       <div className="grid grid-cols-4 gap-5 mb-8">
@@ -52,7 +89,7 @@ export function AdminDashboard() {
         <Card className="col-span-2">
           <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Ejecuciones de Sesiones VR – Últimos 30 Días</h3>
           <ResponsiveContainer width="100%" height={200}>
-            <LineChart data={executionData}>
+            <LineChart data={filteredExecutionData}>
               <CartesianGrid strokeDasharray="3 3" stroke={colors.border} />
               <XAxis dataKey="day" tick={{ fontSize: 11, fill: colors.textSecondary }} />
               <YAxis tick={{ fontSize: 11, fill: colors.textSecondary }} />

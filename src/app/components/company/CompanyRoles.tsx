@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Plus, Pencil, Eye, X } from "lucide-react";
-import { PageHeader, PrimaryBtn, StatusBadge, colors, Card, SectionLabel } from "../shared";
+import { PageHeader, PrimaryBtn, StatusBadge, colors, Card, SectionLabel, permissionTranslations } from "../shared";
 
 const STANDARD_ROLES = [
   { id: 1, name: "Administrador de Empresa", description: "Acceso total a la gestión de la empresa", permissions: 14 },
@@ -56,7 +56,7 @@ function CreateRoleModal({ onClose }: { onClose: () => void }) {
                     {ps.map(p => (
                       <label key={p} className="flex items-center gap-2 cursor-pointer">
                         <input type="checkbox" checked={perms.includes(p)} onChange={() => toggle(p)} style={{ accentColor: colors.primary }} />
-                        <span className="text-xs" style={{ color: colors.textPrimary }}>{p.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase())}</span>
+                        <span className="text-xs" style={{ color: colors.textPrimary }}>{permissionTranslations[p] ?? p.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase())}</span>
                       </label>
                     ))}
                   </div>
