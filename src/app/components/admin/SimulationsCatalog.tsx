@@ -4,34 +4,45 @@ import { Plus, Search, MoreVertical, Flame, Zap, Wind, Shield } from "lucide-rea
 import { PageHeader, PrimaryBtn, StatusBadge, colors } from "../shared";
 
 const CATEGORY_ICONS: Record<string, React.ReactNode> = {
+  "Fuego": <Flame size={24} />,
+  "Energía": <Zap size={24} />,
+  "Confinado": <Wind size={24} />,
+  "General": <Shield size={24} />,
+  "Químico": <Flame size={24} />,
   "Fire": <Flame size={24} />,
   "Energy": <Zap size={24} />,
   "Confined": <Wind size={24} />,
-  "General": <Shield size={24} />,
   "Chemical": <Flame size={24} />,
 };
 
 const CATEGORY_COLORS: Record<string, string> = {
+  "Fuego": "#EF4444",
+  "Energía": "#EAB308",
+  "Confinado": "#3B82F6",
+  "General": "#22C55E",
+  "Químico": "#F97316",
   "Fire": "#EF4444",
   "Energy": "#EAB308",
   "Confined": "#3B82F6",
-  "General": "#22C55E",
   "Chemical": "#F97316",
 };
 
 const SIMULATIONS = [
-  { id: 1, name: "Fire Evacuation – Underground", category: "Fire", difficulty: "Intermediate", duration: "~14 min", version: "v2.1", status: "active" },
-  { id: 2, name: "Energy Lockout/Tagout (LOTO)", category: "Energy", difficulty: "Advanced", duration: "~18 min", version: "v1.5", status: "active" },
-  { id: 3, name: "Confined Space Entry Protocol", category: "Confined", difficulty: "Advanced", duration: "~22 min", version: "v1.3", status: "active" },
-  { id: 4, name: "Chemical Spill Response", category: "Chemical", difficulty: "Intermediate", duration: "~12 min", version: "v2.0", status: "active" },
-  { id: 5, name: "Equipment Safety Checklist", category: "General", difficulty: "Basic", duration: "~8 min", version: "v1.0", status: "draft" },
-  { id: 6, name: "Surface Fire Evacuation", category: "Fire", difficulty: "Basic", duration: "~10 min", version: "v1.2", status: "active" },
-  { id: 7, name: "Electrical Safety Basics", category: "Energy", difficulty: "Basic", duration: "~9 min", version: "v1.1", status: "active" },
-  { id: 8, name: "Rescue in Confined Spaces", category: "Confined", difficulty: "Advanced", duration: "~25 min", version: "v1.0", status: "draft" },
-  { id: 9, name: "PPE Donning & Doffing", category: "General", difficulty: "Basic", duration: "~6 min", version: "v2.2", status: "active" },
+  { id: 1, name: "Evacuación de Incendios – Subterráneo", category: "Fuego", difficulty: "Intermedio", duration: "~14 min", version: "v2.1", status: "activo" },
+  { id: 2, name: "Bloqueo de Energía (LOTO)", category: "Energía", difficulty: "Avanzado", duration: "~18 min", version: "v1.5", status: "activo" },
+  { id: 3, name: "Protocolo de Espacio Confinado", category: "Confinado", difficulty: "Avanzado", duration: "~22 min", version: "v1.3", status: "activo" },
+  { id: 4, name: "Respuesta a Derrame Químico", category: "Químico", difficulty: "Intermedio", duration: "~12 min", version: "v2.0", status: "activo" },
+  { id: 5, name: "Checklist de Seguridad de Equipos", category: "General", difficulty: "Básico", duration: "~8 min", version: "v1.0", status: "borrador" },
+  { id: 6, name: "Evacuación de Incendios Superficie", category: "Fuego", difficulty: "Básico", duration: "~10 min", version: "v1.2", status: "activo" },
+  { id: 7, name: "Básicos de Seguridad Eléctrica", category: "Energía", difficulty: "Básico", duration: "~9 min", version: "v1.1", status: "activo" },
+  { id: 8, name: "Rescate en Espacios Confinados", category: "Confinado", difficulty: "Avanzado", duration: "~25 min", version: "v1.0", status: "borrador" },
+  { id: 9, name: "Colocación de EPP", category: "General", difficulty: "Básico", duration: "~6 min", version: "v2.2", status: "activo" },
 ];
 
 const DIFF_COLORS: Record<string, string> = {
+  Básico: "#22C55E",
+  Intermedio: "#EAB308",
+  Avanzado: "#EF4444",
   Basic: "#22C55E",
   Intermediate: "#EAB308",
   Advanced: "#EF4444",
@@ -44,22 +55,22 @@ export function SimulationsCatalog() {
   const [difficultyFilter, setDifficultyFilter] = useState("All");
   const [openMenu, setOpenMenu] = useState<number | null>(null);
 
-  const categories = ["All", "Fire", "Energy", "Confined", "General", "Chemical"];
-  const difficulties = ["All", "Basic", "Intermediate", "Advanced"];
+  const categories = ["Todas", "Fuego", "Energía", "Confinado", "General", "Químico"];
+  const difficulties = ["Todas", "Básico", "Intermedio", "Avanzado"];
 
   const filtered = SIMULATIONS.filter(s => {
     const matchSearch = s.name.toLowerCase().includes(search.toLowerCase());
-    const matchCat = categoryFilter === "All" || s.category === categoryFilter;
-    const matchDiff = difficultyFilter === "All" || s.difficulty === difficultyFilter;
+    const matchCat = categoryFilter === "Todas" || s.category === categoryFilter;
+    const matchDiff = difficultyFilter === "Todas" || s.difficulty === difficultyFilter;
     return matchSearch && matchCat && matchDiff;
   });
 
   return (
     <div>
       <PageHeader
-        title="VR Simulations"
-        subtitle={`${SIMULATIONS.length} simulations in catalog`}
-        actions={<PrimaryBtn onClick={() => navigate("/admin/simulations/new")}><Plus size={16} /> New Simulation</PrimaryBtn>}
+        title="Simulaciones VR"
+        subtitle={`${SIMULATIONS.length} simulaciones en el catálogo`}
+        actions={<PrimaryBtn onClick={() => navigate("/admin/simulations/new")}><Plus size={16} /> Nueva Simulación</PrimaryBtn>}
       />
 
       {/* Filters */}
@@ -67,7 +78,7 @@ export function SimulationsCatalog() {
         <div className="relative">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: colors.textSecondary }} />
           <input
-            placeholder="Search simulations..."
+            placeholder="Buscar simulaciones..."
             value={search}
             onChange={e => setSearch(e.target.value)}
             className="w-full pl-9 pr-4 py-2 rounded-lg border text-sm outline-none"
@@ -76,7 +87,7 @@ export function SimulationsCatalog() {
         </div>
         <div className="flex gap-4 flex-wrap">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-medium" style={{ color: colors.textSecondary }}>Category:</span>
+            <span className="text-xs font-medium" style={{ color: colors.textSecondary }}>Categoría:</span>
             {categories.map(c => (
               <button
                 key={c}
@@ -89,7 +100,7 @@ export function SimulationsCatalog() {
             ))}
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-medium" style={{ color: colors.textSecondary }}>Difficulty:</span>
+            <span className="text-xs font-medium" style={{ color: colors.textSecondary }}>Dificultad:</span>
             {difficulties.map(d => (
               <button
                 key={d}
@@ -130,12 +141,12 @@ export function SimulationsCatalog() {
                     <>
                       <div className="fixed inset-0 z-30" onClick={() => setOpenMenu(null)} />
                       <div className="absolute right-0 top-8 z-40 bg-white rounded-lg shadow-lg border py-1 w-36" style={{ borderColor: colors.border }}>
-                        {["Edit", "Manage Metrics", "Deactivate"].map(action => (
+                        {["Editar", "Gestionar Métricas", "Desactivar"].map(action => (
                           <button
                             key={action}
-                            onClick={() => { setOpenMenu(null); if (action === "Edit") navigate(`/admin/simulations/${sim.id}`); }}
+                            onClick={() => { setOpenMenu(null); if (action === "Editar") navigate(`/admin/simulations/${sim.id}`); }}
                             className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors"
-                            style={{ color: action === "Deactivate" ? colors.error : colors.textPrimary }}
+                            style={{ color: action === "Desactivar" ? colors.error : colors.textPrimary }}
                           >
                             {action}
                           </button>
@@ -175,7 +186,7 @@ export function SimulationsCatalog() {
                   className="text-xs font-medium hover:underline"
                   style={{ color: colors.primary }}
                 >
-                  Edit →
+                  Editar →
                 </button>
               </div>
             </div>

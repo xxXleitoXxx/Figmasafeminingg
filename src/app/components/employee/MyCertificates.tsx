@@ -5,17 +5,17 @@ import { useAuth } from "../../context/AuthContext";
 const CERTIFICATES = [
   {
     id: 1,
-    program: "PPE Basics Onboarding",
+    program: "Inducción Básica de EPP",
     company: "Minera Andina S.A.",
-    completionDate: "March 31, 2025",
+    completionDate: "31 de marzo, 2025",
     score: 94,
     coordinator: "Elena Vega",
   },
   {
     id: 2,
-    program: "Introduction to Mine Safety",
+    program: "Introducción a la Seguridad Minera",
     company: "Minera Andina S.A.",
-    completionDate: "December 15, 2024",
+    completionDate: "15 de diciembre, 2024",
     score: 88,
     coordinator: "Roberto Silva",
   },
@@ -26,12 +26,12 @@ export function MyCertificates() {
 
   return (
     <div>
-      <PageHeader title="My Certificates" subtitle={`${CERTIFICATES.length} certificates earned`} />
+      <PageHeader title="Mis Certificados" subtitle={`${CERTIFICATES.length} certificados obtenidos`} />
 
       {CERTIFICATES.length === 0 ? (
         <EmptyState
-          title="No certificates yet"
-          subtitle="Complete a training program to earn your first certificate of achievement."
+          title="Aún no hay certificados"
+          subtitle="Completa un programa de entrenamiento para obtener tu primer certificado de logro."
         />
       ) : (
         <div className="grid grid-cols-2 gap-5">
@@ -51,7 +51,7 @@ export function MyCertificates() {
                     <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white" style={{ backgroundColor: colors.secondary }}>⛏</div>
                     <div>
                       <div className="text-xs font-bold leading-tight" style={{ color: colors.primary }}>SafeMining VR</div>
-                      <div className="text-xs" style={{ color: colors.textSecondary }}>Training Platform</div>
+                      <div className="text-xs" style={{ color: colors.textSecondary }}>Plataforma de Entrenamiento</div>
                     </div>
                   </div>
                   <div
@@ -67,28 +67,28 @@ export function MyCertificates() {
                   className="text-center p-5 rounded-xl mb-5"
                   style={{ border: `1px dashed ${colors.border}`, backgroundColor: colors.bg }}
                 >
-                  <p className="text-xs uppercase tracking-widest mb-1" style={{ color: colors.textSecondary }}>Certificate of Completion</p>
-                  <p className="text-base font-bold mb-1" style={{ color: colors.textPrimary }}>{user?.name ?? "Employee"}</p>
-                  <p className="text-xs mb-3" style={{ color: colors.textSecondary }}>has successfully completed</p>
+                  <p className="text-xs uppercase tracking-widest mb-1" style={{ color: colors.textSecondary }}>Certificado de Finalización</p>
+                  <p className="text-base font-bold mb-1" style={{ color: colors.textPrimary }}>{user?.name ?? "Empleado"}</p>
+                  <p className="text-xs mb-3" style={{ color: colors.textSecondary }}>ha completado exitosamente</p>
                   <p className="text-sm font-semibold" style={{ color: colors.primary }}>{cert.program}</p>
                 </div>
 
                 {/* Meta */}
                 <div className="grid grid-cols-2 gap-3 text-xs mb-5">
                   <div>
-                    <p style={{ color: colors.textSecondary }}>Company</p>
+                    <p style={{ color: colors.textSecondary }}>Empresa</p>
                     <p className="font-medium" style={{ color: colors.textPrimary }}>{cert.company}</p>
                   </div>
                   <div>
-                    <p style={{ color: colors.textSecondary }}>Completion Date</p>
+                    <p style={{ color: colors.textSecondary }}>Fecha de Finalización</p>
                     <p className="font-medium" style={{ color: colors.textPrimary }}>{cert.completionDate}</p>
                   </div>
                   <div>
-                    <p style={{ color: colors.textSecondary }}>Final Score</p>
+                    <p style={{ color: colors.textSecondary }}>Puntuación Final</p>
                     <p className="font-semibold" style={{ color: colors.success }}>{cert.score}/100</p>
                   </div>
                   <div>
-                    <p style={{ color: colors.textSecondary }}>Coordinator</p>
+                    <p style={{ color: colors.textSecondary }}>Coordinador</p>
                     <p className="font-medium" style={{ color: colors.textPrimary }}>{cert.coordinator}</p>
                   </div>
                 </div>
@@ -99,7 +99,7 @@ export function MyCertificates() {
                     className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold text-white"
                     style={{ backgroundColor: colors.primary }}
                   >
-                    <Download size={15} /> Download PDF
+                    <Download size={15} /> Descargar PDF
                   </button>
                   <button
                     className="p-2.5 rounded-xl border"

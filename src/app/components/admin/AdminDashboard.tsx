@@ -25,32 +25,32 @@ const topSimulations = [
 ];
 
 const recentActivity = [
-  { time: "2 min ago", text: "New company registered: Yamana Gold Chile" },
-  { time: "14 min ago", text: "User Juan Pérez completed simulation 'Fire Evacuation'" },
-  { time: "1 hour ago", text: "Program 'Safety Basics Q2' activated by Laura Gómez" },
-  { time: "2 hours ago", text: "Certificate issued to Ana Torres – Minera Andina" },
-  { time: "3 hours ago", text: "Simulation 'Chemical Spill' updated to v2.1" },
-  { time: "5 hours ago", text: "System backup completed successfully" },
-  { time: "Yesterday", text: "Anglo American: 12 new employees enrolled" },
+  { time: "Hace 2 min", text: "Nueva empresa registrada: Yamana Gold Chile" },
+  { time: "Hace 14 min", text: "Usuario Juan Pérez completó simulación 'Evacuación de Incendios'" },
+  { time: "Hace 1 hora", text: "Programa 'Básicos de Seguridad Q2' activado por Laura Gómez" },
+  { time: "Hace 2 horas", text: "Certificado emitido a Ana Torres – Minera Andina" },
+  { time: "Hace 3 horas", text: "Simulación 'Derrame Químico' actualizada a v2.1" },
+  { time: "Hace 5 horas", text: "Copia de seguridad del sistema completada exitosamente" },
+  { time: "Ayer", text: "Anglo American: 12 nuevos empleados inscritos" },
 ];
 
 export function AdminDashboard() {
   return (
     <div>
-      <PageHeader title="System Dashboard" subtitle="Platform-wide overview and analytics" />
+      <PageHeader title="Panel del Sistema" subtitle="Resumen y análisis de toda la plataforma" />
 
       {/* KPI Cards */}
       <div className="grid grid-cols-4 gap-5 mb-8">
-        <StatCard label="Active Companies" value="24" icon={<Building2 size={22} />} trend={{ value: "+3 this month", up: true }} />
-        <StatCard label="Total VR Sessions" value="8,432" icon={<Play size={22} />} color={colors.secondary} trend={{ value: "+12% vs last month", up: true }} />
-        <StatCard label="Active Users" value="1,284" icon={<Users size={22} />} trend={{ value: "+87 this month", up: true }} />
-        <StatCard label="Programs in Progress" value="63" icon={<ClipboardList size={22} />} trend={{ value: "-5 completed", up: false }} />
+        <StatCard label="Empresas Activas" value="24" icon={<Building2 size={22} />} trend={{ value: "+3 este mes", up: true }} />
+        <StatCard label="Sesiones VR Totales" value="8,432" icon={<Play size={22} />} color={colors.secondary} trend={{ value: "+12% vs mes anterior", up: true }} />
+        <StatCard label="Usuarios Activos" value="1,284" icon={<Users size={22} />} trend={{ value: "+87 este mes", up: true }} />
+        <StatCard label="Programas en Progreso" value="63" icon={<ClipboardList size={22} />} trend={{ value: "-5 completados", up: false }} />
       </div>
 
       {/* Charts row */}
       <div className="grid grid-cols-3 gap-5 mb-8">
         <Card className="col-span-2">
-          <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>VR Session Executions – Last 30 Days</h3>
+          <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Ejecuciones de Sesiones VR – Últimos 30 Días</h3>
           <ResponsiveContainer width="100%" height={200}>
             <LineChart data={executionData}>
               <CartesianGrid strokeDasharray="3 3" stroke={colors.border} />
@@ -66,7 +66,7 @@ export function AdminDashboard() {
         </Card>
 
         <Card>
-          <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Sessions by Company</h3>
+          <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Sesiones por Empresa</h3>
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={companyData} layout="vertical" margin={{ left: -10 }}>
               <XAxis type="number" tick={{ fontSize: 10, fill: colors.textSecondary }} />
@@ -84,11 +84,11 @@ export function AdminDashboard() {
       <div className="grid grid-cols-3 gap-5">
         {/* Top Simulations Table */}
         <Card className="col-span-2">
-          <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Most Executed Simulations</h3>
+          <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Simulaciones Más Ejecutadas</h3>
           <table className="w-full text-sm">
             <thead>
               <tr style={{ borderBottom: `1px solid ${colors.border}` }}>
-                {["#", "Simulation", "Category", "Executions", "Approval Rate", "Status"].map(h => (
+                {["#", "Simulación", "Categoría", "Ejecuciones", "Tasa de Aprobación", "Estado"].map(h => (
                   <th key={h} className="pb-2 text-left text-xs font-semibold uppercase" style={{ color: colors.textSecondary }}>{h}</th>
                 ))}
               </tr>
@@ -122,7 +122,7 @@ export function AdminDashboard() {
 
         {/* Recent Activity */}
         <Card>
-          <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Recent Activity</h3>
+          <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Actividad Reciente</h3>
           <div className="space-y-3">
             {recentActivity.map((item, i) => (
               <div key={i} className="flex gap-3">

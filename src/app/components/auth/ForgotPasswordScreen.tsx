@@ -29,24 +29,24 @@ export function ForgotPasswordScreen() {
             className="flex items-center gap-2 text-sm font-medium mb-6 hover:opacity-70 transition-opacity"
             style={{ color: colors.textSecondary }}
           >
-            <ArrowLeft size={16} /> Back to login
+            <ArrowLeft size={16} /> Volver al inicio de sesión
           </button>
 
           {!sent ? (
             <>
-              <h2 className="text-xl font-semibold mb-2" style={{ color: colors.textPrimary }}>Reset Password</h2>
+              <h2 className="text-xl font-semibold mb-2" style={{ color: colors.textPrimary }}>Restablecer Contraseña</h2>
               <p className="text-sm mb-6" style={{ color: colors.textSecondary }}>
-                Enter your email address and we'll send you a link to reset your password.
+                Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-1" style={{ color: colors.textPrimary }}>Email address</label>
+                  <label className="block text-sm font-medium mb-1" style={{ color: colors.textPrimary }}>Correo electrónico</label>
                   <input
                     type="email"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                    placeholder="you@company.com"
+                    placeholder="tu@empresa.com"
                     required
                     className="w-full px-4 py-3 rounded-lg border text-sm outline-none transition-all"
                     style={{ borderColor: colors.border, color: colors.textPrimary }}
@@ -60,23 +60,23 @@ export function ForgotPasswordScreen() {
                   className="w-full py-3 rounded-lg text-white font-semibold text-sm transition-all"
                   style={{ backgroundColor: loading || !email ? "#94A3B8" : colors.primary }}
                 >
-                  {loading ? "Sending..." : "Send Reset Link"}
+                  {loading ? "Enviando..." : "Enviar enlace"}
                 </button>
               </form>
             </>
           ) : (
             <div className="text-center py-6">
               <CheckCircle size={48} className="mx-auto mb-4" style={{ color: colors.success }} />
-              <h3 className="text-xl font-semibold mb-2" style={{ color: colors.textPrimary }}>Check your email</h3>
+              <h3 className="text-xl font-semibold mb-2" style={{ color: colors.textPrimary }}>Revisa tu correo</h3>
               <p className="text-sm mb-6" style={{ color: colors.textSecondary }}>
-                We sent a password reset link to <strong>{email}</strong>. Check your inbox and follow the instructions.
+                Enviamos un enlace para restablecer tu contraseña a <strong>{email}</strong>. Revisa tu bandeja de entrada y sigue las instrucciones.
               </p>
               <button
                 onClick={() => navigate("/login")}
                 className="w-full py-3 rounded-lg text-white font-semibold text-sm"
                 style={{ backgroundColor: colors.primary }}
               >
-                Back to Sign In
+                Volver a Iniciar Sesión
               </button>
             </div>
           )}

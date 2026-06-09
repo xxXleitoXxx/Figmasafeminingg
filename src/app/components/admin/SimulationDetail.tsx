@@ -6,9 +6,9 @@ import { PageHeader, PrimaryBtn, OutlinedBtn, InputField, SelectField, Toggle, S
 interface Metric { id: number; name: string; description: string; weight: number; threshold: number; }
 
 const DEFAULT_METRICS: Metric[] = [
-  { id: 1, name: "Response Time", description: "Time to initiate evacuation", weight: 30, threshold: 70 },
-  { id: 2, name: "Procedure Compliance", description: "Steps followed correctly", weight: 40, threshold: 75 },
-  { id: 3, name: "PPE Usage", description: "Proper use of protective equipment", weight: 30, threshold: 80 },
+  { id: 1, name: "Tiempo de Respuesta", description: "Tiempo para iniciar evacuación", weight: 30, threshold: 70 },
+  { id: 2, name: "Cumplimiento de Procedimiento", description: "Pasos seguidos correctamente", weight: 40, threshold: 75 },
+  { id: 3, name: "Uso de EPP", description: "Uso adecuado de equipo de protección", weight: 30, threshold: 80 },
 ];
 
 export function SimulationDetail() {
@@ -17,10 +17,10 @@ export function SimulationDetail() {
   const isNew = id === "new";
 
   const [form, setForm] = useState({
-    name: isNew ? "" : "Fire Evacuation – Underground",
-    description: isNew ? "" : "Full immersive VR simulation of underground mine fire evacuation protocols.",
-    category: "Fire",
-    difficulty: "Intermediate",
+    name: isNew ? "" : "Evacuación de Incendios – Subterráneo",
+    description: isNew ? "" : "Simulación inmersiva completa en VR de protocolos de evacuación de incendios en minas subterráneas.",
+    category: "Fuego",
+    difficulty: "Intermedio",
     duration: "14",
     version: "2.1",
     sceneId: isNew ? "" : "unity_fire_evac_v21",
@@ -45,35 +45,35 @@ export function SimulationDetail() {
   };
 
   const handleSave = () => {
-    if (metrics.length > 0 && !weightOk) { setToast("Metric weights must sum to 100%"); return; }
-    setToast(isNew ? "Simulation created successfully" : "Simulation saved successfully");
+    if (metrics.length > 0 && !weightOk) { setToast("Los pesos de las métricas deben sumar 100%"); return; }
+    setToast(isNew ? "Simulación creada exitosamente" : "Simulación guardada exitosamente");
     setTimeout(() => { setToast(null); navigate("/admin/simulations"); }, 2000);
   };
 
   return (
     <div>
       <Breadcrumb items={[
-        { label: "Simulations", onClick: () => navigate("/admin/simulations") },
-        { label: isNew ? "New Simulation" : "Fire Evacuation – Underground" }
+        { label: "Simulaciones", onClick: () => navigate("/admin/simulations") },
+        { label: isNew ? "Nueva Simulación" : "Evacuación de Incendios – Subterráneo" }
       ]} />
 
       <PageHeader
-        title={isNew ? "New Simulation" : "Fire Evacuation – Underground"}
+        title={isNew ? "Nueva Simulación" : "Evacuación de Incendios – Subterráneo"}
         actions={
           <>
-            <OutlinedBtn onClick={() => navigate("/admin/simulations")}>Cancel</OutlinedBtn>
-            <PrimaryBtn onClick={handleSave}>Save Simulation</PrimaryBtn>
+            <OutlinedBtn onClick={() => navigate("/admin/simulations")}>Cancelar</OutlinedBtn>
+            <PrimaryBtn onClick={handleSave}>Guardar Simulación</PrimaryBtn>
           </>
         }
       />
 
       <div className="space-y-6">
         <Card>
-          <SectionLabel>Basic Information</SectionLabel>
+          <SectionLabel>Información Básica</SectionLabel>
           <div className="grid grid-cols-2 gap-5">
-            <InputField label="Simulation Name" value={form.name} onChange={v => setForm(p => ({ ...p, name: v }))} required className="col-span-2" />
+            <InputField label="Nombre de la Simulación" value={form.name} onChange={v => setForm(p => ({ ...p, name: v }))} required className="col-span-2" />
             <div className="col-span-2">
-              <label className="block text-sm font-medium mb-1" style={{ color: colors.textPrimary }}>Description</label>
+              <label className="block text-sm font-medium mb-1" style={{ color: colors.textPrimary }}>Descripción</label>
               <textarea
                 value={form.description}
                 onChange={e => setForm(p => ({ ...p, description: e.target.value }))}
@@ -86,17 +86,17 @@ export function SimulationDetail() {
             </div>
           
             <SelectField
-              label="Difficulty"
+              label="Dificultad"
               value={form.difficulty}
               onChange={v => setForm(p => ({ ...p, difficulty: v }))}
-              options={["Basic", "Intermediate", "Advanced"].map(v => ({ label: v, value: v }))}
+              options={["Básico", "Intermedio", "Avanzado"].map(v => ({ label: v, value: v }))}
             />
-            <InputField label="Duration (minutes)" type="number" value={form.duration} onChange={v => setForm(p => ({ ...p, duration: v }))} />
-            <InputField label="Version" value={form.version} onChange={v => setForm(p => ({ ...p, version: v }))} placeholder="1.0" />
-            <InputField label="Unity Scene ID" value={form.sceneId} onChange={v => setForm(p => ({ ...p, sceneId: v }))} placeholder="unity_scene_id" />
+            <InputField label="Duración (minutos)" type="number" value={form.duration} onChange={v => setForm(p => ({ ...p, duration: v }))} />
+            <InputField label="Versión" value={form.version} onChange={v => setForm(p => ({ ...p, version: v }))} placeholder="1.0" />
+            <InputField label="ID de Escena Unity" value={form.sceneId} onChange={v => setForm(p => ({ ...p, sceneId: v }))} placeholder="unity_scene_id" />
           </div>
           <div className="mt-5">
-            <Toggle label="Active simulation" checked={form.status} onChange={v => setForm(p => ({ ...p, status: v }))} />
+            <Toggle label="Simulación activa" checked={form.status} onChange={v => setForm(p => ({ ...p, status: v }))} />
           </div>
         </Card>
 

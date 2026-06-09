@@ -3,8 +3,8 @@ import { Download, FileText } from "lucide-react";
 import { PageHeader, StatusBadge, colors, Card } from "../shared";
 
 const sessionData = [
-  { month: "Nov", sessions: 280 }, { month: "Dec", sessions: 320 }, { month: "Jan", sessions: 410 },
-  { month: "Feb", sessions: 380 }, { month: "Mar", sessions: 450 }, { month: "Apr", sessions: 520 },
+  { month: "Nov", sessions: 280 }, { month: "Dic", sessions: 320 }, { month: "Ene", sessions: 410 },
+  { month: "Feb", sessions: 380 }, { month: "Mar", sessions: 450 }, { month: "Abr", sessions: 520 },
   { month: "May", sessions: 495 },
 ];
 
@@ -20,21 +20,21 @@ export function GlobalReports() {
   return (
     <div>
       <PageHeader
-        title="Global Reports"
-        subtitle="Platform-wide analytics and performance metrics"
+        title="Reportes Globales"
+        subtitle="Métricas de rendimiento y análisis de toda la plataforma"
         actions={
           <div className="flex gap-2">
             <button
               className="flex items-center gap-2 px-4 py-2 rounded-lg border text-sm font-medium transition-colors"
               style={{ borderColor: colors.border, color: colors.textSecondary }}
             >
-              <Download size={16} /> Export CSV
+              <Download size={16} /> Exportar CSV
             </button>
             <button
               className="flex items-center gap-2 px-4 py-2 rounded-lg border text-sm font-medium transition-colors"
               style={{ borderColor: colors.border, color: colors.textSecondary }}
             >
-              <FileText size={16} /> Export PDF
+              <FileText size={16} /> Exportar PDF
             </button>
           </div>
         }
@@ -43,29 +43,29 @@ export function GlobalReports() {
       {/* Filters */}
       <div className="bg-white rounded-xl border p-4 mb-6 flex items-center gap-4 flex-wrap" style={{ borderColor: colors.border }}>
         <div className="flex flex-col gap-1">
-          <label className="text-xs font-medium" style={{ color: colors.textSecondary }}>Date Range</label>
+          <label className="text-xs font-medium" style={{ color: colors.textSecondary }}>Rango de Fechas</label>
           <div className="flex gap-2">
             <input type="date" className="px-3 py-1.5 rounded-lg border text-sm outline-none" style={{ borderColor: colors.border }} defaultValue="2025-01-01" />
-            <span className="self-center text-xs" style={{ color: colors.textSecondary }}>to</span>
+            <span className="self-center text-xs" style={{ color: colors.textSecondary }}>a</span>
             <input type="date" className="px-3 py-1.5 rounded-lg border text-sm outline-none" style={{ borderColor: colors.border }} defaultValue="2025-05-26" />
           </div>
         </div>
         <div className="flex flex-col gap-1">
-          <label className="text-xs font-medium" style={{ color: colors.textSecondary }}>Company</label>
+          <label className="text-xs font-medium" style={{ color: colors.textSecondary }}>Empresa</label>
           <select className="px-3 py-1.5 rounded-lg border text-sm outline-none" style={{ borderColor: colors.border }}>
-            <option>All companies</option>
+            <option>Todas las empresas</option>
             <option>Minera Andina S.A.</option>
             <option>Codelco Norte</option>
             <option>Gold Field Chile</option>
           </select>
         </div>
         <div className="flex flex-col gap-1">
-          <label className="text-xs font-medium" style={{ color: colors.textSecondary }}>Category</label>
+          <label className="text-xs font-medium" style={{ color: colors.textSecondary }}>Categoría</label>
           <select className="px-3 py-1.5 rounded-lg border text-sm outline-none" style={{ borderColor: colors.border }}>
-            <option>All categories</option>
-            <option>Fire Evacuation</option>
-            <option>Energy Lockout</option>
-            <option>Confined Spaces</option>
+            <option>Todas las categorías</option>
+            <option>Evacuación de Incendios</option>
+            <option>Bloqueo de Energía</option>
+            <option>Espacios Confinados</option>
           </select>
         </div>
       </div>
@@ -73,10 +73,10 @@ export function GlobalReports() {
       {/* Summary stats */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         {[
-          { label: "Total Sessions", value: "2,855", color: colors.primary },
-          { label: "Approval Rate", value: "83.6%", color: colors.success },
-          { label: "Active Companies", value: "24", color: colors.secondary },
-          { label: "Certificates Issued", value: "1,428", color: "#8B5CF6" },
+          { label: "Sesiones Totales", value: "2,855", color: colors.primary },
+          { label: "Tasa de Aprobación", value: "83.6%", color: colors.success },
+          { label: "Empresas Activas", value: "24", color: colors.secondary },
+          { label: "Certificados Emitidos", value: "1,428", color: "#8B5CF6" },
         ].map(stat => (
           <div key={stat.label} className="bg-white rounded-xl border p-5 shadow-sm" style={{ borderColor: colors.border }}>
             <div className="text-3xl font-bold mb-1" style={{ color: stat.color }}>{stat.value}</div>
@@ -87,7 +87,7 @@ export function GlobalReports() {
 
       {/* Area Chart */}
       <Card className="mb-6">
-        <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Simulation Executions – Last 7 Months</h3>
+        <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Ejecuciones de Simulación – Últimos 7 Meses</h3>
         <ResponsiveContainer width="100%" height={220}>
           <AreaChart data={sessionData}>
             <defs>
@@ -108,7 +108,7 @@ export function GlobalReports() {
       {/* Performance table */}
       <Card>
         <div className="flex items-center justify-between mb-4">
-          <h3 className="font-semibold" style={{ color: colors.textPrimary }}>Performance by Company</h3>
+          <h3 className="font-semibold" style={{ color: colors.textPrimary }}>Rendimiento por Empresa</h3>
           <div className="flex gap-2">
             <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-medium" style={{ borderColor: colors.border, color: colors.textSecondary }}>
               <Download size={13} /> CSV
@@ -121,7 +121,7 @@ export function GlobalReports() {
         <table className="w-full text-sm">
           <thead>
             <tr style={{ borderBottom: `1px solid ${colors.border}` }}>
-              {["Company", "Sessions", "Approved", "Rejected", "Approval Rate", "Avg Attempts"].map(h => (
+              {["Empresa", "Sesiones", "Aprobados", "Rechazados", "Tasa de Aprobación", "Intentos Promedio"].map(h => (
                 <th key={h} className="pb-2 text-left text-xs font-semibold uppercase tracking-wide" style={{ color: colors.textSecondary }}>{h}</th>
               ))}
             </tr>

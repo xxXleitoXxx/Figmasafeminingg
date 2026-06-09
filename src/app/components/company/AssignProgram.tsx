@@ -4,12 +4,12 @@ import { Check, Users } from "lucide-react";
 import { Breadcrumb, PageHeader, PrimaryBtn, OutlinedBtn, Toggle, Avatar, colors, Card, ConfirmModal, Toast } from "../shared";
 
 const EMPLOYEES = [
-  { id: 1, name: "Juan Pérez", role: "Employee", email: "juan@andina.com", assigned: false },
-  { id: 2, name: "Ana Torres", role: "Employee", email: "ana@andina.com", assigned: true },
-  { id: 3, name: "Carlos Ruiz", role: "Employee", email: "carlos@andina.com", assigned: false },
-  { id: 4, name: "María López", role: "Employee", email: "maria@andina.com", assigned: false },
-  { id: 5, name: "Pedro Rojas", role: "Employee", email: "pedro@andina.com", assigned: false },
-  { id: 6, name: "Elena Torres", role: "Employee", email: "elena@andina.com", assigned: true },
+  { id: 1, name: "Juan Pérez", role: "Empleado", email: "juan@andina.com", assigned: false },
+  { id: 2, name: "Ana Torres", role: "Empleado", email: "ana@andina.com", assigned: true },
+  { id: 3, name: "Carlos Ruiz", role: "Empleado", email: "carlos@andina.com", assigned: false },
+  { id: 4, name: "María López", role: "Empleado", email: "maria@andina.com", assigned: false },
+  { id: 5, name: "Pedro Rojas", role: "Empleado", email: "pedro@andina.com", assigned: false },
+  { id: 6, name: "Elena Torres", role: "Empleado", email: "elena@andina.com", assigned: true },
 ];
 
 export function AssignProgram() {
@@ -31,26 +31,26 @@ export function AssignProgram() {
 
   const handleAssign = () => {
     setShowConfirm(false);
-    setToast(`${selected.length} employee${selected.length !== 1 ? "s" : ""} assigned successfully`);
+    setToast(`${selected.length} empleado${selected.length !== 1 ? "s" : ""} asignado${selected.length !== 1 ? "s" : ""} exitosamente`);
     setTimeout(() => { setToast(null); navigate("/company/programs"); }, 2000);
   };
 
   return (
     <div>
       <Breadcrumb items={[
-        { label: "Programs", onClick: () => navigate("/company/programs") },
-        { label: "Fire Safety & Evacuation Q2 2025", onClick: () => navigate("/company/programs") },
-        { label: "Assign Employees" }
+        { label: "Programas", onClick: () => navigate("/company/programs") },
+        { label: "Seguridad y Evacuación de Incendios Q2 2025", onClick: () => navigate("/company/programs") },
+        { label: "Asignar Empleados" }
       ]} />
 
       <PageHeader
-        title="Assign Program"
-        subtitle="Fire Safety & Evacuation Q2 2025"
+        title="Asignar Programa"
+        subtitle="Seguridad y Evacuación de Incendios Q2 2025"
       />
 
       {/* Tabs */}
       <div className="flex gap-1 mb-6 p-1 bg-white rounded-xl border w-fit" style={{ borderColor: colors.border }}>
-        {[{ key: "individual", label: "Individual Assignment" }, { key: "bulk", label: "Bulk Assignment" }].map(tab => (
+        {[{ key: "individual", label: "Asignación Individual" }, { key: "bulk", label: "Asignación Masiva" }].map(tab => (
           <button key={tab.key} onClick={() => setActiveTab(tab.key as "individual" | "bulk")}
             className="px-4 py-2 rounded-lg text-sm font-medium transition-colors"
             style={{ backgroundColor: activeTab === tab.key ? colors.primary : "transparent", color: activeTab === tab.key ? "white" : colors.textSecondary }}>
@@ -63,7 +63,7 @@ export function AssignProgram() {
         <div className="col-span-2">
           {activeTab === "individual" ? (
             <Card>
-              <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Select Employees</h3>
+              <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Seleccionar Empleados</h3>
               <div className="space-y-2">
                 {EMPLOYEES.map(emp => (
                   <div
@@ -96,7 +96,7 @@ export function AssignProgram() {
                       <p className="text-xs" style={{ color: colors.textSecondary }}>{emp.email} · {emp.role}</p>
                     </div>
                     {emp.assigned && (
-                      <span className="text-xs px-2 py-0.5 rounded-full font-medium" style={{ backgroundColor: `${colors.success}15`, color: colors.success }}>Already assigned</span>
+                      <span className="text-xs px-2 py-0.5 rounded-full font-medium" style={{ backgroundColor: `${colors.success}15`, color: colors.success }}>Ya asignado</span>
                     )}
                   </div>
                 ))}
@@ -104,19 +104,19 @@ export function AssignProgram() {
             </Card>
           ) : (
             <Card>
-              <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Bulk Assignment</h3>
+              <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Asignación Masiva</h3>
               <div className="space-y-4">
                 <Toggle
-                  label="Select all active employees not yet assigned"
+                  label="Seleccionar todos los empleados activos aún no asignados"
                   checked={selectAll}
                   onChange={handleSelectAll}
                 />
                 <div className="p-4 rounded-xl" style={{ backgroundColor: colors.bg }}>
                   <p className="text-sm" style={{ color: colors.textSecondary }}>
-                    <span className="font-semibold" style={{ color: colors.textPrimary }}>{unassigned.length}</span> employees available for assignment
+                    <span className="font-semibold" style={{ color: colors.textPrimary }}>{unassigned.length}</span> empleados disponibles para asignar
                   </p>
                   <p className="text-xs mt-1" style={{ color: colors.textSecondary }}>
-                    ({EMPLOYEES.filter(e => e.assigned).length} already assigned to this program)
+                    ({EMPLOYEES.filter(e => e.assigned).length} ya asignados a este programa)
                   </p>
                 </div>
               </div>
@@ -129,15 +129,15 @@ export function AssignProgram() {
           <Card>
             <div className="flex items-center gap-2 mb-4">
               <Users size={18} style={{ color: colors.primary }} />
-              <h3 className="font-semibold" style={{ color: colors.textPrimary }}>Assignment Summary</h3>
+              <h3 className="font-semibold" style={{ color: colors.textPrimary }}>Resumen de Asignación</h3>
             </div>
 
             <div className="p-4 rounded-xl mb-4" style={{ backgroundColor: colors.bg }}>
               <div className="text-3xl font-bold mb-1" style={{ color: colors.primary }}>{selected.length}</div>
               <p className="text-sm" style={{ color: colors.textSecondary }}>
-                employee{selected.length !== 1 ? "s" : ""} will be assigned to
+                empleado{selected.length !== 1 ? "s" : ""} será{selected.length !== 1 ? "n" : ""} asignado{selected.length !== 1 ? "s" : ""} a
               </p>
-              <p className="text-sm font-semibold mt-1" style={{ color: colors.textPrimary }}>Fire Safety & Evacuation Q2 2025</p>
+              <p className="text-sm font-semibold mt-1" style={{ color: colors.textPrimary }}>Seguridad y Evacuación de Incendios Q2 2025</p>
             </div>
 
             {selected.length > 0 && (
@@ -160,10 +160,10 @@ export function AssignProgram() {
               disabled={selected.length === 0}
               className="w-full justify-center"
             >
-              Assign {selected.length > 0 ? `(${selected.length})` : ""}
+              Asignar {selected.length > 0 ? `(${selected.length})` : ""}
             </PrimaryBtn>
             <OutlinedBtn onClick={() => navigate("/company/programs")} className="w-full justify-center mt-2">
-              Cancel
+              Cancelar
             </OutlinedBtn>
           </Card>
         </div>
@@ -171,11 +171,11 @@ export function AssignProgram() {
 
       {showConfirm && (
         <ConfirmModal
-          title="Confirm Assignment"
-          description={`Are you sure you want to assign ${selected.length} employee${selected.length !== 1 ? "s" : ""} to this program? They will receive a notification.`}
+          title="Confirmar Asignación"
+          description={`¿Estás seguro de que quieres asignar ${selected.length} empleado${selected.length !== 1 ? "s" : ""} a este programa? Recibirán una notificación.`}
           onConfirm={handleAssign}
           onCancel={() => setShowConfirm(false)}
-          confirmLabel="Assign Employees"
+          confirmLabel="Asignar Empleados"
         />
       )}
 

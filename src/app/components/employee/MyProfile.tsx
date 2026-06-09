@@ -16,25 +16,25 @@ export function MyProfile() {
 
   const handleSaveProfile = () => {
     setToastType("success");
-    setToast("Profile updated successfully");
+    setToast("Perfil actualizado exitosamente");
     setTimeout(() => setToast(null), 3000);
   };
 
   const handleChangePassword = () => {
     if (passwords.new !== passwords.confirm) {
       setToastType("error");
-      setToast("Passwords don't match");
+      setToast("Las contraseñas no coinciden");
       setTimeout(() => setToast(null), 3000);
       return;
     }
     if (passwords.new.length < 8) {
       setToastType("error");
-      setToast("Password must be at least 8 characters");
+      setToast("La contraseña debe tener al menos 8 caracteres");
       setTimeout(() => setToast(null), 3000);
       return;
     }
     setToastType("success");
-    setToast("Password updated successfully");
+    setToast("Contraseña actualizada exitosamente");
     setPasswords({ current: "", new: "", confirm: "" });
     setTimeout(() => setToast(null), 3000);
   };
@@ -44,13 +44,13 @@ export function MyProfile() {
 
   return (
     <div>
-      <PageHeader title="My Profile" subtitle="Manage your account information and security settings" />
+      <PageHeader title="Mi Perfil" subtitle="Gestiona la información de tu cuenta y ajustes de seguridad" />
 
       <div className="grid grid-cols-2 gap-6">
         {/* Left: Profile Info */}
         <div className="space-y-6">
           <Card>
-            <SectionLabel>Personal Information</SectionLabel>
+            <SectionLabel>Información Personal</SectionLabel>
 
             {/* Avatar */}
             <div className="flex justify-center mb-6">
@@ -72,30 +72,30 @@ export function MyProfile() {
 
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
-                <InputField label="First Name" value={form.firstName} onChange={v => setForm(p => ({ ...p, firstName: v }))} />
-                <InputField label="Last Name" value={form.lastName} onChange={v => setForm(p => ({ ...p, lastName: v }))} />
+                <InputField label="Nombre" value={form.firstName} onChange={v => setForm(p => ({ ...p, firstName: v }))} />
+                <InputField label="Apellido" value={form.lastName} onChange={v => setForm(p => ({ ...p, lastName: v }))} />
               </div>
-              <InputField label="Email" type="email" value={form.email} onChange={() => {}} readOnly hint="Email cannot be changed. Contact your administrator." />
+              <InputField label="Email" type="email" value={form.email} onChange={() => {}} readOnly hint="El email no se puede cambiar. Contacta a tu administrador." />
               <div>
-                <label className="block text-sm font-medium mb-1" style={{ color: colors.textPrimary }}>Company</label>
+                <label className="block text-sm font-medium mb-1" style={{ color: colors.textPrimary }}>Empresa</label>
                 <div className="w-full px-3 py-2.5 rounded-lg border text-sm" style={{ borderColor: colors.border, backgroundColor: colors.bg, color: colors.textSecondary }}>
                   {user?.company ?? "—"}
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1" style={{ color: colors.textPrimary }}>Role</label>
+                <label className="block text-sm font-medium mb-1" style={{ color: colors.textPrimary }}>Rol</label>
                 <div className="flex">
                   <span
                     className="text-xs font-medium px-3 py-1.5 rounded-lg"
                     style={{ backgroundColor: `${colors.primary}15`, color: colors.primary }}
                   >
-                    {user?.role === "employee" ? "Employee / Trainee" :
-                     user?.role === "company" ? "Company Administrator" :
-                     user?.role === "coordinator" ? "Coordinator" : "System Administrator"}
+                    {user?.role === "employee" ? "Empleado / Aprendiz" :
+                     user?.role === "company" ? "Administrador de Empresa" :
+                     user?.role === "coordinator" ? "Coordinador" : "Administrador del Sistema"}
                   </span>
                 </div>
               </div>
-              <PrimaryBtn onClick={handleSaveProfile} className="w-full justify-center">Save Profile</PrimaryBtn>
+              <PrimaryBtn onClick={handleSaveProfile} className="w-full justify-center">Guardar Perfil</PrimaryBtn>
             </div>
           </Card>
         </div>
@@ -103,26 +103,26 @@ export function MyProfile() {
         {/* Right: Security */}
         <div>
           <Card>
-            <SectionLabel>Security</SectionLabel>
-            <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Change Password</h3>
+            <SectionLabel>Seguridad</SectionLabel>
+            <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Cambiar Contraseña</h3>
             <div className="space-y-4">
               <InputField
-                label="Current Password"
+                label="Contraseña Actual"
                 type="password"
                 value={passwords.current}
                 onChange={v => setPasswords(p => ({ ...p, current: v }))}
                 placeholder="••••••••"
               />
               <InputField
-                label="New Password"
+                label="Nueva Contraseña"
                 type="password"
                 value={passwords.new}
                 onChange={v => setPasswords(p => ({ ...p, new: v }))}
                 placeholder="••••••••"
-                hint="Minimum 8 characters"
+                hint="Mínimo 8 caracteres"
               />
               <InputField
-                label="Confirm New Password"
+                label="Confirmar Nueva Contraseña"
                 type="password"
                 value={passwords.confirm}
                 onChange={v => setPasswords(p => ({ ...p, confirm: v }))}
@@ -133,18 +133,18 @@ export function MyProfile() {
                 className="w-full py-2.5 rounded-lg text-white font-semibold text-sm transition-all"
                 style={{ backgroundColor: colors.secondary }}
               >
-                Update Password
+                Actualizar Contraseña
               </button>
             </div>
           </Card>
 
           <Card className="mt-4">
-            <h3 className="font-semibold mb-3" style={{ color: colors.textPrimary }}>Account Activity</h3>
+            <h3 className="font-semibold mb-3" style={{ color: colors.textPrimary }}>Actividad de la Cuenta</h3>
             <div className="space-y-2 text-sm">
               {[
-                { label: "Last login", value: "Today, 09:23 AM" },
-                { label: "Account created", value: "January 10, 2024" },
-                { label: "Sessions this month", value: "12" },
+                { label: "Último inicio de sesión", value: "Hoy, 09:23 AM" },
+                { label: "Cuenta creada", value: "10 de enero, 2024" },
+                { label: "Sesiones este mes", value: "12" },
               ].map(item => (
                 <div key={item.label} className="flex justify-between py-1.5 border-b" style={{ borderColor: colors.border }}>
                   <span style={{ color: colors.textSecondary }}>{item.label}</span>

@@ -30,7 +30,7 @@ export function CompanyDetail() {
   const [toast, setToast] = useState<string | null>(null);
 
   const handleSave = () => {
-    setToast(isNew ? "Company created successfully" : "Changes saved successfully");
+    setToast(isNew ? "Empresa creada exitosamente" : "Cambios guardados exitosamente");
     setTimeout(() => { setToast(null); navigate("/admin/companies"); }, 2000);
   };
 
@@ -43,17 +43,17 @@ export function CompanyDetail() {
   return (
     <div>
       <Breadcrumb items={[
-        { label: "Companies", onClick: () => navigate("/admin/companies") },
-        { label: isNew ? "New Company" : "Minera Andina S.A." }
+        { label: "Empresas", onClick: () => navigate("/admin/companies") },
+        { label: isNew ? "Nueva Empresa" : "Minera Andina S.A." }
       ]} />
 
       <PageHeader
-        title={isNew ? "New Company" : "Minera Andina S.A."}
-        subtitle={isNew ? "Register a new company on the platform" : "Edit company details and manage administrators"}
+        title={isNew ? "Nueva Empresa" : "Minera Andina S.A."}
+        subtitle={isNew ? "Registrar una nueva empresa en la plataforma" : "Editar detalles de la empresa y gestionar administradores"}
         actions={
           <>
-            <OutlinedBtn onClick={() => navigate("/admin/companies")}>Cancel</OutlinedBtn>
-            <PrimaryBtn onClick={handleSave}>Save Changes</PrimaryBtn>
+            <OutlinedBtn onClick={() => navigate("/admin/companies")}>Cancelar</OutlinedBtn>
+            <PrimaryBtn onClick={handleSave}>Guardar Cambios</PrimaryBtn>
           </>
         }
       />
@@ -62,24 +62,24 @@ export function CompanyDetail() {
         {/* Left: Form */}
         <div className="col-span-2 space-y-6">
           <Card>
-            <SectionLabel>Company Information</SectionLabel>
+            <SectionLabel>Información de la Empresa</SectionLabel>
             <div className="grid grid-cols-2 gap-5">
               <InputField label="Razón Social" value={form.razonSocial} onChange={v => setForm(p => ({ ...p, razonSocial: v }))} required />
-              <InputField label="Trade Name" value={form.tradeName} onChange={v => setForm(p => ({ ...p, tradeName: v }))} required />
-              <InputField label="CUIT" value={form.cuit} onChange={v => setForm(p => ({ ...p, cuit: v }))} required placeholder="XX-XXXXXXXX-X" />
-              <InputField label="Contact Email" type="email" value={form.email} onChange={v => setForm(p => ({ ...p, email: v }))} required />
+              <InputField label="Nombre Comercial" value={form.tradeName} onChange={v => setForm(p => ({ ...p, tradeName: v }))} required />
+              <InputField label="RUT/CUIT" value={form.cuit} onChange={v => setForm(p => ({ ...p, cuit: v }))} required placeholder="XX-XXXXXXXX-X" />
+              <InputField label="Email de Contacto" type="email" value={form.email} onChange={v => setForm(p => ({ ...p, email: v }))} required />
             </div>
             <div className="mt-5">
-              <Toggle label="Active company" checked={form.status} onChange={v => setForm(p => ({ ...p, status: v }))} />
+              <Toggle label="Empresa activa" checked={form.status} onChange={v => setForm(p => ({ ...p, status: v }))} />
             </div>
           </Card>
 
           {/* Administrators */}
           <Card>
-            <SectionLabel>Assigned Company Administrators</SectionLabel>
+            <SectionLabel>Administradores Asignados</SectionLabel>
             <div className="space-y-3 mb-4">
               {admins.length === 0 ? (
-                <p className="text-sm py-4 text-center" style={{ color: colors.textSecondary }}>No administrators assigned yet</p>
+                <p className="text-sm py-4 text-center" style={{ color: colors.textSecondary }}>No hay administradores asignados aún</p>
               ) : admins.map(a => (
                 <div
                   key={a.id}
@@ -102,7 +102,7 @@ export function CompanyDetail() {
 
             {showAdminSearch ? (
               <div className="border rounded-xl p-4" style={{ borderColor: colors.border }}>
-                <p className="text-sm font-medium mb-3" style={{ color: colors.textPrimary }}>Select Administrator</p>
+                <p className="text-sm font-medium mb-3" style={{ color: colors.textPrimary }}>Seleccionar Administrador</p>
                 {AVAILABLE_ADMINS.filter(a => !admins.find(ax => ax.id === a.id)).map(a => (
                   <button
                     key={a.id}
@@ -116,7 +116,7 @@ export function CompanyDetail() {
                     </div>
                   </button>
                 ))}
-                <button onClick={() => setShowAdminSearch(false)} className="text-xs mt-2" style={{ color: colors.textSecondary }}>Cancel</button>
+                <button onClick={() => setShowAdminSearch(false)} className="text-xs mt-2" style={{ color: colors.textSecondary }}>Cancelar</button>
               </div>
             ) : (
               <button
@@ -124,7 +124,7 @@ export function CompanyDetail() {
                 className="flex items-center gap-2 px-4 py-2 rounded-lg border text-sm font-medium transition-colors"
                 style={{ borderColor: colors.secondary, color: colors.secondary }}
               >
-                <UserPlus size={16} /> Assign Administrator
+                <UserPlus size={16} /> Asignar Administrador
               </button>
             )}
           </Card>
@@ -133,41 +133,41 @@ export function CompanyDetail() {
         {/* Right: Summary */}
         <div className="space-y-4">
           <Card>
-            <h3 className="font-semibold text-sm mb-4" style={{ color: colors.textPrimary }}>Company Summary</h3>
+            <h3 className="font-semibold text-sm mb-4" style={{ color: colors.textPrimary }}>Resumen de la Empresa</h3>
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">
-                <span style={{ color: colors.textSecondary }}>Created</span>
-                <span style={{ color: colors.textPrimary }}>Jan 15, 2024</span>
+                <span style={{ color: colors.textSecondary }}>Creada</span>
+                <span style={{ color: colors.textPrimary }}>15 Ene, 2024</span>
               </div>
               <div className="flex justify-between">
-                <span style={{ color: colors.textSecondary }}>Last modified</span>
-                <span style={{ color: colors.textPrimary }}>May 20, 2025</span>
+                <span style={{ color: colors.textSecondary }}>Última modificación</span>
+                <span style={{ color: colors.textPrimary }}>20 May, 2025</span>
               </div>
               <div className="flex justify-between">
-                <span style={{ color: colors.textSecondary }}>Active users</span>
+                <span style={{ color: colors.textSecondary }}>Usuarios activos</span>
                 <span className="font-semibold" style={{ color: colors.textPrimary }}>84</span>
               </div>
               <div className="flex justify-between">
-                <span style={{ color: colors.textSecondary }}>Active programs</span>
+                <span style={{ color: colors.textSecondary }}>Programas activos</span>
                 <span className="font-semibold" style={{ color: colors.textPrimary }}>7</span>
               </div>
               <div className="flex justify-between">
-                <span style={{ color: colors.textSecondary }}>Total VR sessions</span>
+                <span style={{ color: colors.textSecondary }}>Sesiones VR totales</span>
                 <span className="font-semibold" style={{ color: colors.textPrimary }}>1,245</span>
               </div>
               <div className="flex justify-between">
-                <span style={{ color: colors.textSecondary }}>Certificates issued</span>
+                <span style={{ color: colors.textSecondary }}>Certificados emitidos</span>
                 <span className="font-semibold" style={{ color: colors.textPrimary }}>312</span>
               </div>
             </div>
           </Card>
 
           <Card>
-            <h3 className="font-semibold text-sm mb-3" style={{ color: colors.textPrimary }}>Status</h3>
+            <h3 className="font-semibold text-sm mb-3" style={{ color: colors.textPrimary }}>Estado</h3>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full" style={{ backgroundColor: form.status ? colors.success : colors.error }} />
               <span className="text-sm font-medium" style={{ color: form.status ? colors.success : colors.error }}>
-                {form.status ? "Active" : "Inactive"}
+                {form.status ? "Activo" : "Inactivo"}
               </span>
             </div>
           </Card>

@@ -20,6 +20,18 @@ export const colors = {
 
 // ─── Status Badge ────────────────────────────────────────────────────────────
 const statusStyles: Record<string, { bg: string; text: string }> = {
+  activo: { bg: "#DCFCE7", text: "#166534" },
+  inactivo: { bg: "#F1F5F9", text: "#475569" },
+  pendiente: { bg: "#FEF9C3", text: "#854D0E" },
+  aprobado: { bg: "#D1FAE5", text: "#065F46" },
+  rechazado: { bg: "#FEE2E2", text: "#991B1B" },
+  borrador: { bg: "#F1F5F9", text: "#475569" },
+  cerrado: { bg: "#E5E7EB", text: "#374151" },
+  completado: { bg: "#D1FAE5", text: "#065F46" },
+  fallido: { bg: "#FEE2E2", text: "#991B1B" },
+  "en progreso": { bg: "#DBEAFE", text: "#1E40AF" },
+  "no iniciado": { bg: "#F1F5F9", text: "#475569" },
+  bloqueado: { bg: "#E5E7EB", text: "#6B7280" },
   active: { bg: "#DCFCE7", text: "#166534" },
   inactive: { bg: "#F1F5F9", text: "#475569" },
   pending: { bg: "#FEF9C3", text: "#854D0E" },

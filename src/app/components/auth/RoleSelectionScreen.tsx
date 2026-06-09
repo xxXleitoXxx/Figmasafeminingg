@@ -14,26 +14,26 @@ const ROLE_INFO: Record<
   { title: string; desc: string; icon: any; path: string }
 > = {
   admin: {
-    title: "System Administrator",
-    desc: "Manage companies, users, and global catalog",
+    title: "Administrador del Sistema",
+    desc: "Gestiona empresas, usuarios y el catálogo global",
     icon: Shield,
     path: "/admin",
   },
   company: {
-    title: "Company Administrator",
-    desc: "Manage your company's roles and programs",
+    title: "Administrador de Empresa",
+    desc: "Gestiona los roles y programas de tu empresa",
     icon: Building2,
     path: "/company",
   },
   coordinator: {
-    title: "Coordinator",
-    desc: "Assign training and monitor exams",
+    title: "Coordinador",
+    desc: "Asigna entrenamientos y supervisa exámenes",
     icon: Users,
     path: "/coordinator",
   },
   employee: {
-    title: "Trainee / Employee",
-    desc: "Access your training and certificates",
+    title: "Empleado / Pasante",
+    desc: "Accede a tus entrenamientos y certificados",
     icon: GraduationCap,
     path: "/employee",
   },
@@ -78,14 +78,14 @@ export function RoleSelectionScreen() {
             <span className="text-3xl">⛏</span>
           </div>
           <h1 className="text-3xl font-bold text-white">
-            Select Your Role
+            Selecciona tu Rol
           </h1>
           <p
             className="text-sm mt-2"
             style={{ color: "rgba(255,255,255,0.7)" }}
           >
-            Welcome back, {user.name}. Please select a role to
-            continue.
+            Bienvenido de nuevo, {user.name}. Por favor, selecciona un rol para
+            continuar.
           </p>
         </div>
 
@@ -146,7 +146,7 @@ export function RoleSelectionScreen() {
             onClick={handleLogout}
             className="text-sm text-white/60 hover:text-white transition-colors"
           >
-            Sign out
+            Cerrar sesión
           </button>
         </div>
       </div>

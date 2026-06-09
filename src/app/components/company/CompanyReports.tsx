@@ -13,15 +13,15 @@ const employeeData = [
 ];
 
 const programData = [
-  { name: "Fire Safety Q2 2025", enrolled: 24, completed: 18, rate: 75 },
-  { name: "LOTO Procedures", enrolled: 18, completed: 10, rate: 56 },
-  { name: "Confined Space Entry", enrolled: 12, completed: 11, rate: 92 },
-  { name: "PPE Basics Onboarding", enrolled: 31, completed: 31, rate: 100 },
+  { name: "Seguridad de Incendios Q2 2025", enrolled: 24, completed: 18, rate: 75 },
+  { name: "Procedimientos LOTO", enrolled: 18, completed: 10, rate: 56 },
+  { name: "Entrada a Espacio Confinado", enrolled: 12, completed: 11, rate: 92 },
+  { name: "Inducción Básica de EPP", enrolled: 31, completed: 31, rate: 100 },
 ];
 
 const simTrend = [
-  { month: "Jan", sessions: 45 }, { month: "Feb", sessions: 52 }, { month: "Mar", sessions: 61 },
-  { month: "Apr", sessions: 48 }, { month: "May", sessions: 77 },
+  { month: "Ene", sessions: 45 }, { month: "Feb", sessions: 52 }, { month: "Mar", sessions: 61 },
+  { month: "Abr", sessions: 48 }, { month: "May", sessions: 77 },
 ];
 
 export function CompanyReports() {
@@ -30,15 +30,15 @@ export function CompanyReports() {
   return (
     <div>
       <PageHeader
-        title="Company Reports"
-        subtitle="Training analytics for Minera Andina S.A."
+        title="Reportes de Empresa"
+        subtitle="Análisis de entrenamiento para Minera Andina S.A."
         actions={
           <div className="flex gap-2">
             <button className="flex items-center gap-2 px-4 py-2 rounded-lg border text-sm font-medium" style={{ borderColor: colors.border, color: colors.textSecondary }}>
-              <Download size={16} /> Export CSV
+              <Download size={16} /> Exportar CSV
             </button>
             <button className="flex items-center gap-2 px-4 py-2 rounded-lg border text-sm font-medium" style={{ borderColor: colors.border, color: colors.textSecondary }}>
-              <FileText size={16} /> Export PDF
+              <FileText size={16} /> Exportar PDF
             </button>
           </div>
         }
@@ -47,10 +47,10 @@ export function CompanyReports() {
       {/* Summary */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         {[
-          { label: "Total Sessions", value: "245", color: colors.primary },
-          { label: "Approval Rate", value: "81%", color: colors.success },
-          { label: "Active Programs", value: "7", color: colors.secondary },
-          { label: "Certificates Issued", value: "89", color: "#8B5CF6" },
+          { label: "Sesiones Totales", value: "245", color: colors.primary },
+          { label: "Tasa de Aprobación", value: "81%", color: colors.success },
+          { label: "Programas Activos", value: "7", color: colors.secondary },
+          { label: "Certificados Emitidos", value: "89", color: "#8B5CF6" },
         ].map(s => (
           <div key={s.label} className="bg-white rounded-xl border p-5 shadow-sm" style={{ borderColor: colors.border }}>
             <div className="text-3xl font-bold mb-1" style={{ color: s.color }}>{s.value}</div>
@@ -61,7 +61,7 @@ export function CompanyReports() {
 
       {/* Trend chart */}
       <Card className="mb-6">
-        <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Monthly Session Trend</h3>
+        <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Tendencia Mensual de Sesiones</h3>
         <ResponsiveContainer width="100%" height={180}>
           <LineChart data={simTrend}>
             <CartesianGrid strokeDasharray="3 3" stroke={colors.border} />
@@ -75,7 +75,7 @@ export function CompanyReports() {
 
       {/* Tabs */}
       <div className="flex gap-1 mb-5 p-1 bg-white rounded-xl border w-fit" style={{ borderColor: colors.border }}>
-        {[{ key: "employee", label: "By Employee" }, { key: "program", label: "By Program" }, { key: "simulation", label: "By Simulation" }].map(tab => (
+        {[{ key: "employee", label: "Por Empleado" }, { key: "program", label: "Por Programa" }, { key: "simulation", label: "Por Simulación" }].map(tab => (
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
@@ -92,7 +92,7 @@ export function CompanyReports() {
           <table className="w-full text-sm">
             <thead>
               <tr style={{ borderBottom: `1px solid ${colors.border}` }}>
-                {["Employee", "Sessions", "Approved", "Approval Rate", "Certificates"].map(h => (
+                {["Empleado", "Sesiones", "Aprobados", "Tasa de Aprobación", "Certificados"].map(h => (
                   <th key={h} className="pb-2 text-left text-xs font-semibold uppercase tracking-wide" style={{ color: colors.textSecondary }}>{h}</th>
                 ))}
               </tr>
@@ -129,7 +129,7 @@ export function CompanyReports() {
           <table className="w-full text-sm">
             <thead>
               <tr style={{ borderBottom: `1px solid ${colors.border}` }}>
-                {["Program", "Enrolled", "Completed", "Completion Rate"].map(h => (
+                {["Programa", "Inscritos", "Completados", "Tasa de Finalización"].map(h => (
                   <th key={h} className="pb-2 text-left text-xs font-semibold uppercase tracking-wide" style={{ color: colors.textSecondary }}>{h}</th>
                 ))}
               </tr>
@@ -155,13 +155,13 @@ export function CompanyReports() {
 
       {activeTab === "simulation" && (
         <Card>
-          <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Sessions by Simulation</h3>
+          <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Sesiones por Simulación</h3>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={[
-              { name: "Fire Evac", sessions: 98 },
-              { name: "Energy LOTO", sessions: 72 },
-              { name: "Confined Space", sessions: 48 },
-              { name: "Chemical Spill", sessions: 27 },
+              { name: "Evac Incendios", sessions: 98 },
+              { name: "LOTO Energía", sessions: 72 },
+              { name: "Espacio Confinado", sessions: 48 },
+              { name: "Derrame Químico", sessions: 27 },
             ]} layout="vertical" margin={{ left: 20 }}>
               <XAxis type="number" tick={{ fontSize: 11, fill: colors.textSecondary }} />
               <YAxis type="category" dataKey="name" width={100} tick={{ fontSize: 11, fill: colors.textSecondary }} />

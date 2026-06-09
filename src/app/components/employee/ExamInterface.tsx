@@ -5,47 +5,47 @@ import { colors } from "../shared";
 const EXAM_QUESTIONS = [
   {
     id: 1,
-    text: "What is the FIRST action you should take when a fire alarm sounds in an underground mine operation?",
+    text: "¿Cuál es la PRIMERA acción que debe tomar cuando suena una alarma de incendio en una operación minera subterránea?",
     options: [
-      "Continue working until a supervisor confirms",
-      "Immediately proceed to the nearest emergency exit following the evacuation plan",
-      "Call your colleague on the radio to confirm",
-      "Shut down all equipment before evacuating",
+      "Continuar trabajando hasta que un supervisor confirme",
+      "Proceder inmediatamente a la salida de emergencia más cercana siguiendo el plan de evacuación",
+      "Llamar a su colega por radio para confirmar",
+      "Apagar todos los equipos antes de evacuar",
     ],
     correct: 1,
   },
   {
     id: 2,
-    text: "Which of the following is the correct order for using a fire extinguisher (PASS technique)?",
+    text: "¿Cuál de los siguientes es el orden correcto para usar un extintor de incendios (técnica PASS)?",
     options: [
-      "Push, Aim, Squeeze, Sweep",
-      "Pull, Aim, Shoot, Squeeze",
-      "Pull, Aim, Squeeze, Sweep",
-      "Push, Angle, Squeeze, Spread",
+      "Empujar, Apuntar, Apretar, Barrer",
+      "Tirar, Apuntar, Disparar, Apretar",
+      "Tirar, Apuntar, Apretar, Barrer",
+      "Empujar, Inclinar, Apretar, Esparcir",
     ],
     correct: 2,
   },
   {
     id: 3,
-    text: "In an underground mine, what does the 'muster point' refer to?",
+    text: "En una mina subterránea, ¿a qué se refiere el 'punto de encuentro'?",
     options: [
-      "The nearest fire extinguisher location",
-      "The supervisor's office",
-      "A designated safe assembly area for emergencies",
-      "The underground ventilation control room",
+      "La ubicación del extintor más cercano",
+      "La oficina del supervisor",
+      "Un área de reunión segura designada para emergencias",
+      "La sala de control de ventilación subterránea",
     ],
     correct: 2,
   },
   {
     id: 4,
-    text: "What minimum distance should be maintained between evacuation personnel and a smoke-filled area?",
-    options: ["5 meters", "10 meters", "20 meters", "As far as possible per the evacuation route"],
+    text: "¿Qué distancia mínima debe mantenerse entre el personal de evacuación y un área llena de humo?",
+    options: ["5 metros", "10 metros", "20 metros", "Lo más lejos posible según la ruta de evacuación"],
     correct: 3,
   },
   {
     id: 5,
-    text: "During a fire emergency, which type of extinguisher should NOT be used on electrical fires?",
-    options: ["CO2 extinguisher", "Dry powder extinguisher", "Water extinguisher", "Halotron extinguisher"],
+    text: "Durante una emergencia de incendio, ¿qué tipo de extintor NO debe usarse en incendios eléctricos?",
+    options: ["Extintor de CO2", "Extintor de polvo seco", "Extintor de agua", "Extintor Halotron"],
     correct: 2,
   },
 ];
@@ -89,11 +89,11 @@ export function ExamInterface() {
         <div className="max-w-3xl mx-auto">
           <div className="flex items-center justify-between mb-3">
             <div>
-              <h2 className="font-semibold" style={{ color: colors.textPrimary }}>Fire Safety Theory Exam</h2>
-              <p className="text-xs" style={{ color: colors.textSecondary }}>Started: {new Date().toLocaleTimeString()}</p>
+              <h2 className="font-semibold" style={{ color: colors.textPrimary }}>Examen Teórico de Seguridad contra Incendios</h2>
+              <p className="text-xs" style={{ color: colors.textSecondary }}>Iniciado: {new Date().toLocaleTimeString()}</p>
             </div>
             <div className="text-sm font-semibold" style={{ color: colors.textSecondary }}>
-              Question <span style={{ color: colors.primary, fontSize: 18, fontWeight: 700 }}>{current + 1}</span> of {total}
+              Pregunta <span style={{ color: colors.primary, fontSize: 18, fontWeight: 700 }}>{current + 1}</span> de {total}
             </div>
           </div>
           {/* Progress bar */}
@@ -128,7 +128,7 @@ export function ExamInterface() {
                 className="text-sm font-semibold px-3 py-1 rounded-full text-white"
                 style={{ backgroundColor: colors.primary }}
               >
-                Question {current + 1}
+                Pregunta {current + 1}
               </span>
             </div>
             <p className="text-lg font-semibold leading-relaxed" style={{ color: colors.textPrimary }}>
@@ -168,7 +168,7 @@ export function ExamInterface() {
           {/* Warning */}
           {showWarning && (
             <div className="mt-4 p-3 rounded-xl text-sm font-medium text-white text-center" style={{ backgroundColor: colors.error }}>
-              Please answer all questions before submitting.
+              Por favor, responde todas las preguntas antes de enviar.
             </div>
           )}
         </div>
@@ -183,11 +183,11 @@ export function ExamInterface() {
             className="px-6 py-2.5 rounded-xl border text-sm font-medium transition-all disabled:opacity-40"
             style={{ borderColor: colors.border, color: colors.textSecondary }}
           >
-            ← Previous
+            ← Anterior
           </button>
 
           <span className="text-xs" style={{ color: colors.textSecondary }}>
-            {Object.keys(answers).length} of {total} answered
+            {Object.keys(answers).length} de {total} respondidas
           </span>
 
           {isLast ? (
@@ -196,7 +196,7 @@ export function ExamInterface() {
               className="px-6 py-2.5 rounded-xl text-sm font-semibold text-white transition-all"
               style={{ backgroundColor: colors.secondary }}
             >
-              Submit Exam →
+              Enviar Examen →
             </button>
           ) : (
             <button
@@ -204,7 +204,7 @@ export function ExamInterface() {
               className="px-6 py-2.5 rounded-xl text-sm font-semibold text-white"
               style={{ backgroundColor: colors.primary }}
             >
-              Next →
+              Siguiente →
             </button>
           )}
         </div>

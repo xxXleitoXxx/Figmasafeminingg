@@ -50,7 +50,7 @@ export function LoginScreen() {
             <span className="text-3xl">⛏</span>
           </div>
           <h1 className="text-3xl font-bold text-white">SafeMining VR</h1>
-          <p className="text-sm mt-1" style={{ color: "rgba(255,255,255,0.6)" }}>Mining Safety Training Platform</p>
+          <p className="text-sm mt-1" style={{ color: "rgba(255,255,255,0.6)" }}>Plataforma de Entrenamiento de Seguridad Minera</p>
         </div>
 
         {/* Card */}
@@ -58,12 +58,12 @@ export function LoginScreen() {
           className="bg-white rounded-2xl p-8 shadow-2xl"
           style={{ boxShadow: "0 0 40px rgba(249,115,22,0.2), 0 20px 60px rgba(0,0,0,0.3)" }}
         >
-          <h2 className="text-xl font-semibold mb-6" style={{ color: colors.textPrimary }}>Sign in to your account</h2>
+          <h2 className="text-xl font-semibold mb-6" style={{ color: colors.textPrimary }}>Inicia sesión en tu cuenta</h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium mb-1" style={{ color: colors.textPrimary }}>Email address</label>
+              <label className="block text-sm font-medium mb-1" style={{ color: colors.textPrimary }}>Correo electrónico</label>
               <input
                 type="email"
                 value={email}
@@ -77,7 +77,7 @@ export function LoginScreen() {
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium mb-1" style={{ color: colors.textPrimary }}>Password</label>
+              <label className="block text-sm font-medium mb-1" style={{ color: colors.textPrimary }}>Contraseña</label>
               <div className="relative">
                 <input
                   type={showPass ? "text" : "password"}
@@ -112,9 +112,9 @@ export function LoginScreen() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                   </svg>
-                  Signing in...
+                  Iniciando sesión...
                 </span>
-              ) : "Sign In"}
+              ) : "Iniciar Sesión"}
             </button>
           </form>
 
@@ -124,13 +124,13 @@ export function LoginScreen() {
               className="text-sm font-medium hover:underline"
               style={{ color: colors.primary }}
             >
-              Forgot your password?
+              ¿Olvidaste tu contraseña?
             </button>
           </div>
         </div>
 
         <p className="text-center text-xs mt-6" style={{ color: "rgba(255,255,255,0.4)" }}>
-          © 2025 SafeMining VR. All rights reserved.
+          © 2025 SafeMining VR. Todos los derechos reservados.
         </p>
       </div>
     </div>

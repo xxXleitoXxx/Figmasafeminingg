@@ -14,44 +14,44 @@ interface NavItem {
 
 const navByRole: Record<Role, NavItem[]> = {
   admin: [
-    { label: "Dashboard", icon: <LayoutDashboard size={18} />, path: "/admin" },
-    { label: "Companies", icon: <Building2 size={18} />, path: "/admin/companies" },
-    { label: "Administrators", icon: <Users size={18} />, path: "/admin/users" },
-    { label: "Simulations", icon: <Play size={18} />, path: "/admin/simulations" },
+    { label: "Panel", icon: <LayoutDashboard size={18} />, path: "/admin" },
+    { label: "Empresas", icon: <Building2 size={18} />, path: "/admin/companies" },
+    { label: "Administradores", icon: <Users size={18} />, path: "/admin/users" },
+    { label: "Simulaciones", icon: <Play size={18} />, path: "/admin/simulations" },
     { label: "Roles", icon: <Shield size={18} />, path: "/admin/roles" },
-    { label: "Reports", icon: <BarChart2 size={18} />, path: "/admin/reports" },
-    { label: "Configuration", icon: <Settings size={18} />, path: "/admin/config" },
+    { label: "Reportes", icon: <BarChart2 size={18} />, path: "/admin/reports" },
+    { label: "Configuración", icon: <Settings size={18} />, path: "/admin/config" },
   ],
   company: [
-    { label: "Dashboard", icon: <LayoutDashboard size={18} />, path: "/company" },
-    { label: "Users", icon: <Users size={18} />, path: "/company/users" },
+    { label: "Panel", icon: <LayoutDashboard size={18} />, path: "/company" },
+    { label: "Usuarios", icon: <Users size={18} />, path: "/company/users" },
     { label: "Roles", icon: <Shield size={18} />, path: "/company/roles" },
-    { label: "Programs", icon: <Briefcase size={18} />, path: "/company/programs" },
-    { label: "Simulations", icon: <Play size={18} />, path: "/company/simulations" },
-    { label: "Reports", icon: <BarChart2 size={18} />, path: "/company/reports" },
-    { label: "My Profile", icon: <UserCircle size={18} />, path: "/company/profile" },
+    { label: "Programas", icon: <Briefcase size={18} />, path: "/company/programs" },
+    { label: "Simulaciones", icon: <Play size={18} />, path: "/company/simulations" },
+    { label: "Reportes", icon: <BarChart2 size={18} />, path: "/company/reports" },
+    { label: "Mi Perfil", icon: <UserCircle size={18} />, path: "/company/profile" },
   ],
   coordinator: [
-    { label: "Dashboard", icon: <LayoutDashboard size={18} />, path: "/coordinator" },
-    { label: "My Programs", icon: <Briefcase size={18} />, path: "/coordinator/programs" },
-    { label: "Simulations", icon: <Play size={18} />, path: "/coordinator/simulations" },
-    { label: "Employees", icon: <Users size={18} />, path: "/coordinator/employees" },
-    { label: "Exams", icon: <ClipboardList size={18} />, path: "/coordinator/exams" },
-    { label: "Reports", icon: <BarChart2 size={18} />, path: "/coordinator/reports" },
-    { label: "My Profile", icon: <UserCircle size={18} />, path: "/coordinator/profile" },
+    { label: "Panel", icon: <LayoutDashboard size={18} />, path: "/coordinator" },
+    { label: "Mis Programas", icon: <Briefcase size={18} />, path: "/coordinator/programs" },
+    { label: "Simulaciones", icon: <Play size={18} />, path: "/coordinator/simulations" },
+    { label: "Empleados", icon: <Users size={18} />, path: "/coordinator/employees" },
+    { label: "Exámenes", icon: <ClipboardList size={18} />, path: "/coordinator/exams" },
+    { label: "Reportes", icon: <BarChart2 size={18} />, path: "/coordinator/reports" },
+    { label: "Mi Perfil", icon: <UserCircle size={18} />, path: "/coordinator/profile" },
   ],
   employee: [
-    { label: "My Training", icon: <GraduationCap size={18} />, path: "/employee" },
-    { label: "My Certificates", icon: <Award size={18} />, path: "/employee/certificates" },
-    { label: "My Profile", icon: <UserCircle size={18} />, path: "/employee/profile" },
+    { label: "Mi Entrenamiento", icon: <GraduationCap size={18} />, path: "/employee" },
+    { label: "Mis Certificados", icon: <Award size={18} />, path: "/employee/certificates" },
+    { label: "Mi Perfil", icon: <UserCircle size={18} />, path: "/employee/profile" },
   ],
 };
 
 const roleLabels: Record<Role, string> = {
-  admin: "System Administrator",
-  company: "Company Admin",
-  coordinator: "Coordinator",
-  employee: "Trainee",
+  admin: "Administrador del Sistema",
+  company: "Admin Empresa",
+  coordinator: "Coordinador",
+  employee: "Empleado",
 };
 
 export function Sidebar() {
@@ -83,7 +83,7 @@ export function Sidebar() {
           </div>
           <div>
             <div className="font-bold text-sm leading-tight">SafeMining VR</div>
-            <div className="text-xs opacity-60 leading-tight">Training Platform</div>
+            <div className="text-xs opacity-60 leading-tight">Plataforma VR</div>
           </div>
         </div>
       </div>
@@ -152,7 +152,7 @@ export function Sidebar() {
             onMouseEnter={e => (e.currentTarget as HTMLButtonElement).style.color = "white"}
             onMouseLeave={e => (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.5)"}
           >
-            → Sign out
+            → Cerrar sesión
           </button>
         </div>
       </div>

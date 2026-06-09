@@ -56,25 +56,25 @@ export function ExamResults() {
               {passed ? (
                 <div className="flex items-center justify-center gap-2">
                   <CheckCircle size={22} style={{ color: colors.success }} />
-                  <span className="text-xl font-bold" style={{ color: colors.success }}>APPROVED</span>
+                  <span className="text-xl font-bold" style={{ color: colors.success }}>APROBADO</span>
                 </div>
               ) : (
                 <div className="flex items-center justify-center gap-2">
                   <XCircle size={22} style={{ color: colors.error }} />
-                  <span className="text-xl font-bold" style={{ color: colors.error }}>NOT APPROVED</span>
+                  <span className="text-xl font-bold" style={{ color: colors.error }}>NO APROBADO</span>
                 </div>
               )}
             </div>
 
             <p className="text-sm" style={{ color: colors.textSecondary }}>
               {passed
-                ? "Congratulations! You've successfully passed this exam."
-                : "You need 75% or higher to pass. Review the material and try again."}
+                ? "¡Felicidades! Has aprobado este examen exitosamente."
+                : "Necesitas un 75% o más para aprobar. Revisa el material e inténtalo de nuevo."}
             </p>
 
             {!passed && attemptsRemaining > 0 && (
               <p className="text-sm mt-2 font-medium" style={{ color: colors.secondary }}>
-                Attempts remaining: {attemptsRemaining}
+                Intentos restantes: {attemptsRemaining}
               </p>
             )}
           </div>
@@ -83,7 +83,7 @@ export function ExamResults() {
         {/* Question breakdown */}
         {questions.length > 0 && (
           <div className="bg-white rounded-2xl border shadow-sm p-6 mb-6" style={{ borderColor: colors.border }}>
-            <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Question Breakdown</h3>
+            <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Desglose de Preguntas</h3>
             <div className="space-y-4">
               {questions.map((q, i) => {
                 const selected = answers[i];
@@ -104,11 +104,11 @@ export function ExamResults() {
                       <div className="flex-1">
                         <p className="text-sm font-medium mb-2" style={{ color: colors.textPrimary }}>{q.text}</p>
                         <p className="text-xs" style={{ color: isCorrect ? colors.success : colors.error }}>
-                          Your answer: <strong>{q.options[selected] ?? "(not answered)"}</strong>
+                          Tu respuesta: <strong>{q.options[selected] ?? "(sin responder)"}</strong>
                         </p>
                         {!isCorrect && (
                           <p className="text-xs mt-1" style={{ color: colors.success }}>
-                            Correct: <strong>{q.options[q.correct]}</strong>
+                            Correcta: <strong>{q.options[q.correct]}</strong>
                           </p>
                         )}
                       </div>
@@ -127,7 +127,7 @@ export function ExamResults() {
             className="flex items-center gap-2 px-5 py-2.5 rounded-xl border font-medium text-sm"
             style={{ borderColor: colors.border, color: colors.textSecondary }}
           >
-            <ArrowLeft size={16} /> Return to Program
+            <ArrowLeft size={16} /> Volver al Programa
           </button>
           {!passed && attemptsRemaining > 0 && (
             <button
@@ -135,7 +135,7 @@ export function ExamResults() {
               className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm text-white"
               style={{ backgroundColor: colors.secondary }}
             >
-              <RotateCcw size={16} /> Retry Exam
+              <RotateCcw size={16} /> Reintentar Examen
             </button>
           )}
         </div>

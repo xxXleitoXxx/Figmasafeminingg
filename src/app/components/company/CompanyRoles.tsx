@@ -3,21 +3,21 @@ import { Plus, Pencil, Eye, X } from "lucide-react";
 import { PageHeader, PrimaryBtn, StatusBadge, colors, Card, SectionLabel } from "../shared";
 
 const STANDARD_ROLES = [
-  { id: 1, name: "Company Administrator", description: "Full company management access", permissions: 14 },
-  { id: 2, name: "Coordinator", description: "Manages programs and employees", permissions: 8 },
-  { id: 3, name: "Employee", description: "Access to assigned training content", permissions: 3 },
+  { id: 1, name: "Administrador de Empresa", description: "Acceso total a la gestión de la empresa", permissions: 14 },
+  { id: 2, name: "Coordinador", description: "Gestiona programas y empleados", permissions: 8 },
+  { id: 3, name: "Empleado", description: "Acceso al contenido de entrenamiento asignado", permissions: 3 },
 ];
 
 const CUSTOM_ROLES = [
-  { id: 10, name: "Safety Inspector", description: "View reports and export data", users: 3, status: "active" },
-  { id: 11, name: "HR Assistant", description: "Manage employee accounts only", users: 7, status: "active" },
+  { id: 10, name: "Inspector de Seguridad", description: "Ver reportes y exportar datos", users: 3, status: "activo" },
+  { id: 11, name: "Asistente RRHH", description: "Solo gestión de cuentas de empleados", users: 7, status: "activo" },
 ];
 
 const PERMISSIONS_BY_MODULE = {
-  Training: ["view_programs", "assign_programs", "create_programs"],
-  Users: ["view_users", "create_user_employee", "edit_users"],
-  Reports: ["view_reports", "export_reports"],
-  Settings: ["view_settings"],
+  Entrenamiento: ["view_programs", "assign_programs", "create_programs"],
+  Usuarios: ["view_users", "create_user_employee", "edit_users"],
+  Reportes: ["view_reports", "export_reports"],
+  Ajustes: ["view_settings"],
 };
 
 function CreateRoleModal({ onClose }: { onClose: () => void }) {
@@ -32,22 +32,22 @@ function CreateRoleModal({ onClose }: { onClose: () => void }) {
       <div className="absolute inset-0 bg-black/50" onClick={onClose} />
       <div className="relative bg-white rounded-xl shadow-2xl w-[560px] flex flex-col max-h-[80vh]">
         <div className="flex items-center justify-between px-6 py-5 border-b" style={{ borderColor: colors.border }}>
-          <h3 className="font-semibold" style={{ color: colors.textPrimary }}>New Custom Role</h3>
+          <h3 className="font-semibold" style={{ color: colors.textPrimary }}>Nuevo Rol Personalizado</h3>
           <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-gray-100"><X size={18} /></button>
         </div>
         <div className="flex-1 overflow-y-auto p-6 space-y-5">
           <div>
-            <label className="block text-sm font-medium mb-1" style={{ color: colors.textPrimary }}>Role Name *</label>
-            <input value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Senior Coordinator"
+            <label className="block text-sm font-medium mb-1" style={{ color: colors.textPrimary }}>Nombre del Rol *</label>
+            <input value={name} onChange={e => setName(e.target.value)} placeholder="ej. Coordinador Senior"
               className="w-full px-3 py-2.5 rounded-lg border text-sm outline-none" style={{ borderColor: colors.border }} />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1" style={{ color: colors.textPrimary }}>Description</label>
+            <label className="block text-sm font-medium mb-1" style={{ color: colors.textPrimary }}>Descripción</label>
             <textarea value={desc} onChange={e => setDesc(e.target.value)} rows={2}
               className="w-full px-3 py-2.5 rounded-lg border text-sm outline-none resize-none" style={{ borderColor: colors.border }} />
           </div>
           <div>
-            <SectionLabel>Permissions</SectionLabel>
+            <SectionLabel>Permisos</SectionLabel>
             <div className="grid grid-cols-2 gap-4">
               {Object.entries(PERMISSIONS_BY_MODULE).map(([module, ps]) => (
                 <div key={module}>
@@ -66,8 +66,8 @@ function CreateRoleModal({ onClose }: { onClose: () => void }) {
           </div>
         </div>
         <div className="px-6 py-4 border-t flex justify-end gap-3" style={{ borderColor: colors.border }}>
-          <button onClick={onClose} className="px-4 py-2 rounded-lg border text-sm font-medium" style={{ borderColor: colors.border, color: colors.textSecondary }}>Cancel</button>
-          <PrimaryBtn onClick={onClose}>Create Role</PrimaryBtn>
+          <button onClick={onClose} className="px-4 py-2 rounded-lg border text-sm font-medium" style={{ borderColor: colors.border, color: colors.textSecondary }}>Cancelar</button>
+          <PrimaryBtn onClick={onClose}>Crear Rol</PrimaryBtn>
         </div>
       </div>
     </div>
@@ -80,13 +80,13 @@ export function CompanyRoles() {
   return (
     <div>
       <PageHeader
-        title="Company Roles"
-        actions={<PrimaryBtn onClick={() => setShowCreate(true)}><Plus size={16} /> New Custom Role</PrimaryBtn>}
+        title="Roles de Empresa"
+        actions={<PrimaryBtn onClick={() => setShowCreate(true)}><Plus size={16} /> Nuevo Rol Personalizado</PrimaryBtn>}
       />
 
       {/* Standard Roles */}
       <div className="mb-6">
-        <h3 className="font-semibold text-base mb-4" style={{ color: colors.textPrimary }}>Standard Roles</h3>
+        <h3 className="font-semibold text-base mb-4" style={{ color: colors.textPrimary }}>Roles Estándar</h3>
         <div className="bg-white rounded-xl border shadow-sm overflow-hidden" style={{ borderColor: colors.border }}>
           {STANDARD_ROLES.map((role, i) => (
             <div
@@ -99,7 +99,7 @@ export function CompanyRoles() {
                 <div className="text-xs mt-0.5" style={{ color: colors.textSecondary }}>{role.description}</div>
               </div>
               <div className="flex items-center gap-5">
-                <span className="text-sm" style={{ color: colors.textSecondary }}>{role.permissions} permissions</span>
+                <span className="text-sm" style={{ color: colors.textSecondary }}>{role.permissions} permisos</span>
                 <button className="flex items-center gap-1.5 p-1.5 rounded-lg hover:bg-gray-100 transition-colors" style={{ color: colors.textSecondary }}>
                   <Eye size={15} />
                 </button>
@@ -111,11 +111,11 @@ export function CompanyRoles() {
 
       {/* Custom Roles */}
       <div>
-        <h3 className="font-semibold text-base mb-4" style={{ color: colors.textPrimary }}>Custom Roles</h3>
+        <h3 className="font-semibold text-base mb-4" style={{ color: colors.textPrimary }}>Roles Personalizados</h3>
         {CUSTOM_ROLES.length === 0 ? (
           <Card className="text-center py-8">
-            <p className="text-sm" style={{ color: colors.textSecondary }}>No custom roles created yet.</p>
-            <PrimaryBtn onClick={() => setShowCreate(true)} className="mx-auto mt-3"><Plus size={16} /> Create First Role</PrimaryBtn>
+            <p className="text-sm" style={{ color: colors.textSecondary }}>Aún no se han creado roles personalizados.</p>
+            <PrimaryBtn onClick={() => setShowCreate(true)} className="mx-auto mt-3"><Plus size={16} /> Crear Primer Rol</PrimaryBtn>
           </Card>
         ) : (
           <div className="grid grid-cols-2 gap-4">
@@ -129,18 +129,18 @@ export function CompanyRoles() {
                   <StatusBadge status={role.status} />
                 </div>
                 <div className="text-sm mb-4" style={{ color: colors.textSecondary }}>
-                  <span className="font-semibold" style={{ color: colors.textPrimary }}>{role.users}</span> users assigned
+                  <span className="font-semibold" style={{ color: colors.textPrimary }}>{role.users}</span> usuarios asignados
                 </div>
                 <div className="flex gap-2">
                   <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-medium" style={{ borderColor: colors.border, color: colors.textSecondary }}>
-                    <Pencil size={12} /> Edit
+                    <Pencil size={12} /> Editar
                   </button>
                   <button
                     className="px-3 py-1.5 rounded-lg border text-xs font-medium"
                     style={{ borderColor: role.users > 0 ? colors.border : colors.error, color: role.users > 0 ? colors.textSecondary : colors.error }}
-                    title={role.users > 0 ? `Cannot deactivate: ${role.users} users assigned` : "Deactivate role"}
+                    title={role.users > 0 ? `No se puede desactivar: ${role.users} usuarios asignados` : "Desactivar rol"}
                   >
-                    {role.users > 0 ? `${role.users} active users` : "Deactivate"}
+                    {role.users > 0 ? `${role.users} usuarios activos` : "Desactivar"}
                   </button>
                 </div>
               </Card>

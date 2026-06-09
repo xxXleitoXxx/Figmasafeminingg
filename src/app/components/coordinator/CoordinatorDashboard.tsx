@@ -4,16 +4,16 @@ import { PageHeader, StatCard, StatusBadge, ProgressBar, colors, Card, Avatar } 
 import { useAuth } from "../../context/AuthContext";
 
 const MY_PROGRAMS = [
-  { id: 1, name: "Fire Safety & Evacuation Q2 2025", status: "active", completion: 78, enrolled: 24 },
-  { id: 2, name: "LOTO Procedures – Level 2", status: "active", completion: 54, enrolled: 18 },
-  { id: 3, name: "Confined Space Entry Protocol", status: "active", completion: 91, enrolled: 12 },
+  { id: 1, name: "Seguridad y Evacuación de Incendios Q2 2025", status: "activo", completion: 78, enrolled: 24 },
+  { id: 2, name: "Procedimientos LOTO – Nivel 2", status: "activo", completion: 54, enrolled: 18 },
+  { id: 3, name: "Protocolo de Entrada a Espacio Confinado", status: "activo", completion: 91, enrolled: 12 },
 ];
 
 const ATTENTION_NEEDED = [
-  { name: "María López", issue: "Failed exam 3 times", program: "LOTO Procedures", urgency: "high" },
-  { name: "Carlos Ruiz", issue: "Not started yet", program: "Fire Safety Q2", urgency: "medium" },
-  { name: "Pedro Rojas", issue: "3 days until deadline", program: "Confined Space", urgency: "high" },
-  { name: "Elena Torres", issue: "5 days until deadline", program: "Fire Safety Q2", urgency: "medium" },
+  { name: "María López", issue: "Falló examen 3 veces", program: "Procedimientos LOTO", urgency: "high" },
+  { name: "Carlos Ruiz", issue: "Aún no ha comenzado", program: "Seguridad Incendios Q2", urgency: "medium" },
+  { name: "Pedro Rojas", issue: "3 días para fecha límite", program: "Espacio Confinado", urgency: "high" },
+  { name: "Elena Torres", issue: "5 días para fecha límite", program: "Seguridad Incendios Q2", urgency: "medium" },
 ];
 
 export function CoordinatorDashboard() {
@@ -22,22 +22,22 @@ export function CoordinatorDashboard() {
 
   return (
     <div>
-      <PageHeader title={`Welcome, ${user?.name}`} subtitle="Your active programs and employee status at a glance" />
+      <PageHeader title={`Bienvenido, ${user?.name}`} subtitle="Tus programas activos y estado de empleados en un vistazo" />
 
       <div className="grid grid-cols-4 gap-5 mb-8">
-        <StatCard label="My Programs" value="3" icon={<Briefcase size={22} />} />
-        <StatCard label="Total Employees" value="54" icon={<Users size={22} />} color={colors.secondary} />
-        <StatCard label="Avg Completion" value="74%" icon={<TrendingUp size={22} />} trend={{ value: "+6% this month", up: true }} />
-        <StatCard label="Certificates Issued" value="89" icon={<Award size={22} />} trend={{ value: "+12 this month", up: true }} />
+        <StatCard label="Mis Programas" value="3" icon={<Briefcase size={22} />} />
+        <StatCard label="Total Empleados" value="54" icon={<Users size={22} />} color={colors.secondary} />
+        <StatCard label="Finalización Promedio" value="74%" icon={<TrendingUp size={22} />} trend={{ value: "+6% este mes", up: true }} />
+        <StatCard label="Certificados Emitidos" value="89" icon={<Award size={22} />} trend={{ value: "+12 este mes", up: true }} />
       </div>
 
       <div className="grid grid-cols-3 gap-5">
         {/* My Programs */}
         <Card className="col-span-2">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold" style={{ color: colors.textPrimary }}>My Programs</h3>
+            <h3 className="font-semibold" style={{ color: colors.textPrimary }}>Mis Programas</h3>
             <button onClick={() => navigate("/coordinator/programs")} className="text-sm font-medium hover:underline" style={{ color: colors.primary }}>
-              View all →
+              Ver todos →
             </button>
           </div>
           <div className="space-y-4">
@@ -51,7 +51,7 @@ export function CoordinatorDashboard() {
                 <div className="flex items-center justify-between mb-2">
                   <div>
                     <p className="font-medium text-sm" style={{ color: colors.textPrimary }}>{prog.name}</p>
-                    <p className="text-xs mt-0.5" style={{ color: colors.textSecondary }}>{prog.enrolled} employees enrolled</p>
+                    <p className="text-xs mt-0.5" style={{ color: colors.textSecondary }}>{prog.enrolled} empleados inscritos</p>
                   </div>
                   <div className="flex items-center gap-3">
                     <StatusBadge status={prog.status} />
@@ -68,7 +68,7 @@ export function CoordinatorDashboard() {
         <Card>
           <div className="flex items-center gap-2 mb-4">
             <AlertTriangle size={16} style={{ color: colors.secondary }} />
-            <h3 className="font-semibold" style={{ color: colors.textPrimary }}>Needs Attention</h3>
+            <h3 className="font-semibold" style={{ color: colors.textPrimary }}>Requiere Atención</h3>
           </div>
           <div className="space-y-3">
             {ATTENTION_NEEDED.map((a, i) => (

@@ -31,9 +31,9 @@ export function CompaniesScreen() {
   return (
     <div>
       <PageHeader
-        title="Companies"
-        subtitle={`${companies.length} total companies`}
-        actions={<PrimaryBtn onClick={() => navigate("/admin/companies/new")}><Plus size={16} /> New Company</PrimaryBtn>}
+        title="Empresas"
+        subtitle={`${companies.length} empresas en total`}
+        actions={<PrimaryBtn onClick={() => navigate("/admin/companies/new")}><Plus size={16} /> Nueva Empresa</PrimaryBtn>}
       />
 
       {/* Filters */}
@@ -41,7 +41,7 @@ export function CompaniesScreen() {
         <div className="relative flex-1 min-w-48">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: colors.textSecondary }} />
           <input
-            placeholder="Search companies..."
+            placeholder="Buscar empresas..."
             value={search}
             onChange={e => setSearch(e.target.value)}
             className="w-full pl-9 pr-4 py-2 rounded-lg border text-sm outline-none"
@@ -50,20 +50,24 @@ export function CompaniesScreen() {
         </div>
         <div className="flex items-center gap-2">
           <Filter size={14} style={{ color: colors.textSecondary }} />
-          {["all", "active", "inactive"].map(s => (
-            <button
-              key={s}
-              onClick={() => setStatusFilter(s)}
-              className="px-3 py-1.5 rounded-lg text-sm font-medium capitalize transition-colors"
-              style={{
-                backgroundColor: statusFilter === s ? colors.primary : "transparent",
-                color: statusFilter === s ? "white" : colors.textSecondary,
-                border: `1px solid ${statusFilter === s ? colors.primary : colors.border}`,
-              }}
-            >
-              {s}
-            </button>
-          ))}
+          {["todos", "activos", "inactivos"].map(s => {
+            const statusMap: Record<string, string> = { "todos": "all", "activos": "active", "inactivos": "inactive" };
+            const actualStatus = statusMap[s];
+            return (
+              <button
+                key={s}
+                onClick={() => setStatusFilter(actualStatus)}
+                className="px-3 py-1.5 rounded-lg text-sm font-medium capitalize transition-colors"
+                style={{
+                  backgroundColor: statusFilter === actualStatus ? colors.primary : "transparent",
+                  color: statusFilter === actualStatus ? "white" : colors.textSecondary,
+                  border: `1px solid ${statusFilter === actualStatus ? colors.primary : colors.border}`,
+                }}
+              >
+                {s}
+              </button>
+            )
+          })}
         </div>
       </div>
 
@@ -72,14 +76,14 @@ export function CompaniesScreen() {
         <table className="w-full text-sm">
           <thead style={{ backgroundColor: colors.bg, borderBottom: `1px solid ${colors.border}` }}>
             <tr>
-              {["Company", "CUIT", "Contact Email", "Status", "Admins", "Registration Date", "Actions"].map(h => (
+              {["Empresa", "RUT/CUIT", "Email de Contacto", "Estado", "Admins", "Fecha de Registro", "Acciones"].map(h => (
                 <th key={h} className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: colors.textSecondary }}>{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {filtered.length === 0 ? (
-              <tr><td colSpan={7}><EmptyState title="No companies found" subtitle="Try adjusting your search or filters" /></td></tr>
+              <tr><td colSpan={7}><EmptyState title="No se encontraron empresas" subtitle="Intenta ajustar tu búsqueda o filtros" /></td></tr>
             ) : filtered.map((c, i) => (
               <tr
                 key={c.id}
@@ -139,9 +143,9 @@ export function CompaniesScreen() {
 
       {/* Pagination */}
       <div className="flex items-center justify-between mt-4">
-        <span className="text-sm" style={{ color: colors.textSecondary }}>Showing {filtered.length} of {companies.length} companies</span>
+        <span className="text-sm" style={{ color: colors.textSecondary }}>Mostrando {filtered.length} de {companies.length} empresas</span>
         <div className="flex items-center gap-2">
-          <OutlinedBtn className="py-1.5 px-3 text-xs">Previous</OutlinedBtn>
+          <OutlinedBtn className="py-1.5 px-3 text-xs">Anterior</OutlinedBtn>
           <div className="flex gap-1">
             {[1, 2, 3].map(p => (
               <button
@@ -153,7 +157,7 @@ export function CompaniesScreen() {
               </button>
             ))}
           </div>
-          <OutlinedBtn className="py-1.5 px-3 text-xs">Next</OutlinedBtn>
+          <OutlinedBtn className="py-1.5 px-3 text-xs">Siguiente</OutlinedBtn>
         </div>
       </div>
     </div>

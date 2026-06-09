@@ -4,32 +4,32 @@ import { PageHeader, StatCard, StatusBadge, ProgressBar, colors, Card, Avatar } 
 import { useAuth } from "../../context/AuthContext";
 
 const programData = [
-  { name: "Fire Safety Q2", completion: 78 },
-  { name: "LOTO Training", completion: 54 },
-  { name: "Confined Spaces", completion: 91 },
-  { name: "PPE Basics", completion: 100 },
-  { name: "Chemical Safety", completion: 32 },
+  { name: "Seguridad Incendios Q2", completion: 78 },
+  { name: "Entrenamiento LOTO", completion: 54 },
+  { name: "Espacios Confinados", completion: 91 },
+  { name: "Básicos de EPP", completion: 100 },
+  { name: "Seguridad Química", completion: 32 },
 ];
 
 const failureData = [
-  { name: "Energy LOTO", rate: 28 },
-  { name: "Chemical Spill", rate: 24 },
-  { name: "Confined Entry", rate: 19 },
-  { name: "Fire Evac", rate: 13 },
-  { name: "PPE Donning", rate: 8 },
+  { name: "LOTO Energía", rate: 28 },
+  { name: "Derrame Químico", rate: 24 },
+  { name: "Entrada Confinado", rate: 19 },
+  { name: "Evac Incendios", rate: 13 },
+  { name: "Colocación EPP", rate: 8 },
 ];
 
 const recentAssignments = [
-  { name: "Juan Pérez", program: "Fire Safety Q2", date: "May 25, 2025", status: "in progress" },
-  { name: "Ana Torres", program: "LOTO Training", date: "May 24, 2025", status: "completed" },
-  { name: "Carlos Ruiz", program: "Chemical Safety", date: "May 23, 2025", status: "not started" },
-  { name: "María López", program: "Confined Spaces", date: "May 22, 2025", status: "in progress" },
+  { name: "Juan Pérez", program: "Seguridad Incendios Q2", date: "25 Mayo, 2025", status: "en progreso" },
+  { name: "Ana Torres", program: "Entrenamiento LOTO", date: "24 Mayo, 2025", status: "completado" },
+  { name: "Carlos Ruiz", program: "Seguridad Química", date: "23 Mayo, 2025", status: "no iniciado" },
+  { name: "María López", program: "Espacios Confinados", date: "22 Mayo, 2025", status: "en progreso" },
 ];
 
 const pendingActions = [
-  { name: "Roberto Silva", program: "Fire Safety Q2", daysLeft: 3 },
-  { name: "Elena Vega", program: "LOTO Training", daysLeft: 5 },
-  { name: "Pedro Rojas", program: "Chemical Safety", daysLeft: 6 },
+  { name: "Roberto Silva", program: "Seguridad Incendios Q2", daysLeft: 3 },
+  { name: "Elena Vega", program: "Entrenamiento LOTO", daysLeft: 5 },
+  { name: "Pedro Rojas", program: "Seguridad Química", daysLeft: 6 },
 ];
 
 export function CompanyDashboard() {
@@ -38,26 +38,26 @@ export function CompanyDashboard() {
   return (
     <div>
       <PageHeader
-        title={user?.company ?? "Company Dashboard"}
-        subtitle="Overview of training activities and employee progress"
+        title={user?.company ?? "Panel de Empresa"}
+        subtitle="Resumen de actividades de entrenamiento y progreso de empleados"
       />
 
       <div className="grid grid-cols-4 gap-5 mb-8">
-        <StatCard label="Active Users" value="84" icon={<Users size={22} />} trend={{ value: "+5 this month", up: true }} />
-        <StatCard label="Active Programs" value="7" icon={<Briefcase size={22} />} color={colors.secondary} />
-        <StatCard label="Completion Rate" value="72%" icon={<TrendingUp size={22} />} trend={{ value: "+8% vs last month", up: true }} />
-        <StatCard label="Certificates Issued" value="312" icon={<Award size={22} />} trend={{ value: "+28 this month", up: true }} />
+        <StatCard label="Usuarios Activos" value="84" icon={<Users size={22} />} trend={{ value: "+5 este mes", up: true }} />
+        <StatCard label="Programas Activos" value="7" icon={<Briefcase size={22} />} color={colors.secondary} />
+        <StatCard label="Tasa de Finalización" value="72%" icon={<TrendingUp size={22} />} trend={{ value: "+8% vs mes anterior", up: true }} />
+        <StatCard label="Certificados Emitidos" value="312" icon={<Award size={22} />} trend={{ value: "+28 este mes", up: true }} />
       </div>
 
       <div className="grid grid-cols-3 gap-5 mb-6">
         {/* Programs bar chart */}
         <Card className="col-span-2">
-          <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Program Completion Overview</h3>
+          <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Resumen de Finalización de Programas</h3>
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={programData} layout="vertical" margin={{ left: 20 }}>
               <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 10, fill: colors.textSecondary }} />
               <YAxis type="category" dataKey="name" width={110} tick={{ fontSize: 10, fill: colors.textSecondary }} />
-              <Tooltip formatter={(v) => [`${v}%`, "Completion"]} contentStyle={{ backgroundColor: "white", border: `1px solid ${colors.border}`, borderRadius: 8 }} />
+              <Tooltip formatter={(v) => [`${v}%`, "Finalización"]} contentStyle={{ backgroundColor: "white", border: `1px solid ${colors.border}`, borderRadius: 8 }} />
               <Bar dataKey="completion" fill={colors.primary} radius={[0, 4, 4, 0]} />
             </BarChart>
           </ResponsiveContainer>
@@ -65,8 +65,8 @@ export function CompanyDashboard() {
 
         {/* Pending actions */}
         <Card>
-          <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Pending Actions</h3>
-          <p className="text-xs mb-3" style={{ color: colors.textSecondary }}>Employees with expiring deadlines</p>
+          <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Acciones Pendientes</h3>
+          <p className="text-xs mb-3" style={{ color: colors.textSecondary }}>Empleados con fechas límite próximas</p>
           <div className="space-y-3">
             {pendingActions.map((p, i) => (
               <div key={i} className="flex items-center justify-between p-2.5 rounded-lg" style={{ backgroundColor: colors.bg }}>
@@ -81,7 +81,7 @@ export function CompanyDashboard() {
                   className="text-xs font-semibold px-2 py-0.5 rounded-full text-white"
                   style={{ backgroundColor: p.daysLeft <= 3 ? colors.error : colors.secondary }}
                 >
-                  {p.daysLeft}d left
+                  {p.daysLeft}d rest
                 </span>
               </div>
             ))}
@@ -92,7 +92,7 @@ export function CompanyDashboard() {
       <div className="grid grid-cols-3 gap-5">
         {/* Failure rate */}
         <Card>
-          <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Simulation Failure Rate</h3>
+          <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Tasa de Fallos en Simulaciones</h3>
           <div className="space-y-3">
             {failureData.map((f, i) => (
               <div key={i}>
@@ -108,11 +108,11 @@ export function CompanyDashboard() {
 
         {/* Recent assignments */}
         <Card className="col-span-2">
-          <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Recent Assignments</h3>
+          <h3 className="font-semibold mb-4" style={{ color: colors.textPrimary }}>Asignaciones Recientes</h3>
           <table className="w-full text-sm">
             <thead>
               <tr style={{ borderBottom: `1px solid ${colors.border}` }}>
-                {["Employee", "Program", "Assigned", "Status"].map(h => (
+                {["Empleado", "Programa", "Asignado", "Estado"].map(h => (
                   <th key={h} className="pb-2 text-left text-xs font-semibold uppercase" style={{ color: colors.textSecondary }}>{h}</th>
                 ))}
               </tr>

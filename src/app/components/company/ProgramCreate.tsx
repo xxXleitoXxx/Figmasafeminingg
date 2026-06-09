@@ -334,7 +334,7 @@ export function ProgramCreate() {
                       >
                         {"category" in item
                           ? `${item.category} · ${item.duration}`
-                          : `${item.questions} questions`}
+                          : `${item.questions} preguntas`}
                       </p>
                     </div>
                     <button
@@ -370,13 +370,13 @@ export function ProgramCreate() {
           </Card>
 
           <Card>
-            <SectionLabel>Program Structure</SectionLabel>
+            <SectionLabel>Estructura del Programa</SectionLabel>
             {content.length === 0 ? (
               <p
                 className="text-sm text-center py-8"
                 style={{ color: colors.textSecondary }}
               >
-                Add content from the left panel
+                Añadir contenido desde el panel izquierdo
               </p>
             ) : (
               <div className="space-y-3">
@@ -455,7 +455,7 @@ export function ProgramCreate() {
                             color: colors.textSecondary,
                           }}
                         >
-                          Max attempts:
+                          Intentos máx:
                         </span>
                         <input
                           type="number"
@@ -485,10 +485,10 @@ export function ProgramCreate() {
       {/* Step 2: Settings */}
       {step === 2 && (
         <Card className="max-w-2xl">
-          <SectionLabel>Program Settings</SectionLabel>
+          <SectionLabel>Ajustes del Programa</SectionLabel>
           <div className="space-y-5">
             <SelectField
-              label="Assigned Coordinator"
+              label="Coordinador Asignado"
               value={settings.coordinators[0]}
               onChange={(v) =>
                 setSettings((p) => ({
@@ -501,14 +501,14 @@ export function ProgramCreate() {
               )}
             />
             <Toggle
-              label="Assign to all active employees immediately"
+              label="Asignar a todos los empleados activos inmediatamente"
               checked={settings.assignNow}
               onChange={(v) =>
                 setSettings((p) => ({ ...p, assignNow: v }))
               }
             />
             <Toggle
-              label="Notify employees on assignment"
+              label="Notificar a los empleados al asignar"
               checked={settings.notifyOnAssign}
               onChange={(v) =>
                 setSettings((p) => ({
@@ -518,7 +518,7 @@ export function ProgramCreate() {
               }
             />
             <Toggle
-              label="Send expiry warning notification"
+              label="Enviar notificación de advertencia de caducidad"
               checked={settings.notifyOnExpiry}
               onChange={(v) =>
                 setSettings((p) => ({
@@ -534,7 +534,7 @@ export function ProgramCreate() {
       {/* Step 3: Review */}
       {step === 3 && (
         <Card className="max-w-2xl">
-          <SectionLabel>Review & Confirm</SectionLabel>
+          <SectionLabel>Revisar y Confirmar</SectionLabel>
           <div className="space-y-5">
             <div
               className="p-4 rounded-lg"
@@ -544,19 +544,19 @@ export function ProgramCreate() {
                 className="text-xs font-semibold uppercase tracking-wide mb-2"
                 style={{ color: colors.textSecondary }}
               >
-                Basic Info
+                Info Básica
               </p>
               <p
                 className="font-semibold"
                 style={{ color: colors.textPrimary }}
               >
-                {basicInfo.name || "(no name)"}
+                {basicInfo.name || "(sin nombre)"}
               </p>
               <p
                 className="text-sm mt-1"
                 style={{ color: colors.textSecondary }}
               >
-                {basicInfo.description || "(no description)"}
+                {basicInfo.description || "(sin descripción)"}
               </p>
               {basicInfo.startDate && (
                 <p
@@ -564,7 +564,7 @@ export function ProgramCreate() {
                   style={{ color: colors.textSecondary }}
                 >
                   {basicInfo.startDate} →{" "}
-                  {basicInfo.endDate || "No end date"}
+                  {basicInfo.endDate || "Sin fecha de fin"}
                 </p>
               )}
             </div>
@@ -576,7 +576,7 @@ export function ProgramCreate() {
                 className="text-xs font-semibold uppercase tracking-wide mb-2"
                 style={{ color: colors.textSecondary }}
               >
-                Content ({content.length} items)
+                Contenido ({content.length} elementos)
               </p>
               {content.map((c) => (
                 <div
@@ -605,7 +605,7 @@ export function ProgramCreate() {
                 className="text-xs font-semibold uppercase tracking-wide mb-2"
                 style={{ color: colors.textSecondary }}
               >
-                Coordinator
+                Coordinador
               </p>
               <p
                 className="text-sm"
@@ -616,10 +616,10 @@ export function ProgramCreate() {
             </div>
             <div className="flex gap-3">
               <OutlinedBtn onClick={() => handleSave(false)}>
-                Save as Draft
+                Guardar como Borrador
               </OutlinedBtn>
               <PrimaryBtn onClick={() => handleSave(true)}>
-                Activate Program
+                Activar Programa
               </PrimaryBtn>
             </div>
           </div>
@@ -635,11 +635,11 @@ export function ProgramCreate() {
               : setStep((s) => s - 1)
           }
         >
-          {step === 0 ? "Cancel" : "← Back"}
+          {step === 0 ? "Cancelar" : "← Atrás"}
         </OutlinedBtn>
         {step < 3 && (
           <PrimaryBtn onClick={() => setStep((s) => s + 1)}>
-            Next <ChevronRight size={16} />
+            Siguiente <ChevronRight size={16} />
           </PrimaryBtn>
         )}
       </div>

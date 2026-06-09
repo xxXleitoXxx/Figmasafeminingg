@@ -4,11 +4,11 @@ import { useAuth } from "../../context/AuthContext";
 import { colors, Avatar } from "../shared";
 
 const NOTIFICATIONS = [
-  { id: 1, text: "New employee registered: Ana Torres", time: "5 min ago", read: false },
-  { id: 2, text: "Program 'Fire Safety 2025' expires in 7 days", time: "1 hour ago", read: false },
-  { id: 3, text: "Juan Pérez completed VR Simulation", time: "2 hours ago", read: true },
-  { id: 4, text: "Certificate issued for Laura García", time: "Yesterday", read: true },
-  { id: 5, text: "System backup completed successfully", time: "Yesterday", read: true },
+  { id: 1, text: "Nueva empleada registrada: Ana Torres", time: "Hace 5 min", read: false },
+  { id: 2, text: "Programa 'Seguridad contra Incendios 2025' expira en 7 días", time: "Hace 1 hora", read: false },
+  { id: 3, text: "Juan Pérez completó la Simulación VR", time: "Hace 2 horas", read: true },
+  { id: 4, text: "Certificado emitido para Laura García", time: "Ayer", read: true },
+  { id: 5, text: "Copia de seguridad del sistema completada con éxito", time: "Ayer", read: true },
 ];
 
 interface HeaderProps {
@@ -33,7 +33,7 @@ export function Header({ title }: HeaderProps) {
         <div className="relative hidden md:flex items-center">
           <Search size={14} className="absolute left-3" style={{ color: colors.textSecondary }} />
           <input
-            placeholder="Search..."
+            placeholder="Buscar..."
             className="pl-9 pr-4 py-1.5 rounded-lg text-sm border outline-none w-56"
             style={{ borderColor: colors.border, backgroundColor: colors.bg, color: colors.textPrimary }}
           />
@@ -67,12 +67,12 @@ export function Header({ title }: HeaderProps) {
                 style={{ borderColor: colors.border }}
               >
                 <div className="px-4 py-3 border-b flex items-center justify-between" style={{ borderColor: colors.border }}>
-                  <span className="font-semibold text-sm" style={{ color: colors.textPrimary }}>Notifications</span>
+                  <span className="font-semibold text-sm" style={{ color: colors.textPrimary }}>Notificaciones</span>
                   <span
                     className="text-xs px-2 py-0.5 rounded-full text-white"
                     style={{ backgroundColor: colors.secondary }}
                   >
-                    {unread} new
+                    {unread} nuevas
                   </span>
                 </div>
                 <div className="divide-y divide-gray-100">
@@ -94,7 +94,7 @@ export function Header({ title }: HeaderProps) {
                   ))}
                 </div>
                 <div className="px-4 py-2 text-center border-t" style={{ borderColor: colors.border }}>
-                  <button className="text-xs font-medium" style={{ color: colors.primary }}>View all notifications</button>
+                  <button className="text-xs font-medium" style={{ color: colors.primary }}>Ver todas las notificaciones</button>
                 </div>
               </div>
             </>

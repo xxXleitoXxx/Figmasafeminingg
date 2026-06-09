@@ -27,19 +27,19 @@ function UserDrawer({ user, onClose, onSave }: DrawerProps) {
       <div className="absolute right-0 top-0 bottom-0 w-[480px] bg-white shadow-2xl flex flex-col">
         <div className="flex items-center justify-between px-6 py-5 border-b" style={{ borderColor: colors.border }}>
           <h3 className="font-semibold text-base" style={{ color: colors.textPrimary }}>
-            {user ? "Edit Administrator" : "New Administrator"}
+            {user ? "Editar Administrador" : "Nuevo Administrador"}
           </h3>
           <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-gray-100"><X size={18} /></button>
         </div>
 
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
           <div className="grid grid-cols-2 gap-4">
-            <InputField label="First Name" value={form.firstName} onChange={v => setForm(p => ({ ...p, firstName: v }))} required />
-            <InputField label="Last Name" value={form.lastName} onChange={v => setForm(p => ({ ...p, lastName: v }))} required />
+            <InputField label="Nombre" value={form.firstName} onChange={v => setForm(p => ({ ...p, firstName: v }))} required />
+            <InputField label="Apellido" value={form.lastName} onChange={v => setForm(p => ({ ...p, lastName: v }))} required />
           </div>
-          <InputField label="Email" type="email" value={form.email} onChange={v => setForm(p => ({ ...p, email: v }))} required />
+          <InputField label="Correo Electrónico" type="email" value={form.email} onChange={v => setForm(p => ({ ...p, email: v }))} required />
           <SelectField
-            label="Assigned Company"
+            label="Empresa Asignada"
             value={form.company}
             onChange={v => setForm(p => ({ ...p, company: v }))}
             options={[
@@ -50,12 +50,12 @@ function UserDrawer({ user, onClose, onSave }: DrawerProps) {
               { label: "Anglo American Chile", value: "Anglo American Chile" },
             ]}
           />
-          <Toggle label="Active account" checked={form.status} onChange={v => setForm(p => ({ ...p, status: v }))} />
+          <Toggle label="Cuenta activa" checked={form.status} onChange={v => setForm(p => ({ ...p, status: v }))} />
         </div>
 
         <div className="px-6 py-4 border-t flex justify-end gap-3" style={{ borderColor: colors.border }}>
-          <OutlinedBtn onClick={onClose}>Cancel</OutlinedBtn>
-          <PrimaryBtn onClick={onSave}>Save Administrator</PrimaryBtn>
+          <OutlinedBtn onClick={onClose}>Cancelar</OutlinedBtn>
+          <PrimaryBtn onClick={onSave}>Guardar Administrador</PrimaryBtn>
         </div>
       </div>
     </div>
@@ -84,46 +84,50 @@ export function AdminUsersScreen() {
   return (
     <div>
       <PageHeader
-        title="Company Administrators"
-        subtitle={`${users.length} administrators registered`}
-        actions={<PrimaryBtn onClick={() => { setEditUser(null); setShowDrawer(true); }}><Plus size={16} /> New Admin</PrimaryBtn>}
+        title="Administradores de Empresa"
+        subtitle={`${users.length} administradores registrados`}
+        actions={<PrimaryBtn onClick={() => { setEditUser(null); setShowDrawer(true); }}><Plus size={16} /> Nuevo Admin</PrimaryBtn>}
       />
 
       <div className="bg-white rounded-xl border p-4 mb-5 flex items-center gap-3" style={{ borderColor: colors.border }}>
         <div className="relative flex-1">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: colors.textSecondary }} />
           <input
-            placeholder="Search by name or email..."
+            placeholder="Buscar por nombre o correo..."
             value={search}
             onChange={e => setSearch(e.target.value)}
             className="w-full pl-9 pr-4 py-2 rounded-lg border text-sm outline-none"
             style={{ borderColor: colors.border }}
           />
         </div>
-        {["all", "active", "inactive"].map(s => (
-          <button
-            key={s}
-            onClick={() => setStatusFilter(s)}
-            className="px-3 py-1.5 rounded-lg text-sm font-medium capitalize"
-            style={{ backgroundColor: statusFilter === s ? colors.primary : "transparent", color: statusFilter === s ? "white" : colors.textSecondary, border: `1px solid ${statusFilter === s ? colors.primary : colors.border}` }}
-          >
-            {s}
-          </button>
-        ))}
+        {["todos", "activos", "inactivos"].map(s => {
+          const statusMap: Record<string, string> = { "todos": "all", "activos": "active", "inactivos": "inactive" };
+          const actualStatus = statusMap[s];
+          return (
+            <button
+              key={s}
+              onClick={() => setStatusFilter(actualStatus)}
+              className="px-3 py-1.5 rounded-lg text-sm font-medium capitalize"
+              style={{ backgroundColor: statusFilter === actualStatus ? colors.primary : "transparent", color: statusFilter === actualStatus ? "white" : colors.textSecondary, border: `1px solid ${statusFilter === actualStatus ? colors.primary : colors.border}` }}
+            >
+              {s}
+            </button>
+          )
+        })}
       </div>
 
       <div className="bg-white rounded-xl border overflow-hidden shadow-sm" style={{ borderColor: colors.border }}>
         <table className="w-full text-sm">
           <thead style={{ backgroundColor: colors.bg, borderBottom: `1px solid ${colors.border}` }}>
             <tr>
-              {["Name", "Email", "Company", "Status", "Created At", "Actions"].map(h => (
+              {["Nombre", "Correo Electrónico", "Empresa", "Estado", "Creado", "Acciones"].map(h => (
                 <th key={h} className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: colors.textSecondary }}>{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {filtered.length === 0 ? (
-              <tr><td colSpan={6}><EmptyState title="No administrators found" /></td></tr>
+              <tr><td colSpan={6}><EmptyState title="No se encontraron administradores" /></td></tr>
             ) : filtered.map((u, i) => (
               <tr
                 key={u.id}

@@ -37,21 +37,21 @@ export function Configuration() {
   const [showCertPreview, setShowCertPreview] = useState(false);
 
   const save = () => {
-    setToast("Configuration saved successfully");
+    setToast("Configuración guardada exitosamente");
     setTimeout(() => setToast(null), 3000);
   };
 
   const tabs = [
     { key: "general", label: "General" },
-    { key: "security", label: "Security" },
-    { key: "certificate", label: "Certificate Template" },
+    { key: "security", label: "Seguridad" },
+    { key: "certificate", label: "Plantilla de Certificado" },
   ];
 
   return (
     <div>
       <PageHeader
-        title="System Configuration"
-        subtitle="Manage platform-wide settings and parameters"
+        title="Configuración del Sistema"
+        subtitle="Gestionar ajustes y parámetros globales de la plataforma"
       />
 
       <div
@@ -85,7 +85,7 @@ export function Configuration() {
             className="font-semibold mb-5"
             style={{ color: colors.textPrimary }}
           >
-            General Settings
+            Ajustes Generales
           </h3>
           <div className="space-y-4">
             <div>
@@ -93,7 +93,7 @@ export function Configuration() {
                 className="block text-sm font-medium mb-1"
                 style={{ color: colors.textPrimary }}
               >
-                Platform Name
+                Nombre de la Plataforma
               </label>
               <input
                 value={general.platformName}
@@ -112,7 +112,7 @@ export function Configuration() {
                 className="block text-sm font-medium mb-1"
                 style={{ color: colors.textPrimary }}
               >
-                Issuing Entity
+                Entidad Emisora
               </label>
               <input
                 value={general.issuingEntity}
@@ -141,7 +141,7 @@ export function Configuration() {
                   className="text-sm"
                   style={{ color: colors.textSecondary }}
                 >
-                  Click to upload logo (PNG, SVG)
+                  Haz clic para subir logo (PNG, SVG)
                 </p>
               </div>
             </div>
@@ -150,7 +150,7 @@ export function Configuration() {
                 className="block text-sm font-medium mb-1"
                 style={{ color: colors.textPrimary }}
               >
-                Contact Email
+                Email de Contacto
               </label>
               <input
                 type="email"
@@ -166,7 +166,7 @@ export function Configuration() {
               />
             </div>
             <PrimaryBtn onClick={save}>
-              Save General Settings
+              Guardar Ajustes Generales
             </PrimaryBtn>
           </div>
         </Card>
@@ -178,27 +178,27 @@ export function Configuration() {
             className="font-semibold mb-5"
             style={{ color: colors.textPrimary }}
           >
-            Security Settings
+            Ajustes de Seguridad
           </h3>
           <div className="space-y-5">
             {[
               {
-                label: "JWT Expiry – Web (hours)",
+                label: "Caducidad JWT – Web (horas)",
                 key: "jwtWeb",
                 value: security.jwtWeb,
               },
               {
-                label: "JWT Expiry – VR Headset (hours)",
+                label: "Caducidad JWT – Visor VR (horas)",
                 key: "jwtVR",
                 value: security.jwtVR,
               },
               {
-                label: "Max Login Attempts Before Block",
+                label: "Intentos Máx. de Login Antes de Bloqueo",
                 key: "loginAttempts",
                 value: security.loginAttempts,
               },
               {
-                label: "Block Duration (minutes)",
+                label: "Duración del Bloqueo (minutos)",
                 key: "blockDuration",
                 value: security.blockDuration,
               },
@@ -225,19 +225,19 @@ export function Configuration() {
               </div>
             ))}
             <PrimaryBtn onClick={save}>
-              Save Security Settings
+              Guardar Ajustes de Seguridad
             </PrimaryBtn>
           </div>
         </Card>
       )}
-a
+
       {activeTab === "certificate" && (
         <Card className="max-w-2xl">
           <h3
             className="font-semibold mb-5"
             style={{ color: colors.textPrimary }}
           >
-            Certificate Template
+            Plantilla de Certificado
           </h3>
           <div className="space-y-5">
             <div>
@@ -245,10 +245,10 @@ a
                 className="block text-sm font-medium mb-1"
                 style={{ color: colors.textPrimary }}
               >
-                Introduction Text
+                Texto de Introducción
               </label>
               <textarea
-                defaultValue="This is to certify that the following individual has successfully completed the required VR safety training."
+                defaultValue="Por la presente se certifica que la siguiente persona ha completado con éxito el entrenamiento de seguridad en RV requerido."
                 rows={3}
                 className="w-full px-3 py-2.5 rounded-lg border text-sm outline-none resize-none"
                 style={{ borderColor: colors.border }}
@@ -259,16 +259,16 @@ a
                 className="block text-sm font-medium mb-2"
                 style={{ color: colors.textPrimary }}
               >
-                Visible Fields
+                Campos Visibles
               </label>
               <div className="grid grid-cols-2 gap-2">
                 {[
-                  "Employee Name",
-                  "Company",
-                  "Program Name",
-                  "Completion Date",
-                  "Score",
-                  "Coordinator",
+                  "Nombre del Empleado",
+                  "Empresa",
+                  "Nombre del Programa",
+                  "Fecha de Finalización",
+                  "Puntaje",
+                  "Coordinador",
                 ].map((f) => (
                   <label
                     key={f}
@@ -295,10 +295,10 @@ a
                 className="block text-sm font-medium mb-1"
                 style={{ color: colors.textPrimary }}
               >
-                Digital Signature Text
+                Texto de Firma Digital
               </label>
               <input
-                defaultValue="Carlos Mendoza – Chief Safety Officer"
+                defaultValue="Carlos Mendoza – Jefe de Seguridad"
                 className="w-full px-3 py-2.5 rounded-lg border text-sm outline-none"
                 style={{ borderColor: colors.border }}
               />
@@ -308,17 +308,17 @@ a
                 className="block text-sm font-medium mb-1"
                 style={{ color: colors.textPrimary }}
               >
-                Footer Text
+                Texto de Pie de Página
               </label>
               <input
-                defaultValue="SafeMining VR | Mining Safety Training Platform | www.safemining.vr"
+                defaultValue="SafeMining VR | Plataforma de Entrenamiento de Seguridad Minera | www.safemining.vr"
                 className="w-full px-3 py-2.5 rounded-lg border text-sm outline-none"
                 style={{ borderColor: colors.border }}
               />
             </div>
             <div className="flex gap-3">
               <PrimaryBtn onClick={save}>
-                Save Template
+                Guardar Plantilla
               </PrimaryBtn>
               <button
                 onClick={() => setShowCertPreview(true)}
@@ -328,7 +328,7 @@ a
                   color: colors.textSecondary,
                 }}
               >
-                Preview Certificate
+                Previsualizar Certificado
               </button>
             </div>
           </div>
@@ -361,15 +361,15 @@ a
                   className="text-2xl font-bold mb-2"
                   style={{ color: colors.primary }}
                 >
-                  Certificate of Completion
+                  Certificado de Finalización
                 </h2>
                 <p
                   className="text-sm mb-6"
                   style={{ color: colors.textSecondary }}
                 >
-                  This is to certify that the following
-                  individual has successfully completed the
-                  required VR safety training.
+                  Por la presente se certifica que la siguiente
+                  persona ha completado con éxito el
+                  entrenamiento de seguridad en RV requerido.
                 </p>
                 <div
                   className="text-2xl font-bold mb-1"
@@ -388,13 +388,13 @@ a
                     className="font-semibold text-lg"
                     style={{ color: colors.textPrimary }}
                   >
-                    Fire Safety & Evacuation – Q2 2025
+                    Seguridad y Evacuación de Incendios – Q2 2025
                   </div>
                   <div
                     className="text-sm mt-1"
                     style={{ color: colors.textSecondary }}
                   >
-                    Completed: May 26, 2025 • Score: 92/100
+                    Completado: 26 de Mayo, 2025 • Puntaje: 92/100
                   </div>
                 </div>
                 <div className="flex justify-between items-end">
@@ -412,7 +412,7 @@ a
                       className="text-xs"
                       style={{ color: colors.textSecondary }}
                     >
-                      Chief Safety Officer
+                      Jefe de Seguridad
                     </div>
                   </div>
                   <div className="text-right">
@@ -428,8 +428,8 @@ a
                   className="text-xs mt-4"
                   style={{ color: colors.textSecondary }}
                 >
-                  SafeMining VR | Mining Safety Training
-                  Platform
+                  SafeMining VR | Plataforma de Entrenamiento de
+                  Seguridad Minera
                 </div>
               </div>
             </div>

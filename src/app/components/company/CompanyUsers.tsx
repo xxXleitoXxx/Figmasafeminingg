@@ -3,17 +3,20 @@ import { Plus, Pencil, ToggleLeft, X, Search } from "lucide-react";
 import { PageHeader, PrimaryBtn, StatusBadge, OutlinedBtn, InputField, SelectField, Toggle, Avatar, colors, EmptyState } from "../shared";
 
 const USERS = [
-  { id: 1, name: "Juan Pérez", email: "juan@andina.com", role: "Employee", status: "active", regDate: "2024-01-10", lastActivity: "May 25, 2025" },
-  { id: 2, name: "Ana Torres", email: "ana@andina.com", role: "Employee", status: "active", regDate: "2024-02-15", lastActivity: "May 24, 2025" },
-  { id: 3, name: "Roberto Silva", email: "roberto@andina.com", role: "Coordinator", status: "active", regDate: "2024-01-20", lastActivity: "May 26, 2025" },
-  { id: 4, name: "María López", email: "maria@andina.com", role: "Employee", status: "active", regDate: "2024-03-01", lastActivity: "May 23, 2025" },
-  { id: 5, name: "Carlos Ruiz", email: "carlos@andina.com", role: "Employee", status: "inactive", regDate: "2024-04-10", lastActivity: "Apr 15, 2025" },
-  { id: 6, name: "Elena Vega", email: "elena@andina.com", role: "Coordinator", status: "active", regDate: "2023-11-05", lastActivity: "May 26, 2025" },
+  { id: 1, name: "Juan Pérez", email: "juan@andina.com", role: "Empleado", status: "activo", regDate: "2024-01-10", lastActivity: "25 Mayo, 2025" },
+  { id: 2, name: "Ana Torres", email: "ana@andina.com", role: "Empleado", status: "activo", regDate: "2024-02-15", lastActivity: "24 Mayo, 2025" },
+  { id: 3, name: "Roberto Silva", email: "roberto@andina.com", role: "Coordinador", status: "activo", regDate: "2024-01-20", lastActivity: "26 Mayo, 2025" },
+  { id: 4, name: "María López", email: "maria@andina.com", role: "Empleado", status: "activo", regDate: "2024-03-01", lastActivity: "23 Mayo, 2025" },
+  { id: 5, name: "Carlos Ruiz", email: "carlos@andina.com", role: "Empleado", status: "inactivo", regDate: "2024-04-10", lastActivity: "15 Abr, 2025" },
+  { id: 6, name: "Elena Vega", email: "elena@andina.com", role: "Coordinador", status: "activo", regDate: "2023-11-05", lastActivity: "26 Mayo, 2025" },
 ];
 
 const ROLE_COLORS: Record<string, string> = {
+  Empleado: "#3B82F6",
   Employee: "#3B82F6",
+  Coordinador: "#8B5CF6",
   Coordinator: "#8B5CF6",
+  "Admin Empresa": "#F97316",
   "Company Admin": "#F97316",
 };
 
@@ -31,31 +34,31 @@ function UserDrawer({ user, onClose, onSave }: { user?: typeof USERS[0] | null; 
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
       <div className="absolute right-0 top-0 bottom-0 w-[480px] bg-white shadow-2xl flex flex-col">
         <div className="flex items-center justify-between px-6 py-5 border-b" style={{ borderColor: colors.border }}>
-          <h3 className="font-semibold text-base" style={{ color: colors.textPrimary }}>{user ? "Edit User" : "New User"}</h3>
+          <h3 className="font-semibold text-base" style={{ color: colors.textPrimary }}>{user ? "Editar Usuario" : "Nuevo Usuario"}</h3>
           <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-gray-100"><X size={18} /></button>
         </div>
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
           <div className="grid grid-cols-2 gap-4">
-            <InputField label="First Name" value={form.firstName} onChange={v => setForm(p => ({ ...p, firstName: v }))} required />
-            <InputField label="Last Name" value={form.lastName} onChange={v => setForm(p => ({ ...p, lastName: v }))} required />
+            <InputField label="Nombre" value={form.firstName} onChange={v => setForm(p => ({ ...p, firstName: v }))} required />
+            <InputField label="Apellido" value={form.lastName} onChange={v => setForm(p => ({ ...p, lastName: v }))} required />
           </div>
           <InputField label="Email" type="email" value={form.email} onChange={v => setForm(p => ({ ...p, email: v }))} required />
           <SelectField
-            label="Role"
+            label="Rol"
             value={form.role}
             onChange={v => setForm(p => ({ ...p, role: v }))}
-            options={["Employee", "Coordinator", "Safety Inspector", "HR Assistant"].map(r => ({ label: r, value: r }))}
+            options={["Empleado", "Coordinador", "Inspector de Seguridad", "Asistente RRHH"].map(r => ({ label: r, value: r }))}
           />
-          <Toggle label="Active account" checked={form.status} onChange={v => setForm(p => ({ ...p, status: v }))} />
+          <Toggle label="Cuenta activa" checked={form.status} onChange={v => setForm(p => ({ ...p, status: v }))} />
           {!user && (
             <div className="p-3 rounded-lg text-xs" style={{ backgroundColor: "#EFF6FF", color: "#1D4ED8" }}>
-              ✉ A welcome email will be sent to this user automatically upon creation.
+              ✉ Se enviará un correo de bienvenida a este usuario automáticamente tras su creación.
             </div>
           )}
         </div>
         <div className="px-6 py-4 border-t flex justify-end gap-3" style={{ borderColor: colors.border }}>
-          <OutlinedBtn onClick={onClose}>Cancel</OutlinedBtn>
-          <PrimaryBtn onClick={onSave}>{user ? "Save Changes" : "Create User"}</PrimaryBtn>
+          <OutlinedBtn onClick={onClose}>Cancelar</OutlinedBtn>
+          <PrimaryBtn onClick={onSave}>{user ? "Guardar Cambios" : "Crear Usuario"}</PrimaryBtn>
         </div>
       </div>
     </div>
@@ -72,7 +75,7 @@ export function CompanyUsers() {
 
   const filtered = users.filter(u => {
     const matchSearch = u.name.toLowerCase().includes(search.toLowerCase()) || u.email.toLowerCase().includes(search.toLowerCase());
-    const matchTab = activeTab === "all" || (activeTab === "coordinators" && u.role === "Coordinator") || (activeTab === "employees" && u.role === "Employee");
+    const matchTab = activeTab === "all" || (activeTab === "coordinators" && (u.role === "Coordinator" || u.role === "Coordinador")) || (activeTab === "employees" && (u.role === "Employee" || u.role === "Empleado"));
     return matchSearch && matchTab;
   });
 
@@ -82,23 +85,23 @@ export function CompanyUsers() {
   return (
     <div>
       <PageHeader
-        title="Users"
-        subtitle={`${users.length} users in your company`}
+        title="Usuarios"
+        subtitle={`${users.length} usuarios en tu empresa`}
         actions={
           <div className="flex gap-2">
             {selected.length > 0 && (
               <button className="px-4 py-2 rounded-lg text-sm font-medium border" style={{ borderColor: colors.secondary, color: colors.secondary }}>
-                Bulk Assign Role ({selected.length})
+                Asignar Rol Masivo ({selected.length})
               </button>
             )}
-            <PrimaryBtn onClick={() => { setEditUser(null); setShowDrawer(true); }}><Plus size={16} /> New User</PrimaryBtn>
+            <PrimaryBtn onClick={() => { setEditUser(null); setShowDrawer(true); }}><Plus size={16} /> Nuevo Usuario</PrimaryBtn>
           </div>
         }
       />
 
       {/* Tabs */}
       <div className="flex gap-1 mb-5 p-1 bg-white rounded-xl border w-fit" style={{ borderColor: colors.border }}>
-        {[{ key: "all", label: "All" }, { key: "coordinators", label: "Coordinators" }, { key: "employees", label: "Employees" }].map(tab => (
+        {[{ key: "all", label: "Todos" }, { key: "coordinators", label: "Coordinadores" }, { key: "employees", label: "Empleados" }].map(tab => (
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
@@ -115,7 +118,7 @@ export function CompanyUsers() {
         <div className="relative">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: colors.textSecondary }} />
           <input
-            placeholder="Search by name or email..."
+            placeholder="Buscar por nombre o email..."
             value={search}
             onChange={e => setSearch(e.target.value)}
             className="w-full pl-9 pr-4 py-2 rounded-lg border text-sm outline-none"
@@ -133,14 +136,14 @@ export function CompanyUsers() {
                   checked={selected.length === filtered.length && filtered.length > 0}
                   onChange={() => setSelected(selected.length === filtered.length ? [] : filtered.map(u => u.id))} />
               </th>
-              {["Name", "Email", "Role", "Status", "Registered", "Last Activity", "Actions"].map(h => (
+              {["Nombre", "Email", "Rol", "Estado", "Registrado", "Última Actividad", "Acciones"].map(h => (
                 <th key={h} className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: colors.textSecondary }}>{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {filtered.length === 0 ? (
-              <tr><td colSpan={8}><EmptyState title="No users found" /></td></tr>
+              <tr><td colSpan={8}><EmptyState title="No se encontraron usuarios" /></td></tr>
             ) : filtered.map((u, i) => (
               <tr
                 key={u.id}

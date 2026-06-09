@@ -2,27 +2,27 @@ import { useState } from "react";
 import { Plus, ChevronDown, ChevronUp, Pencil } from "lucide-react";
 import { PageHeader, PrimaryBtn, StatusBadge, colors, Card } from "../shared";
 
-const MODULES = ["Users", "Companies", "Simulations", "Programs", "Reports", "Configuration"];
+const MODULES = ["Usuarios", "Empresas", "Simulaciones", "Programas", "Reportes", "Configuración"];
 
 const PERMISSIONS: Record<string, string[]> = {
-  Users: ["view_users", "create_users", "edit_users", "delete_users", "assign_roles"],
-  Companies: ["view_companies", "create_companies", "edit_companies", "deactivate_companies"],
-  Simulations: ["view_simulations", "create_simulations", "edit_simulations", "manage_metrics"],
-  Programs: ["view_programs", "create_programs", "assign_programs", "close_programs"],
-  Reports: ["view_global_reports", "view_company_reports", "export_reports"],
-  Configuration: ["edit_configuration", "manage_templates", "view_audit_log"],
+  Usuarios: ["view_users", "create_users", "edit_users", "delete_users", "assign_roles"],
+  Empresas: ["view_companies", "create_companies", "edit_companies", "deactivate_companies"],
+  Simulaciones: ["view_simulations", "create_simulations", "edit_simulations", "manage_metrics"],
+  Programas: ["view_programs", "create_programs", "assign_programs", "close_programs"],
+  Reportes: ["view_global_reports", "view_company_reports", "export_reports"],
+  Configuración: ["edit_configuration", "manage_templates", "view_audit_log"],
 };
 
 const BASE_ROLES = [
-  { id: 1, name: "System Administrator", description: "Full platform access", permCount: 20, status: "active", permissions: Object.values(PERMISSIONS).flat() },
-  { id: 2, name: "Company Administrator", description: "Manages one company", permCount: 14, status: "active", permissions: ["view_users", "create_users", "edit_users", "assign_roles", "view_programs", "create_programs", "assign_programs", "close_programs", "view_company_reports", "export_reports"] },
-  { id: 3, name: "Coordinator", description: "Manages programs and employees", permCount: 8, status: "active", permissions: ["view_users", "view_programs", "assign_programs", "view_company_reports"] },
-  { id: 4, name: "Employee", description: "Access assigned training", permCount: 3, status: "active", permissions: ["view_programs"] },
+  { id: 1, name: "Administrador del Sistema", description: "Acceso total a la plataforma", permCount: 20, status: "activo", permissions: Object.values(PERMISSIONS).flat() },
+  { id: 2, name: "Administrador de Empresa", description: "Gestiona una empresa", permCount: 14, status: "activo", permissions: ["view_users", "create_users", "edit_users", "assign_roles", "view_programs", "create_programs", "assign_programs", "close_programs", "view_company_reports", "export_reports"] },
+  { id: 3, name: "Coordinador", description: "Gestiona programas y empleados", permCount: 8, status: "activo", permissions: ["view_users", "view_programs", "assign_programs", "view_company_reports"] },
+  { id: 4, name: "Empleado", description: "Accede al entrenamiento asignado", permCount: 3, status: "activo", permissions: ["view_programs"] },
 ];
 
 const CUSTOM_ROLES = [
-  { id: 10, name: "Safety Inspector", description: "View-only access plus report export", permCount: 5, users: 3, status: "active" },
-  { id: 11, name: "HR Assistant", description: "Limited user management", permCount: 4, users: 7, status: "active" },
+  { id: 10, name: "Inspector de Seguridad", description: "Acceso de solo lectura y exportación de reportes", permCount: 5, users: 3, status: "activo" },
+  { id: 11, name: "Asistente RRHH", description: "Gestión limitada de usuarios", permCount: 4, users: 7, status: "activo" },
 ];
 
 export function RolesScreen() {
@@ -32,13 +32,13 @@ export function RolesScreen() {
   return (
     <div>
       <PageHeader
-        title="System Roles"
-        actions={<PrimaryBtn><Plus size={16} /> New Role</PrimaryBtn>}
+        title="Roles del Sistema"
+        actions={<PrimaryBtn><Plus size={16} /> Nuevo Rol</PrimaryBtn>}
       />
 
       {/* Tabs */}
       <div className="flex gap-1 mb-6 p-1 bg-white rounded-xl border w-fit" style={{ borderColor: colors.border }}>
-        {[{ key: "base", label: "Base Roles" }, { key: "additional", label: "Additional Roles" }].map(tab => (
+        {[{ key: "base", label: "Roles Base" }, { key: "additional", label: "Roles Adicionales" }].map(tab => (
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key as "base" | "additional")}
@@ -65,7 +65,7 @@ export function RolesScreen() {
                   </div>
                 </div>
                 <div className="flex items-center gap-5">
-                  <span className="text-sm" style={{ color: colors.textSecondary }}>{role.permCount} permissions</span>
+                  <span className="text-sm" style={{ color: colors.textSecondary }}>{role.permCount} permisos</span>
                   <StatusBadge status={role.status} />
                   <button className="p-1.5 rounded-lg hover:bg-gray-200 transition-colors" onClick={e => e.stopPropagation()}>
                     <Pencil size={14} style={{ color: colors.textSecondary }} />
@@ -117,11 +117,11 @@ export function RolesScreen() {
               </div>
               <div className="flex items-center gap-4 text-sm mb-4">
                 <div>
-                  <span style={{ color: colors.textSecondary }}>Permissions: </span>
+                  <span style={{ color: colors.textSecondary }}>Permisos: </span>
                   <span className="font-semibold" style={{ color: colors.textPrimary }}>{role.permCount}</span>
                 </div>
                 <div>
-                  <span style={{ color: colors.textSecondary }}>Users: </span>
+                  <span style={{ color: colors.textSecondary }}>Usuarios: </span>
                   <span className="font-semibold" style={{ color: colors.textPrimary }}>{role.users}</span>
                 </div>
               </div>
@@ -130,13 +130,13 @@ export function RolesScreen() {
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors"
                   style={{ borderColor: colors.border, color: colors.textSecondary }}
                 >
-                  <Pencil size={12} /> Edit
+                  <Pencil size={12} /> Editar
                 </button>
                 <button
                   className="px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors"
                   style={{ borderColor: colors.error, color: colors.error }}
                 >
-                  Deactivate
+                  Desactivar
                 </button>
               </div>
             </Card>

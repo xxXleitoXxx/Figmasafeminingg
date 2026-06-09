@@ -5,63 +5,63 @@ import { PageHeader, PrimaryBtn, OutlinedBtn, StatusBadge, ProgressBar, colors }
 
 const PROGRAMS = [
   {
-    id: 1, name: "Fire Safety & Evacuation Q2 2025", status: "active", created: "Apr 1, 2025",
+    id: 1, name: "Seguridad y Evacuación de Incendios Q2 2025", status: "activo", created: "1 Abr, 2025",
     coordinator: "Roberto Silva", simulations: 3, exams: 1, enrolled: 24, completion: 78,
-    startDate: "Apr 1, 2025", endDate: "Jun 30, 2025"
+    startDate: "1 Abr, 2025", endDate: "30 Jun, 2025"
   },
   {
-    id: 2, name: "LOTO Procedures – Level 2", status: "active", created: "Mar 15, 2025",
+    id: 2, name: "Procedimientos LOTO – Nivel 2", status: "activo", created: "15 Mar, 2025",
     coordinator: "Elena Vega", simulations: 2, exams: 2, enrolled: 18, completion: 54,
-    startDate: "Mar 15, 2025", endDate: "May 31, 2025"
+    startDate: "15 Mar, 2025", endDate: "31 May, 2025"
   },
   {
-    id: 3, name: "Confined Space Entry Protocol", status: "active", created: "Jan 10, 2025",
+    id: 3, name: "Protocolo Entrada Espacio Confinado", status: "activo", created: "10 Ene, 2025",
     coordinator: "Roberto Silva", simulations: 4, exams: 1, enrolled: 12, completion: 91,
-    startDate: "Jan 10, 2025", endDate: "Jul 31, 2025"
+    startDate: "10 Ene, 2025", endDate: "31 Jul, 2025"
   },
   {
-    id: 4, name: "PPE Basics Onboarding", status: "completed", created: "Feb 1, 2025",
+    id: 4, name: "Inducción Básica de EPP", status: "completado", created: "1 Feb, 2025",
     coordinator: "Elena Vega", simulations: 1, exams: 1, enrolled: 31, completion: 100,
-    startDate: "Feb 1, 2025", endDate: "Mar 31, 2025"
+    startDate: "1 Feb, 2025", endDate: "31 Mar, 2025"
   },
   {
-    id: 5, name: "Chemical Handling Safety", status: "draft", created: "May 20, 2025",
+    id: 5, name: "Seguridad de Manejo de Químicos", status: "borrador", created: "20 May, 2025",
     coordinator: "Roberto Silva", simulations: 2, exams: 1, enrolled: 0, completion: 0,
-    startDate: "Jun 1, 2025", endDate: "Aug 31, 2025"
+    startDate: "1 Jun, 2025", endDate: "31 Ago, 2025"
   },
 ];
 
-const STATUS_COLORS: Record<string, string> = { active: colors.primary, completed: colors.success, draft: "#94A3B8", closed: "#6B7280" };
+const STATUS_COLORS: Record<string, string> = { activo: colors.primary, active: colors.primary, completado: colors.success, completed: colors.success, borrador: "#94A3B8", draft: "#94A3B8", cerrado: "#6B7280", closed: "#6B7280" };
 
 export function ProgramsList() {
   const navigate = useNavigate();
-  const [statusFilter, setStatusFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("todos");
 
-  const filtered = PROGRAMS.filter(p => statusFilter === "all" || p.status === statusFilter);
+  const filtered = PROGRAMS.filter(p => statusFilter === "todos" || p.status === statusFilter);
 
   return (
     <div>
       <PageHeader
-        title="Training Programs"
-        subtitle={`${PROGRAMS.length} programs`}
+        title="Programas de Entrenamiento"
+        subtitle={`${PROGRAMS.length} programas`}
         actions={
           <div className="flex gap-2">
-            <OutlinedBtn onClick={() => {}}><Copy size={16} /> Clone Program</OutlinedBtn>
-            <PrimaryBtn onClick={() => navigate("/company/programs/new")}><Plus size={16} /> New Program</PrimaryBtn>
+            <OutlinedBtn onClick={() => {}}><Copy size={16} /> Clonar Programa</OutlinedBtn>
+            <PrimaryBtn onClick={() => navigate("/company/programs/new")}><Plus size={16} /> Nuevo Programa</PrimaryBtn>
           </div>
         }
       />
 
       {/* Filters */}
       <div className="flex gap-2 mb-6">
-        {["all", "draft", "active", "completed", "closed"].map(s => (
+        {["todos", "borrador", "activo", "completado", "cerrado"].map(s => (
           <button
             key={s}
             onClick={() => setStatusFilter(s)}
             className="px-3 py-1.5 rounded-lg text-sm font-medium capitalize"
             style={{ backgroundColor: statusFilter === s ? colors.primary : "white", color: statusFilter === s ? "white" : colors.textSecondary, border: `1px solid ${statusFilter === s ? colors.primary : colors.border}` }}
           >
-            {s === "all" ? "All Programs" : s}
+            {s === "todos" ? "Todos los Programas" : s}
           </button>
         ))}
       </div>
@@ -77,7 +77,7 @@ export function ProgramsList() {
                   <h4 className="font-semibold text-base leading-tight mb-1" style={{ color: colors.textPrimary }}>{prog.name}</h4>
                   <div className="flex items-center gap-2">
                     <StatusBadge status={prog.status} />
-                    <span className="text-xs" style={{ color: colors.textSecondary }}>Created {prog.created}</span>
+                    <span className="text-xs" style={{ color: colors.textSecondary }}>Creado {prog.created}</span>
                   </div>
                 </div>
               </div>
@@ -93,39 +93,39 @@ export function ProgramsList() {
                 </div>
                 <div className="flex items-center gap-1.5" style={{ color: colors.textSecondary }}>
                   <Play size={12} />
-                  <span>{prog.simulations} simulations</span>
+                  <span>{prog.simulations} simulaciones</span>
                 </div>
                 <div className="flex items-center gap-1.5" style={{ color: colors.textSecondary }}>
                   <FileText size={12} />
-                  <span>{prog.exams} exams</span>
+                  <span>{prog.exams} exámenes</span>
                 </div>
               </div>
 
               {/* Enrollment + Progress */}
               <div className="flex items-center justify-between mb-1.5 text-xs">
-                <span style={{ color: colors.textSecondary }}>{prog.enrolled} employees enrolled</span>
-                <span className="font-semibold" style={{ color: colors.textPrimary }}>{prog.completion}% complete</span>
+                <span style={{ color: colors.textSecondary }}>{prog.enrolled} empleados inscritos</span>
+                <span className="font-semibold" style={{ color: colors.textPrimary }}>{prog.completion}% completado</span>
               </div>
               <ProgressBar value={prog.completion} color={STATUS_COLORS[prog.status]} />
 
               {/* Actions */}
               <div className="flex gap-2 mt-4 flex-wrap">
-                {prog.status === "draft" && (
+                {prog.status === "borrador" && (
                   <button
                     onClick={() => navigate(`/company/programs/${prog.id}`)}
                     className="px-3 py-1.5 rounded-lg border text-xs font-medium transition-colors"
                     style={{ borderColor: colors.border, color: colors.textSecondary }}
                   >
-                    Edit
+                    Editar
                   </button>
                 )}
-                {prog.status !== "closed" && (
+                {prog.status !== "cerrado" && (
                   <button
                     onClick={() => navigate(`/company/programs/${prog.id}/assign`)}
                     className="px-3 py-1.5 rounded-lg text-xs font-medium text-white"
                     style={{ backgroundColor: colors.secondary }}
                   >
-                    Assign
+                    Asignar
                   </button>
                 )}
                 <button
@@ -133,11 +133,11 @@ export function ProgramsList() {
                   className="px-3 py-1.5 rounded-lg border text-xs font-medium transition-colors"
                   style={{ borderColor: colors.border, color: colors.textSecondary }}
                 >
-                  View Progress
+                  Ver Progreso
                 </button>
-                {prog.status === "active" && (
+                {prog.status === "activo" && (
                   <button className="px-3 py-1.5 rounded-lg border text-xs font-medium" style={{ borderColor: colors.error, color: colors.error }}>
-                    Close
+                    Cerrar
                   </button>
                 )}
                 <button className="px-3 py-1.5 rounded-lg border text-xs font-medium" style={{ borderColor: colors.border, color: colors.textSecondary }}>
