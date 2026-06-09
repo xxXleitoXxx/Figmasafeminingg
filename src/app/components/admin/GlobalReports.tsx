@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { Download, FileText } from "lucide-react";
-import { PageHeader, StatusBadge, colors, Card } from "../shared";
 import { TextField } from "@mui/material";
+import { PageHeader, StatusBadge, colors, Card } from "../shared";
 
 const sessionData = [
-  { month: "Nov", sessions: 280, date: "2024-11-01" }, { month: "Dic", sessions: 320, date: "2024-12-01" }, { month: "Ene", sessions: 410, date: "2025-01-01" },
-  { month: "Feb", sessions: 380, date: "2025-02-01" }, { month: "Mar", sessions: 450, date: "2025-03-01" }, { month: "Abr", sessions: 520, date: "2025-04-01" },
-  { month: "May", sessions: 495, date: "2025-05-01" },
+  { month: "2024-11-01", label: "Nov", sessions: 280 }, { month: "2024-12-01", label: "Dic", sessions: 320 }, { month: "2025-01-01", label: "Ene", sessions: 410 },
+  { month: "2025-02-01", label: "Feb", sessions: 380 }, { month: "2025-03-01", label: "Mar", sessions: 450 }, { month: "2025-04-01", label: "Abr", sessions: 520 },
+  { month: "2025-05-01", label: "May", sessions: 495 },
 ];
 
 const companyPerf = [
@@ -19,12 +19,12 @@ const companyPerf = [
 ];
 
 export function GlobalReports() {
-  const [startDate, setStartDate] = useState("2024-11-01");
-  const [endDate, setEndDate] = useState("2025-05-31");
+  const [startDate, setStartDate] = useState("2025-01-01");
+  const [endDate, setEndDate] = useState("2025-05-26");
 
   const filteredSessionData = sessionData.filter(d => {
-    if (startDate && d.date < startDate) return false;
-    if (endDate && d.date > endDate) return false;
+    if (startDate && d.month < startDate) return false;
+    if (endDate && d.month > endDate) return false;
     return true;
   });
 
@@ -55,23 +55,23 @@ export function GlobalReports() {
       <div className="bg-white rounded-xl border p-4 mb-6 flex items-center gap-4 flex-wrap" style={{ borderColor: colors.border }}>
         <div className="flex flex-col gap-1">
           <label className="text-xs font-medium" style={{ color: colors.textSecondary }}>Rango de Fechas</label>
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2">
             <TextField
               type="date"
               size="small"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
               InputLabelProps={{ shrink: true }}
-              sx={{ '& .MuiInputBase-root': { fontSize: '0.875rem', borderRadius: '0.5rem', height: '34px' }, '& .MuiOutlinedInput-notchedOutline': { borderColor: colors.border } }}
+              sx={{ '& .MuiOutlinedInput-root': { borderRadius: '0.5rem', height: '34px', backgroundColor: 'white' }, '& .MuiOutlinedInput-notchedOutline': { borderColor: '#E2E8F0' } }}
             />
-            <span className="text-xs" style={{ color: colors.textSecondary }}>a</span>
+            <span className="self-center text-xs" style={{ color: colors.textSecondary }}>a</span>
             <TextField
               type="date"
               size="small"
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
               InputLabelProps={{ shrink: true }}
-              sx={{ '& .MuiInputBase-root': { fontSize: '0.875rem', borderRadius: '0.5rem', height: '34px' }, '& .MuiOutlinedInput-notchedOutline': { borderColor: colors.border } }}
+              sx={{ '& .MuiOutlinedInput-root': { borderRadius: '0.5rem', height: '34px', backgroundColor: 'white' }, '& .MuiOutlinedInput-notchedOutline': { borderColor: '#E2E8F0' } }}
             />
           </div>
         </div>
@@ -122,7 +122,7 @@ export function GlobalReports() {
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke={colors.border} />
-            <XAxis dataKey="month" tick={{ fontSize: 12, fill: colors.textSecondary }} />
+            <XAxis dataKey="label" tick={{ fontSize: 12, fill: colors.textSecondary }} />
             <YAxis tick={{ fontSize: 12, fill: colors.textSecondary }} />
             <Tooltip contentStyle={{ backgroundColor: "white", border: `1px solid ${colors.border}`, borderRadius: 8, boxShadow: "0 4px 12px rgba(0,0,0,0.1)" }} />
             <Area type="monotone" dataKey="sessions" stroke={colors.primary} strokeWidth={2.5} fill="url(#grad)" />

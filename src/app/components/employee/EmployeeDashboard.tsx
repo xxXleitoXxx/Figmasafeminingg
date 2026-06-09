@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Award, Clock, CheckCircle, PlayCircle } from "lucide-react";
+import { TextField } from "@mui/material";
 import { PageHeader, StatusBadge, ProgressBar, colors, Card, Avatar } from "../shared";
 import { useAuth } from "../../context/AuthContext";
-import { TextField } from "@mui/material";
 
 const PROGRAMS = [
   {
@@ -13,16 +13,16 @@ const PROGRAMS = [
     progress: 65,
     deadline: "30 Jun, 2025",
     daysLeft: 35,
-    date: "2025-06-30",
+    date: "2025-05-10"
   },
   {
     id: 2,
     name: "Procedimientos LOTO – Nivel 2",
     status: "no iniciado",
     progress: 0,
-    deadline: "31 Mayo, 2025",
+    deadline: "31 May, 2025",
     daysLeft: 5,
-    date: "2025-05-31",
+    date: "2025-05-15"
   },
   {
     id: 3,
@@ -31,7 +31,7 @@ const PROGRAMS = [
     progress: 100,
     deadline: "31 Mar, 2025",
     daysLeft: null,
-    date: "2025-03-31",
+    date: "2025-03-31"
   },
 ];
 
@@ -39,11 +39,11 @@ export function EmployeeDashboard() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [startDate, setStartDate] = useState("2025-01-01");
-  const [endDate, setEndDate] = useState("2025-12-31");
+  const [endDate, setEndDate] = useState("2025-06-30");
 
-  const filteredPrograms = PROGRAMS.filter(d => {
-    if (startDate && d.date < startDate) return false;
-    if (endDate && d.date > endDate) return false;
+  const filteredPrograms = PROGRAMS.filter(p => {
+    if (startDate && p.date < startDate) return false;
+    if (endDate && p.date > endDate) return false;
     return true;
   });
 
@@ -57,30 +57,25 @@ export function EmployeeDashboard() {
         </div>
       </div>
 
-      {/* Filters */}
-      <div className="bg-white rounded-xl border p-4 mb-6 flex items-center gap-4 flex-wrap" style={{ borderColor: colors.border }}>
-        <div className="flex flex-col gap-1">
-          <label className="text-xs font-medium" style={{ color: colors.textSecondary }}>Rango de Fechas</label>
-          <div className="flex gap-2 items-center">
-            <TextField
-              type="date"
-              size="small"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-              InputLabelProps={{ shrink: true }}
-              sx={{ '& .MuiInputBase-root': { fontSize: '0.875rem', borderRadius: '0.5rem', height: '34px' }, '& .MuiOutlinedInput-notchedOutline': { borderColor: colors.border } }}
-            />
-            <span className="text-xs" style={{ color: colors.textSecondary }}>a</span>
-            <TextField
-              type="date"
-              size="small"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-              InputLabelProps={{ shrink: true }}
-              sx={{ '& .MuiInputBase-root': { fontSize: '0.875rem', borderRadius: '0.5rem', height: '34px' }, '& .MuiOutlinedInput-notchedOutline': { borderColor: colors.border } }}
-            />
-          </div>
-        </div>
+      <div className="flex gap-4 mb-6">
+        <TextField
+          label="Fecha Desde"
+          type="date"
+          size="small"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+          InputLabelProps={{ shrink: true }}
+          sx={{ '& .MuiOutlinedInput-root': { borderRadius: '0.5rem', height: '34px', backgroundColor: 'white' }, '& .MuiOutlinedInput-notchedOutline': { borderColor: '#E2E8F0' } }}
+        />
+        <TextField
+          label="Fecha Hasta"
+          type="date"
+          size="small"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+          InputLabelProps={{ shrink: true }}
+          sx={{ '& .MuiOutlinedInput-root': { borderRadius: '0.5rem', height: '34px', backgroundColor: 'white' }, '& .MuiOutlinedInput-notchedOutline': { borderColor: '#E2E8F0' } }}
+        />
       </div>
 
       {/* Quick Stats */}

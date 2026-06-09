@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { Users, Briefcase, Award, TrendingUp } from "lucide-react";
+import { TextField } from "@mui/material";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { PageHeader, StatCard, StatusBadge, ProgressBar, colors, Card, Avatar } from "../shared";
 import { useAuth } from "../../context/AuthContext";
-import { TextField } from "@mui/material";
 
 const programData = [
-  { name: "Seguridad Incendios Q2", completion: 78, date: "2025-05-15" },
-  { name: "Entrenamiento LOTO", completion: 54, date: "2025-05-20" },
-  { name: "Espacios Confinados", completion: 91, date: "2025-05-25" },
-  { name: "Básicos de EPP", completion: 100, date: "2025-04-10" },
-  { name: "Seguridad Química", completion: 32, date: "2025-06-05" },
+  { name: "Seguridad Incendios Q2", completion: 78, date: "2025-05-10" },
+  { name: "Entrenamiento LOTO", completion: 54, date: "2025-05-15" },
+  { name: "Espacios Confinados", completion: 91, date: "2025-05-20" },
+  { name: "Básicos de EPP", completion: 100, date: "2025-05-22" },
+  { name: "Seguridad Química", completion: 32, date: "2025-05-25" },
 ];
 
 const failureData = [
@@ -22,10 +22,10 @@ const failureData = [
 ];
 
 const recentAssignments = [
-  { name: "Juan Pérez", program: "Seguridad Incendios Q2", date: "25 Mayo, 2025", status: "en progreso" },
-  { name: "Ana Torres", program: "Entrenamiento LOTO", date: "24 Mayo, 2025", status: "completado" },
-  { name: "Carlos Ruiz", program: "Seguridad Química", date: "23 Mayo, 2025", status: "no iniciado" },
-  { name: "María López", program: "Espacios Confinados", date: "22 Mayo, 2025", status: "en progreso" },
+  { name: "Juan Pérez", program: "Seguridad Incendios Q2", dateStr: "25 Mayo, 2025", date: "2025-05-25", status: "en progreso" },
+  { name: "Ana Torres", program: "Entrenamiento LOTO", dateStr: "24 Mayo, 2025", date: "2025-05-24", status: "completado" },
+  { name: "Carlos Ruiz", program: "Seguridad Química", dateStr: "23 Mayo, 2025", date: "2025-05-23", status: "no iniciado" },
+  { name: "María López", program: "Espacios Confinados", dateStr: "22 Mayo, 2025", date: "2025-05-22", status: "en progreso" },
 ];
 
 const pendingActions = [
@@ -45,6 +45,12 @@ export function CompanyDashboard() {
     return true;
   });
 
+  const filteredAssignments = recentAssignments.filter(d => {
+    if (startDate && d.date < startDate) return false;
+    if (endDate && d.date > endDate) return false;
+    return true;
+  });
+
   return (
     <div>
       <PageHeader
@@ -52,30 +58,25 @@ export function CompanyDashboard() {
         subtitle="Resumen de actividades de entrenamiento y progreso de empleados"
       />
 
-      {/* Filters */}
-      <div className="bg-white rounded-xl border p-4 mb-6 flex items-center gap-4 flex-wrap" style={{ borderColor: colors.border }}>
-        <div className="flex flex-col gap-1">
-          <label className="text-xs font-medium" style={{ color: colors.textSecondary }}>Rango de Fechas</label>
-          <div className="flex gap-2 items-center">
-            <TextField
-              type="date"
-              size="small"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-              InputLabelProps={{ shrink: true }}
-              sx={{ '& .MuiInputBase-root': { fontSize: '0.875rem', borderRadius: '0.5rem', height: '34px' }, '& .MuiOutlinedInput-notchedOutline': { borderColor: colors.border } }}
-            />
-            <span className="text-xs" style={{ color: colors.textSecondary }}>a</span>
-            <TextField
-              type="date"
-              size="small"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-              InputLabelProps={{ shrink: true }}
-              sx={{ '& .MuiInputBase-root': { fontSize: '0.875rem', borderRadius: '0.5rem', height: '34px' }, '& .MuiOutlinedInput-notchedOutline': { borderColor: colors.border } }}
-            />
-          </div>
-        </div>
+      <div className="flex gap-4 mb-6">
+        <TextField
+          label="Fecha Desde"
+          type="date"
+          size="small"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+          InputLabelProps={{ shrink: true }}
+          sx={{ '& .MuiOutlinedInput-root': { borderRadius: '0.5rem', height: '34px', backgroundColor: 'white' }, '& .MuiOutlinedInput-notchedOutline': { borderColor: '#E2E8F0' } }}
+        />
+        <TextField
+          label="Fecha Hasta"
+          type="date"
+          size="small"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+          InputLabelProps={{ shrink: true }}
+          sx={{ '& .MuiOutlinedInput-root': { borderRadius: '0.5rem', height: '34px', backgroundColor: 'white' }, '& .MuiOutlinedInput-notchedOutline': { borderColor: '#E2E8F0' } }}
+        />
       </div>
 
       <div className="grid grid-cols-4 gap-5 mb-8">
@@ -154,7 +155,7 @@ export function CompanyDashboard() {
               </tr>
             </thead>
             <tbody>
-              {recentAssignments.map((a, i) => (
+              {filteredAssignments.map((a, i) => (
                 <tr key={i} style={{ borderBottom: `1px solid ${colors.border}` }}
                   onMouseEnter={e => (e.currentTarget as HTMLTableRowElement).style.backgroundColor = "#F8FAFC"}
                   onMouseLeave={e => (e.currentTarget as HTMLTableRowElement).style.backgroundColor = ""}>
@@ -165,7 +166,7 @@ export function CompanyDashboard() {
                     </div>
                   </td>
                   <td className="py-2.5 text-xs" style={{ color: colors.textSecondary }}>{a.program}</td>
-                  <td className="py-2.5 text-xs" style={{ color: colors.textSecondary }}>{a.date}</td>
+                  <td className="py-2.5 text-xs" style={{ color: colors.textSecondary }}>{a.dateStr}</td>
                   <td className="py-2.5"><StatusBadge status={a.status} /></td>
                 </tr>
               ))}

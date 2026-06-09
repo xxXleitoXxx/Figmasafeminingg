@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Briefcase, Users, TrendingUp, Award, AlertTriangle } from "lucide-react";
+import { TextField } from "@mui/material";
 import { PageHeader, StatCard, StatusBadge, ProgressBar, colors, Card, Avatar } from "../shared";
 import { useAuth } from "../../context/AuthContext";
-import { TextField } from "@mui/material";
 
 const MY_PROGRAMS = [
-  { id: 1, name: "Seguridad y Evacuación de Incendios Q2 2025", status: "activo", completion: 78, enrolled: 24, date: "2025-05-10" },
-  { id: 2, name: "Procedimientos LOTO – Nivel 2", status: "activo", completion: 54, enrolled: 18, date: "2025-05-15" },
-  { id: 3, name: "Protocolo de Entrada a Espacio Confinado", status: "activo", completion: 91, enrolled: 12, date: "2025-05-20" },
+  { id: 1, name: "Seguridad y Evacuación de Incendios Q2 2025", status: "activo", completion: 78, enrolled: 24, date: "2025-05-15" },
+  { id: 2, name: "Procedimientos LOTO – Nivel 2", status: "activo", completion: 54, enrolled: 18, date: "2025-05-20" },
+  { id: 3, name: "Protocolo de Entrada a Espacio Confinado", status: "activo", completion: 91, enrolled: 12, date: "2025-05-25" },
 ];
 
 const ATTENTION_NEEDED = [
@@ -24,9 +24,9 @@ export function CoordinatorDashboard() {
   const [startDate, setStartDate] = useState("2025-05-01");
   const [endDate, setEndDate] = useState("2025-05-31");
 
-  const filteredPrograms = MY_PROGRAMS.filter(d => {
-    if (startDate && d.date < startDate) return false;
-    if (endDate && d.date > endDate) return false;
+  const filteredPrograms = MY_PROGRAMS.filter(p => {
+    if (startDate && p.date < startDate) return false;
+    if (endDate && p.date > endDate) return false;
     return true;
   });
 
@@ -34,30 +34,25 @@ export function CoordinatorDashboard() {
     <div>
       <PageHeader title={`Bienvenido, ${user?.name}`} subtitle="Tus programas activos y estado de empleados en un vistazo" />
 
-      {/* Filters */}
-      <div className="bg-white rounded-xl border p-4 mb-6 flex items-center gap-4 flex-wrap" style={{ borderColor: colors.border }}>
-        <div className="flex flex-col gap-1">
-          <label className="text-xs font-medium" style={{ color: colors.textSecondary }}>Rango de Fechas</label>
-          <div className="flex gap-2 items-center">
-            <TextField
-              type="date"
-              size="small"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-              InputLabelProps={{ shrink: true }}
-              sx={{ '& .MuiInputBase-root': { fontSize: '0.875rem', borderRadius: '0.5rem', height: '34px' }, '& .MuiOutlinedInput-notchedOutline': { borderColor: colors.border } }}
-            />
-            <span className="text-xs" style={{ color: colors.textSecondary }}>a</span>
-            <TextField
-              type="date"
-              size="small"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-              InputLabelProps={{ shrink: true }}
-              sx={{ '& .MuiInputBase-root': { fontSize: '0.875rem', borderRadius: '0.5rem', height: '34px' }, '& .MuiOutlinedInput-notchedOutline': { borderColor: colors.border } }}
-            />
-          </div>
-        </div>
+      <div className="flex gap-4 mb-6">
+        <TextField
+          label="Fecha Desde"
+          type="date"
+          size="small"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+          InputLabelProps={{ shrink: true }}
+          sx={{ '& .MuiOutlinedInput-root': { borderRadius: '0.5rem', height: '34px', backgroundColor: 'white' }, '& .MuiOutlinedInput-notchedOutline': { borderColor: '#E2E8F0' } }}
+        />
+        <TextField
+          label="Fecha Hasta"
+          type="date"
+          size="small"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+          InputLabelProps={{ shrink: true }}
+          sx={{ '& .MuiOutlinedInput-root': { borderRadius: '0.5rem', height: '34px', backgroundColor: 'white' }, '& .MuiOutlinedInput-notchedOutline': { borderColor: '#E2E8F0' } }}
+        />
       </div>
 
       <div className="grid grid-cols-4 gap-5 mb-8">

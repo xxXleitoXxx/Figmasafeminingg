@@ -56,7 +56,9 @@ function CreateRoleModal({ onClose }: { onClose: () => void }) {
                     {ps.map(p => (
                       <label key={p} className="flex items-center gap-2 cursor-pointer">
                         <input type="checkbox" checked={perms.includes(p)} onChange={() => toggle(p)} style={{ accentColor: colors.primary }} />
-                        <span className="text-xs" style={{ color: colors.textPrimary }}>{permissionTranslations[p] ?? p.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase())}</span>
+                        <span className="text-xs" style={{ color: colors.textPrimary }}>
+                          {permissionTranslations[p] ?? p.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase())}
+                        </span>
                       </label>
                     ))}
                   </div>

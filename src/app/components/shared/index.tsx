@@ -18,35 +18,7 @@ export const colors = {
   border: "#E2E8F0",
 };
 
-// ─── Status Badge ────────────────────────────────────────────────────────────
-const statusStyles: Record<string, { bg: string; text: string }> = {
-  activo: { bg: "#DCFCE7", text: "#166534" },
-  inactivo: { bg: "#F1F5F9", text: "#475569" },
-  pendiente: { bg: "#FEF9C3", text: "#854D0E" },
-  aprobado: { bg: "#D1FAE5", text: "#065F46" },
-  rechazado: { bg: "#FEE2E2", text: "#991B1B" },
-  borrador: { bg: "#F1F5F9", text: "#475569" },
-  cerrado: { bg: "#E5E7EB", text: "#374151" },
-  completado: { bg: "#D1FAE5", text: "#065F46" },
-  fallido: { bg: "#FEE2E2", text: "#991B1B" },
-  reprobado: { bg: "#FEE2E2", text: "#991B1B" },
-  "en progreso": { bg: "#DBEAFE", text: "#1E40AF" },
-  "no iniciado": { bg: "#F1F5F9", text: "#475569" },
-  bloqueado: { bg: "#E5E7EB", text: "#6B7280" },
-  active: { bg: "#DCFCE7", text: "#166534" },
-  inactive: { bg: "#F1F5F9", text: "#475569" },
-  pending: { bg: "#FEF9C3", text: "#854D0E" },
-  approved: { bg: "#D1FAE5", text: "#065F46" },
-  rejected: { bg: "#FEE2E2", text: "#991B1B" },
-  draft: { bg: "#F1F5F9", text: "#475569" },
-  closed: { bg: "#E5E7EB", text: "#374151" },
-  completed: { bg: "#D1FAE5", text: "#065F46" },
-  failed: { bg: "#FEE2E2", text: "#991B1B" },
-  "in progress": { bg: "#DBEAFE", text: "#1E40AF" },
-  "not started": { bg: "#F1F5F9", text: "#475569" },
-  locked: { bg: "#E5E7EB", text: "#6B7280" },
-};
-
+// ─── Translations ─────────────────────────────────────────────────────────────
 export const statusTranslations: Record<string, string> = {
   active: "activo",
   inactive: "inactivo",
@@ -60,19 +32,6 @@ export const statusTranslations: Record<string, string> = {
   "in progress": "en progreso",
   "not started": "no iniciado",
   locked: "bloqueado",
-  activo: "activo",
-  inactivo: "inactivo",
-  pendiente: "pendiente",
-  aprobado: "aprobado",
-  rechazado: "rechazado",
-  borrador: "borrador",
-  cerrado: "cerrado",
-  completado: "completado",
-  fallido: "reprobado",
-  reprobado: "reprobado",
-  "en progreso": "en progreso",
-  "no iniciado": "no iniciado",
-  bloqueado: "bloqueado",
 };
 
 export const permissionTranslations: Record<string, string> = {
@@ -104,16 +63,43 @@ export const permissionTranslations: Record<string, string> = {
   view_settings: "Ver ajustes",
 };
 
+// ─── Status Badge ────────────────────────────────────────────────────────────
+const statusStyles: Record<string, { bg: string; text: string }> = {
+  activo: { bg: "#DCFCE7", text: "#166534" },
+  inactivo: { bg: "#F1F5F9", text: "#475569" },
+  pendiente: { bg: "#FEF9C3", text: "#854D0E" },
+  aprobado: { bg: "#D1FAE5", text: "#065F46" },
+  rechazado: { bg: "#FEE2E2", text: "#991B1B" },
+  borrador: { bg: "#F1F5F9", text: "#475569" },
+  cerrado: { bg: "#E5E7EB", text: "#374151" },
+  completado: { bg: "#D1FAE5", text: "#065F46" },
+  fallido: { bg: "#FEE2E2", text: "#991B1B" },
+  "en progreso": { bg: "#DBEAFE", text: "#1E40AF" },
+  "no iniciado": { bg: "#F1F5F9", text: "#475569" },
+  bloqueado: { bg: "#E5E7EB", text: "#6B7280" },
+  active: { bg: "#DCFCE7", text: "#166534" },
+  inactive: { bg: "#F1F5F9", text: "#475569" },
+  pending: { bg: "#FEF9C3", text: "#854D0E" },
+  approved: { bg: "#D1FAE5", text: "#065F46" },
+  rejected: { bg: "#FEE2E2", text: "#991B1B" },
+  draft: { bg: "#F1F5F9", text: "#475569" },
+  closed: { bg: "#E5E7EB", text: "#374151" },
+  completed: { bg: "#D1FAE5", text: "#065F46" },
+  failed: { bg: "#FEE2E2", text: "#991B1B" },
+  "in progress": { bg: "#DBEAFE", text: "#1E40AF" },
+  "not started": { bg: "#F1F5F9", text: "#475569" },
+  locked: { bg: "#E5E7EB", text: "#6B7280" },
+};
+
 export function StatusBadge({ status }: { status: string }) {
-  const normalized = status.toLowerCase();
-  const translated = statusTranslations[normalized] ?? status;
-  const s = statusStyles[normalized] ?? { bg: "#F1F5F9", text: "#475569" };
+  const translatedStatus = statusTranslations[status.toLowerCase()] || status;
+  const s = statusStyles[status.toLowerCase()] ?? { bg: "#F1F5F9", text: "#475569" };
   return (
     <span
       style={{ backgroundColor: s.bg, color: s.text }}
       className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize"
     >
-      {translated}
+      {translatedStatus}
     </span>
   );
 }
