@@ -71,6 +71,15 @@ export function ForgotPasswordScreen() {
               <p className="text-sm mb-6" style={{ color: colors.textSecondary }}>
                 Enviamos un enlace para restablecer tu contraseña a <strong>{email}</strong>. Revisa tu bandeja de entrada y sigue las instrucciones.
               </p>
+              
+              {/* Development helper to quickly test the reset flow */}
+              <div className="mb-6 p-3 rounded-lg border border-dashed border-gray-300 text-xs text-left bg-gray-50">
+                <p className="font-semibold text-gray-500 mb-1">🔗 Enlace de prueba (Simulación):</p>
+                <a href="/reset-password?token=abcdef123456789" className="text-blue-600 hover:underline break-all">
+                  /reset-password?token=abcdef123456789
+                </a>
+              </div>
+
               <button
                 onClick={() => navigate("/login")}
                 className="w-full py-3 rounded-lg text-white font-semibold text-sm"

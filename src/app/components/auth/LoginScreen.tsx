@@ -18,6 +18,8 @@ export function LoginScreen() {
   const [password, setPassword] = useState("password123");
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   useEffect(() => {
     if (user) {
@@ -31,6 +33,28 @@ export function LoginScreen() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    let hasError = false;
+    
+    if (!email) {
+      setEmailError("El correo es obligatorio.");
+      hasError = true;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setEmailError("El formato del correo es inválido.");
+      hasError = true;
+    } else {
+      setEmailError("");
+    }
+
+    if (!password) {
+      setPasswordError("La contraseña es obligatoria.");
+      hasError = true;
+    } else {
+      setPasswordError("");
+    }
+
+    if (hasError) return;
+
     setLoading(true);
     await new Promise(r => setTimeout(r, 800));
     login(email);
@@ -67,12 +91,13 @@ export function LoginScreen() {
               <input
                 type="email"
                 value={email}
-                onChange={e => setEmail(e.target.value)}
+                onChange={e => { setEmail(e.target.value); if (emailError) setEmailError(""); }}
                 className="w-full px-4 py-3 rounded-lg border text-sm outline-none transition-all"
-                style={{ borderColor: colors.border, color: colors.textPrimary }}
-                onFocus={e => { e.currentTarget.style.borderColor = colors.primary; e.currentTarget.style.boxShadow = `0 0 0 2px ${colors.primary}30`; }}
-                onBlur={e => { e.currentTarget.style.borderColor = colors.border; e.currentTarget.style.boxShadow = "none"; }}
+                style={{ borderColor: emailError ? colors.error : colors.border, color: colors.textPrimary }}
+                onFocus={e => { e.currentTarget.style.borderColor = emailError ? colors.error : colors.primary; e.currentTarget.style.boxShadow = `0 0 0 2px ${emailError ? colors.error : colors.primary}30`; }}
+                onBlur={e => { e.currentTarget.style.borderColor = emailError ? colors.error : colors.border; e.currentTarget.style.boxShadow = "none"; }}
               />
+              {emailError && <p className="text-xs mt-1" style={{ color: colors.error }}>{emailError}</p>}
             </div>
 
             {/* Password */}
@@ -82,11 +107,11 @@ export function LoginScreen() {
                 <input
                   type={showPass ? "text" : "password"}
                   value={password}
-                  onChange={e => setPassword(e.target.value)}
+                  onChange={e => { setPassword(e.target.value); if (passwordError) setPasswordError(""); }}
                   className="w-full px-4 py-3 pr-12 rounded-lg border text-sm outline-none transition-all"
-                  style={{ borderColor: colors.border, color: colors.textPrimary }}
-                  onFocus={e => { e.currentTarget.style.borderColor = colors.primary; e.currentTarget.style.boxShadow = `0 0 0 2px ${colors.primary}30`; }}
-                  onBlur={e => { e.currentTarget.style.borderColor = colors.border; e.currentTarget.style.boxShadow = "none"; }}
+                  style={{ borderColor: passwordError ? colors.error : colors.border, color: colors.textPrimary }}
+                  onFocus={e => { e.currentTarget.style.borderColor = passwordError ? colors.error : colors.primary; e.currentTarget.style.boxShadow = `0 0 0 2px ${passwordError ? colors.error : colors.primary}30`; }}
+                  onBlur={e => { e.currentTarget.style.borderColor = passwordError ? colors.error : colors.border; e.currentTarget.style.boxShadow = "none"; }}
                 />
                 <button
                   type="button"
@@ -97,6 +122,7 @@ export function LoginScreen() {
                   {showPass ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
+              {passwordError && <p className="text-xs mt-1" style={{ color: colors.error }}>{passwordError}</p>}
             </div>
 
             {/* Sign In button */}

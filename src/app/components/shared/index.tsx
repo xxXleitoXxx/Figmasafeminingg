@@ -222,9 +222,9 @@ export function DestructiveBtn({ children, onClick, className = "" }: {
 }
 
 // ─── Input Field ──────────────────────────────────────────────────────────────
-export function InputField({ label, type = "text", placeholder, value, onChange, required, readOnly, hint, className }: {
+export function InputField({ label, type = "text", placeholder, value, onChange, required, readOnly, hint, error, className }: {
   label?: string; type?: string; placeholder?: string; value?: string; onChange?: (v: string) => void;
-  required?: boolean; readOnly?: boolean; hint?: string; className?: string;
+  required?: boolean; readOnly?: boolean; hint?: string; error?: string; className?: string;
 }) {
   return (
     <div className={`flex flex-col gap-1 ${className ?? ""}`}>
@@ -236,11 +236,25 @@ export function InputField({ label, type = "text", placeholder, value, onChange,
         onChange={e => onChange?.(e.target.value)}
         readOnly={readOnly}
         className="w-full px-3 py-2.5 rounded-lg border text-sm outline-none transition-all"
-        style={{ borderColor: colors.border, backgroundColor: readOnly ? colors.bg : colors.white, color: colors.textPrimary }}
-        onFocus={e => { if (!readOnly) e.currentTarget.style.boxShadow = `0 0 0 2px ${colors.primary}40`; e.currentTarget.style.borderColor = colors.primary; }}
-        onBlur={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.borderColor = colors.border; }}
+        style={{ 
+          borderColor: error ? colors.error : colors.border, 
+          backgroundColor: readOnly ? colors.bg : colors.white, 
+          color: colors.textPrimary 
+        }}
+        onFocus={e => { 
+          if (!readOnly) e.currentTarget.style.boxShadow = `0 0 0 2px ${error ? colors.error : colors.primary}40`; 
+          e.currentTarget.style.borderColor = error ? colors.error : colors.primary; 
+        }}
+        onBlur={e => { 
+          e.currentTarget.style.boxShadow = "none"; 
+          e.currentTarget.style.borderColor = error ? colors.error : colors.border; 
+        }}
       />
-      {hint && <p className="text-xs" style={{ color: colors.textSecondary }}>{hint}</p>}
+      {error ? (
+        <p className="text-xs mt-0.5 font-medium" style={{ color: colors.error }}>{error}</p>
+      ) : hint ? (
+        <p className="text-xs" style={{ color: colors.textSecondary }}>{hint}</p>
+      ) : null}
     </div>
   );
 }

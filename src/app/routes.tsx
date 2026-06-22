@@ -3,14 +3,17 @@ import { AppShell } from "./components/layout/AppShell";
 import { LoginScreen } from "./components/auth/LoginScreen";
 import { RoleSelectionScreen } from "./components/auth/RoleSelectionScreen";
 import { ForgotPasswordScreen } from "./components/auth/ForgotPasswordScreen";
+import { ResetPasswordScreen } from "./components/auth/ResetPasswordScreen";
 
 // Admin
 import { AdminDashboard } from "./components/admin/AdminDashboard";
 import { CompaniesScreen } from "./components/admin/CompaniesScreen";
 import { CompanyDetail } from "./components/admin/CompanyDetail";
+import { CompanyCreate } from "./components/admin/CompanyCreate";
 import { AdminUsersScreen } from "./components/admin/AdminUsersScreen";
 import { SimulationsCatalog } from "./components/admin/SimulationsCatalog";
 import { SimulationDetail } from "./components/admin/SimulationDetail";
+import { SimulationView } from "./components/shared/SimulationView";
 import { RolesScreen } from "./components/admin/RolesScreen";
 import { GlobalReports } from "./components/admin/GlobalReports";
 import { Configuration } from "./components/admin/Configuration";
@@ -70,6 +73,10 @@ export const router = createBrowserRouter([
     path: "/forgot-password",
     Component: ForgotPasswordScreen,
   },
+  {
+    path: "/reset-password",
+    Component: ResetPasswordScreen,
+  },
 
   // ─── System Admin ──────────────────────────────────
   {
@@ -78,12 +85,14 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: AdminDashboard },
       { path: "companies", Component: CompaniesScreen },
-      { path: "companies/new", Component: CompanyDetail },
+      { path: "companies/new", Component: CompanyCreate },
       { path: "companies/:id", Component: CompanyDetail },
       { path: "users", Component: AdminUsersScreen },
       { path: "simulations", Component: SimulationsCatalog },
       { path: "simulations/new", Component: SimulationDetail },
-      { path: "simulations/:id", Component: SimulationDetail },
+      { path: "simulations/:id", Component: SimulationView },
+      { path: "simulations/:id/view", Component: SimulationView },
+      { path: "simulations/:id/edit", Component: SimulationDetail },
       { path: "roles", Component: RolesScreen },
       { path: "reports", Component: GlobalReports },
       { path: "config", Component: Configuration },
@@ -104,6 +113,8 @@ export const router = createBrowserRouter([
       { path: "programs/:id/assign", Component: AssignProgram },
       { path: "programs/:id/progress", Component: EmployeeProgress },
       { path: "simulations", Component: CompanySimulations },
+      { path: "simulations/:id", Component: SimulationView },
+      { path: "simulations/:id/view", Component: SimulationView },
       { path: "reports", Component: CompanyReports },
       { path: "profile", Component: SharedProfile },
     ],
@@ -121,6 +132,8 @@ export const router = createBrowserRouter([
       { path: "programs/:id/assign", Component: AssignProgram },
       { path: "programs/:id/progress", Component: CoordEmployees },
       { path: "simulations", Component: CoordSimulations },
+      { path: "simulations/:id", Component: SimulationView },
+      { path: "simulations/:id/view", Component: SimulationView },
       { path: "employees", Component: CoordEmployees },
       { path: "exams", Component: ExamManagement },
       { path: "reports", Component: CoordReports },
@@ -135,12 +148,14 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: EmployeeDashboard },
       { path: "programs/:id", Component: ProgramDetail },
+      { path: "simulations/:id", Component: SimulationView },
+      { path: "simulations/:id/view", Component: SimulationView },
       { path: "certificates", Component: MyCertificates },
       { path: "profile", Component: MyProfile },
     ],
   },
 
-  // Exam interface (fullscreen, outside AppShell)
+  // Exam and Simulation interface (fullscreen, outside AppShell)
   {
     path: "/employee/exam/:id",
     Component: ExamInterface,

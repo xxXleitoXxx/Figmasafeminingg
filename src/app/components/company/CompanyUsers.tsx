@@ -49,7 +49,9 @@ function UserDrawer({ user, onClose, onSave }: { user?: typeof USERS[0] | null; 
             onChange={v => setForm(p => ({ ...p, role: v }))}
             options={["Empleado", "Coordinador", "Inspector de Seguridad", "Asistente RRHH"].map(r => ({ label: r, value: r }))}
           />
-          <Toggle label="Cuenta activa" checked={form.status} onChange={v => setForm(p => ({ ...p, status: v }))} />
+          {user && (
+            <Toggle label="Cuenta activa" checked={form.status} onChange={v => setForm(p => ({ ...p, status: v }))} />
+          )}
           {!user && (
             <div className="p-3 rounded-lg text-xs" style={{ backgroundColor: "#EFF6FF", color: "#1D4ED8" }}>
               ✉ Se enviará un correo de bienvenida a este usuario automáticamente tras su creación.

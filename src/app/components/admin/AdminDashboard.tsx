@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { Building2, Play, Users, ClipboardList } from "lucide-react";
 import { TextField } from "@mui/material";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
@@ -37,6 +38,7 @@ const recentActivity = [
 ];
 
 export function AdminDashboard() {
+  const navigate = useNavigate();
   const [startDate, setStartDate] = useState("2025-05-01");
   const [endDate, setEndDate] = useState("2025-05-31");
 
@@ -121,7 +123,7 @@ export function AdminDashboard() {
           <table className="w-full text-sm">
             <thead>
               <tr style={{ borderBottom: `1px solid ${colors.border}` }}>
-                {["#", "Simulación", "Categoría", "Ejecuciones", "Tasa de Aprobación", "Estado"].map(h => (
+                {["#", "Simulación", "Categoría", "Ejecuciones", "Tasa de Aprobación", "Estado", "Acción"].map(h => (
                   <th key={h} className="pb-2 text-left text-xs font-semibold uppercase" style={{ color: colors.textSecondary }}>{h}</th>
                 ))}
               </tr>
@@ -146,7 +148,16 @@ export function AdminDashboard() {
                       {sim.approvalRate}%
                     </span>
                   </td>
-                  <td className="py-2.5"><StatusBadge status={sim.status} /></td>
+                  <td className="py-2.5 pr-4"><StatusBadge status={sim.status} /></td>
+                  <td className="py-2.5">
+                    <button
+                      onClick={() => navigate(`/admin/simulations/${sim.rank}/view`)}
+                      className="text-xs font-semibold hover:underline"
+                      style={{ color: colors.primary }}
+                    >
+                      Ver detalle
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

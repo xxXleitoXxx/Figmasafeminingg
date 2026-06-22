@@ -16,22 +16,54 @@ const AVAILABLE_ADMINS = [
 export function CompanyDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const isNew = id === "new";
 
   const [form, setForm] = useState({
-    razonSocial: isNew ? "" : "Minera Andina S.A.",
-    tradeName: isNew ? "" : "Andina Mining",
-    cuit: isNew ? "" : "30-71234567-8",
-    email: isNew ? "" : "admin@andina.com",
+    razonSocial: "Minera Andina S.A.",
+    tradeName: "Andina Mining",
+    cuit: "30-71234567-8",
+    email: "admin@andina.com",
     status: true,
   });
-  const [admins, setAdmins] = useState(isNew ? [] : MOCK_ADMINS);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [admins, setAdmins] = useState(MOCK_ADMINS);
   const [showAdminSearch, setShowAdminSearch] = useState(false);
-  const [toast, setToast] = useState<string | null>(null);
+  const [toast, setToast] = useState<{message: string, type: 'success' | 'error'} | null>(null);
+
+  const validate = () => {
+    const newErrors: Record<string, string> = {};
+    if (!form.razonSocial) newErrors.razonSocial = "La Razón Social es obligatoria";
+    if (!form.tradeName) newErrors.tradeName = "El Trade Name es obligatorio";
+    if (!form.cuit) {
+      newErrors.cuit = "El CUIT es obligatorio";
+    } else if (!/^\d{2}-\d{8}-\d{1}$/.test(form.cuit)) {
+      newErrors.cuit = "El CUIT debe tener el formato XX-XXXXXXXX-X";
+    }
+
+    if (!form.email) {
+      newErrors.email = "El Email de Contacto es obligatorio";
+    } else if (!/\S+@\S+\.\S+/.test(form.email)) {
+      newErrors.email = "El formato del correo electrónico es inválido";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSave = () => {
-    setToast(isNew ? "Empresa creada exitosamente" : "Cambios guardados exitosamente");
-    setTimeout(() => { setToast(null); navigate("/admin/companies"); }, 2000);
+    if (!validate()) {
+      setToast({ message: "Por favor corrija los errores en el formulario", type: 'error' });
+      return;
+    }
+
+    setToast({ 
+      message: "Cambios guardados exitosamente", 
+      type: 'success' 
+    });
+    
+    setTimeout(() => { 
+      setToast(null); 
+      navigate("/admin/companies"); 
+    }, 2000);
   };
 
   const removeAdmin = (id: number) => setAdmins(prev => prev.filter(a => a.id !== id));
@@ -44,12 +76,12 @@ export function CompanyDetail() {
     <div>
       <Breadcrumb items={[
         { label: "Empresas", onClick: () => navigate("/admin/companies") },
-        { label: isNew ? "Nueva Empresa" : "Minera Andina S.A." }
+        { label: form.razonSocial }
       ]} />
 
       <PageHeader
-        title={isNew ? "Nueva Empresa" : "Minera Andina S.A."}
-        subtitle={isNew ? "Registrar una nueva empresa en la plataforma" : "Editar detalles de la empresa y gestionar administradores"}
+        title={form.razonSocial}
+        subtitle="Editar detalles de la empresa y gestionar administradores"
         actions={
           <>
             <OutlinedBtn onClick={() => navigate("/admin/companies")}>Cancelar</OutlinedBtn>
@@ -63,11 +95,49 @@ export function CompanyDetail() {
         <div className="col-span-2 space-y-6">
           <Card>
             <SectionLabel>Información de la Empresa</SectionLabel>
-            <div className="grid grid-cols-2 gap-5">
-              <InputField label="Razón Social" value={form.razonSocial} onChange={v => setForm(p => ({ ...p, razonSocial: v }))} required />
-              <InputField label="Nombre Comercial" value={form.tradeName} onChange={v => setForm(p => ({ ...p, tradeName: v }))} required />
-              <InputField label="RUT/CUIT" value={form.cuit} onChange={v => setForm(p => ({ ...p, cuit: v }))} required placeholder="XX-XXXXXXXX-X" />
-              <InputField label="Email de Contacto" type="email" value={form.email} onChange={v => setForm(p => ({ ...p, email: v }))} required />
+            <div className="grid grid-cols-2 gap-5 mt-4">
+              <InputField 
+                label="Razón Social" 
+                value={form.razonSocial} 
+                onChange={v => {
+                  setForm(p => ({ ...p, razonSocial: v }));
+                  if (errors.razonSocial) setErrors(p => ({ ...p, razonSocial: "" }));
+                }} 
+                required 
+                error={errors.razonSocial}
+              />
+              <InputField 
+                label="Trade Name" 
+                value={form.tradeName} 
+                onChange={v => {
+                  setForm(p => ({ ...p, tradeName: v }));
+                  if (errors.tradeName) setErrors(p => ({ ...p, tradeName: "" }));
+                }} 
+                required 
+                error={errors.tradeName}
+              />
+              <InputField 
+                label="CUIT" 
+                value={form.cuit} 
+                onChange={v => {
+                  setForm(p => ({ ...p, cuit: v }));
+                  if (errors.cuit) setErrors(p => ({ ...p, cuit: "" }));
+                }} 
+                required 
+                placeholder="XX-XXXXXXXX-X" 
+                error={errors.cuit}
+              />
+              <InputField 
+                label="Contact Email" 
+                type="email" 
+                value={form.email} 
+                onChange={v => {
+                  setForm(p => ({ ...p, email: v }));
+                  if (errors.email) setErrors(p => ({ ...p, email: "" }));
+                }} 
+                required 
+                error={errors.email}
+              />
             </div>
             <div className="mt-5">
               <Toggle label="Empresa activa" checked={form.status} onChange={v => setForm(p => ({ ...p, status: v }))} />
@@ -76,10 +146,13 @@ export function CompanyDetail() {
 
           {/* Administrators */}
           <Card>
-            <SectionLabel>Administradores Asignados</SectionLabel>
-            <div className="space-y-3 mb-4">
+            <SectionLabel>Administradores de Empresa Asignados</SectionLabel>
+            <div className="space-y-3 mb-4 mt-4">
               {admins.length === 0 ? (
-                <p className="text-sm py-4 text-center" style={{ color: colors.textSecondary }}>No hay administradores asignados aún</p>
+                <div className="flex flex-col items-center justify-center py-8 text-center border-2 border-dashed rounded-xl" style={{ borderColor: colors.border }}>
+                  <p className="text-sm font-medium mb-1" style={{ color: colors.textSecondary }}>No hay administradores asignados aún</p>
+                  <p className="text-xs" style={{ color: colors.textSecondary }}>Asigna un administrador para que pueda gestionar la empresa.</p>
+                </div>
               ) : admins.map(a => (
                 <div
                   key={a.id}
@@ -174,7 +247,7 @@ export function CompanyDetail() {
         </div>
       </div>
 
-      {toast && <Toast message={toast} type="success" onClose={() => setToast(null)} />}
+      {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
     </div>
   );
 }

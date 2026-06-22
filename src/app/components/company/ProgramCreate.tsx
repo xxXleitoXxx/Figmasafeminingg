@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useNavigate, useParams } from "react-router";
 import {
   Plus,
@@ -8,6 +8,7 @@ import {
   FileText,
   Check,
   ChevronRight,
+  User,
 } from "lucide-react";
 import {
   PageHeader,
@@ -22,13 +23,22 @@ import {
   Card,
   Toast,
 } from "../shared";
+import { useAuth } from "../../context/AuthContext";
 
 interface ContentItem {
   id: number;
   type: "simulation" | "exam";
   name: string;
-
   maxAttempts: number;
+  isMandatory?: boolean;
+  weight?: number;
+  passingScore?: number;
+  objectives?: {
+    id: string;
+    name: string;
+    weight: number;
+    isMandatory: boolean;
+  }[];
 }
 
 const AVAILABLE_SIMS = [
@@ -37,24 +47,39 @@ const AVAILABLE_SIMS = [
     name: "Evacuación de Incendio – Subterráneo",
     category: "Fuego",
     duration: "~14 min",
+    objectives: [
+      { id: "obj-1-1", name: "Uso correcto del extintor", weight: 40, isMandatory: true },
+      { id: "obj-1-2", name: "Tiempo de evacuación < 3m", weight: 60, isMandatory: false }
+    ]
   },
   {
     id: 2,
     name: "Bloqueo/Etiquetado de Energía",
     category: "Energía",
     duration: "~18 min",
+    objectives: [
+      { id: "obj-2-1", name: "Identificación de fuentes de energía", weight: 50, isMandatory: true },
+      { id: "obj-2-2", name: "Colocación de candado de seguridad", weight: 50, isMandatory: true }
+    ]
   },
   {
     id: 3,
     name: "Entrada a Espacios Confinados",
     category: "Confinados",
     duration: "~22 min",
+    objectives: [
+      { id: "obj-3-1", name: "Medición de gases antes de entrar", weight: 100, isMandatory: true }
+    ]
   },
   {
     id: 4,
     name: "Respuesta a Derrames Químicos",
     category: "Químicos",
     duration: "~12 min",
+    objectives: [
+      { id: "obj-4-1", name: "Uso de EPP adecuado", weight: 30, isMandatory: true },
+      { id: "obj-4-2", name: "Contención del derrame", weight: 70, isMandatory: false }
+    ]
   },
 ];
 
@@ -65,6 +90,13 @@ const AVAILABLE_EXAMS = [
 ];
 
 const STEPS = ["Información Básica", "Contenido", "Ajustes", "Revisión"];
+
+const AVAILABLE_COORDINATORS = [
+  { id: 1, name: "Roberto Silva" },
+  { id: 2, name: "Elena Vega" },
+  { id: 3, name: "Marco Torres" },
+  { id: 4, name: "Lucía Méndez" },
+];
 
 function StepIndicator({ step }: { step: number }) {
   return (
@@ -118,7 +150,9 @@ function StepIndicator({ step }: { step: number }) {
 export function ProgramCreate() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const isNew = !id || id === "new";
+  const isCoordinator = user?.role === "coordinator";
 
   const [step, setStep] = useState(0);
   const [toast, setToast] = useState<string | null>(null);
@@ -142,12 +176,22 @@ export function ProgramCreate() {
             type: "simulation",
             name: "Evacuación de Incendio – Subterráneo",
             maxAttempts: 3,
+            isMandatory: true,
+            weight: 50,
+            passingScore: 80,
+            objectives: [
+              { id: "obj-1-1", name: "Uso correcto del extintor", weight: 40, isMandatory: true },
+              { id: "obj-1-2", name: "Tiempo de evacuación < 3m", weight: 60, isMandatory: false }
+            ]
           },
           {
             id: 10,
             type: "exam",
             name: "Examen Teórico de Seguridad contra Incendios",
             maxAttempts: 2,
+            isMandatory: true,
+            weight: 50,
+            passingScore: 70
           },
         ],
   );
@@ -157,20 +201,31 @@ export function ProgramCreate() {
   >("sims");
 
   const [settings, setSettings] = useState({
-    coordinators: ["Roberto Silva"],
+    coordinators: isCoordinator ? [user?.name || ""] : ["Roberto Silva"],
     assignNow: false,
     notifyOnAssign: true,
     notifyOnExpiry: true,
   });
 
   const addContent = (
-    item: { id: number; name: string },
+    item: { id: number; name: string; objectives?: any[] },
     type: "simulation" | "exam",
   ) => {
     if (!content.find((c) => c.id === item.id)) {
       setContent((prev) => [
         ...prev,
-        { id: item.id, type, name: item.name, maxAttempts: 3 },
+        { 
+          id: item.id, 
+          type, 
+          name: item.name, 
+          maxAttempts: 3,
+          isMandatory: true,
+          weight: 0,
+          passingScore: 70,
+          objectives: type === "simulation" && item.objectives 
+            ? [...item.objectives] 
+            : undefined
+        },
       ]);
     }
   };
@@ -189,6 +244,36 @@ export function ProgramCreate() {
     );
   };
 
+  const updateObjective = (
+    contentId: number,
+    objId: string,
+    field: "weight" | "isMandatory",
+    value: unknown
+  ) => {
+    setContent(prev => prev.map(c => {
+      if (c.id === contentId && c.objectives) {
+        return {
+          ...c,
+          objectives: c.objectives.map(o => o.id === objId ? { ...o, [field]: value } : o)
+        }
+      }
+      return c;
+    }));
+  };
+
+  const toggleCoordinator = (name: string) => {
+    if (isCoordinator) return;
+    setSettings(prev => {
+      const isSelected = prev.coordinators.includes(name);
+      return {
+        ...prev,
+        coordinators: isSelected 
+          ? prev.coordinators.filter(c => c !== name)
+          : [...prev.coordinators, name]
+      };
+    });
+  };
+
   const handleSave = (activate = false) => {
     setToast(
       activate
@@ -197,7 +282,9 @@ export function ProgramCreate() {
     );
     setTimeout(() => {
       setToast(null);
-      navigate("/company/programs");
+      // Ensure we navigate to the correct role path
+      const basePath = window.location.pathname.startsWith("/coordinator") ? "/coordinator" : "/company";
+      navigate(`${basePath}/programs`);
     }, 2000);
   };
 
@@ -207,7 +294,10 @@ export function ProgramCreate() {
         items={[
           {
             label: "Programas",
-            onClick: () => navigate("/company/programs"),
+            onClick: () => {
+              const basePath = window.location.pathname.startsWith("/coordinator") ? "/coordinator" : "/company";
+              navigate(`${basePath}/programs`);
+            },
           },
           { label: isNew ? "Nuevo Programa" : "Editar Programa" },
         ]}
@@ -248,7 +338,7 @@ export function ProgramCreate() {
                   }))
                 }
                 rows={3}
-                className="w-full px-3 py-2.5 rounded-lg border text-sm outline-none resize-none"
+                className="w-full px-3 py-2.5 rounded-lg border text-sm outline-none resize-none transition-all focus:border-blue-900 focus:ring-1 focus:ring-blue-900"
                 style={{ borderColor: colors.border }}
               />
             </div>
@@ -337,32 +427,49 @@ export function ProgramCreate() {
                           : `${item.questions} preguntas`}
                       </p>
                     </div>
-                    <button
-                      onClick={() =>
-                        addContent(
-                          item,
-                          activeContentTab === "sims"
-                            ? "simulation"
-                            : "exam",
-                        )
-                      }
-                      disabled={!!already}
-                      className="p-1.5 rounded-lg transition-colors"
-                      style={{
-                        backgroundColor: already
-                          ? colors.bg
-                          : `${colors.success}15`,
-                        color: already
-                          ? colors.textSecondary
-                          : colors.success,
-                      }}
-                    >
-                      {already ? (
-                        <Check size={14} />
-                      ) : (
-                        <Plus size={14} />
+                    <div className="flex items-center gap-2">
+                      {activeContentTab === "sims" && (
+                        <button
+                          onClick={() =>
+                            window.open(
+                              `/company/simulations/${item.id}/view`,
+                              "_blank",
+                            )
+                          }
+                          className="text-xs px-2 py-1 rounded-lg hover:bg-gray-100 transition-colors"
+                          style={{ color: colors.primary }}
+                          type="button"
+                        >
+                          Ver detalle
+                        </button>
                       )}
-                    </button>
+                      <button
+                        onClick={() =>
+                          addContent(
+                            item,
+                            activeContentTab === "sims"
+                              ? "simulation"
+                              : "exam",
+                          )
+                        }
+                        disabled={!!already}
+                        className="p-1.5 rounded-lg transition-colors"
+                        style={{
+                          backgroundColor: already
+                            ? colors.bg
+                            : `${colors.success}15`,
+                          color: already
+                            ? colors.textSecondary
+                            : colors.success,
+                        }}
+                      >
+                        {already ? (
+                          <Check size={14} />
+                        ) : (
+                          <Plus size={14} />
+                        )}
+                      </button>
+                    </div>
                   </div>
                 );
               })}
@@ -429,41 +536,106 @@ export function ProgramCreate() {
                           {item.type === "simulation" ? "Simulación" : "Examen"}
                         </p>
                       </div>
-                      <button
-                        onClick={() => removeContent(item.id)}
-                      >
-                        <Trash2
-                          size={14}
-                          style={{ color: colors.error }}
-                        />
-                      </button>
-                    </div>
-                    <div className="flex gap-4">
-                      <div className="flex items-center gap-1.5">
-                        <span
-                          className="text-xs"
-                          style={{
-                            color: colors.textSecondary,
-                          }}
+                      <div className="flex items-center gap-2">
+                        {item.type === "simulation" && (
+                          <button
+                            onClick={() =>
+                              window.open(
+                                `/company/simulations/${item.id}/view`,
+                                "_blank",
+                              )
+                            }
+                            className="text-xs hover:underline"
+                            style={{ color: colors.primary }}
+                            type="button"
+                          >
+                            Ver detalle
+                          </button>
+                        )}
+                        <button
+                          onClick={() => removeContent(item.id)}
+                          type="button"
                         >
-                          Intentos máx:
-                        </span>
-                        <input
-                          type="number"
-                          value={item.maxAttempts}
-                          min={1}
-                          max={10}
-                          onChange={(e) =>
-                            updateContent(
-                              item.id,
-                              "maxAttempts",
-                              Number(e.target.value),
-                            )
-                          }
-                          className="w-14 px-2 py-1 rounded border text-xs text-center"
-                          style={{ borderColor: colors.border }}
-                        />
+                          <Trash2
+                            size={14}
+                            style={{ color: colors.error }}
+                          />
+                        </button>
                       </div>
+                    </div>
+                    <div className="mt-3 pt-3 border-t border-gray-100 flex flex-col gap-3">
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <div className="flex flex-col gap-1">
+                          <label className="text-xs" style={{ color: colors.textSecondary }}>Intentos máx.</label>
+                          <input
+                            type="number"
+                            value={item.maxAttempts}
+                            min={1}
+                            max={10}
+                            onChange={(e) => updateContent(item.id, "maxAttempts", Number(e.target.value))}
+                            className="w-full px-2 py-1 rounded border text-sm"
+                            style={{ borderColor: colors.border }}
+                          />
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          <label className="text-xs" style={{ color: colors.textSecondary }}>Nota mínima (%)</label>
+                          <input
+                            type="number"
+                            value={item.passingScore || 70}
+                            min={0}
+                            max={100}
+                            onChange={(e) => updateContent(item.id, "passingScore", Number(e.target.value))}
+                            className="w-full px-2 py-1 rounded border text-sm"
+                            style={{ borderColor: colors.border }}
+                          />
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          <label className="text-xs" style={{ color: colors.textSecondary }}>Ponderación (%)</label>
+                          <input
+                            type="number"
+                            value={item.weight || 0}
+                            min={0}
+                            max={100}
+                            onChange={(e) => updateContent(item.id, "weight", Number(e.target.value))}
+                            className="w-full px-2 py-1 rounded border text-sm"
+                            style={{ borderColor: colors.border }}
+                          />
+                        </div>
+                        <div className="flex items-end pb-1">
+                          <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={item.isMandatory !== false}
+                              onChange={(e) => updateContent(item.id, "isMandatory", e.target.checked)}
+                              className="w-4 h-4 text-blue-900 border-gray-300 rounded focus:ring-blue-900"
+                            />
+                            <span className="text-sm font-medium" style={{ color: colors.textPrimary }}>Obligatorio</span>
+                          </label>
+                        </div>
+                      </div>
+
+                      {item.type === "simulation" && item.objectives && item.objectives.length > 0 && (
+                        <div className="mt-2 pl-3 border-l-2 border-gray-200">
+                          <p className="text-xs font-semibold mb-2" style={{ color: colors.textPrimary }}>Objetivos de la Simulación</p>
+                          <div className="space-y-2">
+                            {item.objectives.map(obj => (
+                              <div key={obj.id} className="flex items-center gap-3 bg-gray-50 p-2 rounded">
+                                <span className="flex-1 text-xs" style={{ color: colors.textSecondary }}>{obj.name}</span>
+                                <div className="flex items-center gap-1.5">
+                                  <label className="text-[10px] text-gray-500">Peso %</label>
+                                  <input
+                                    type="number"
+                                    value={obj.weight}
+                                    onChange={(e) => updateObjective(item.id, obj.id, "weight", Number(e.target.value))}
+                                    className="w-12 px-1 py-0.5 rounded border text-xs text-center"
+                                    style={{ borderColor: colors.border }}
+                                  />
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -477,47 +649,78 @@ export function ProgramCreate() {
       {step === 2 && (
         <Card className="max-w-2xl">
           <SectionLabel>Ajustes del Programa</SectionLabel>
-          <div className="space-y-5">
-            <SelectField
-              label="Coordinador Asignado"
-              value={settings.coordinators[0]}
-              onChange={(v) =>
-                setSettings((p) => ({
-                  ...p,
-                  coordinators: [v],
-                }))
-              }
-              options={["Roberto Silva", "Elena Vega"].map(
-                (c) => ({ label: c, value: c }),
+          <div className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium mb-3" style={{ color: colors.textPrimary }}>
+                Asignación de Coordinador(es)
+              </label>
+              
+              {isCoordinator ? (
+                <div className="flex items-center gap-3 p-3 rounded-lg border bg-gray-50 border-gray-200">
+                  <div className="w-8 h-8 rounded-full bg-blue-900/10 flex items-center justify-center">
+                    <User size={16} className="text-blue-900" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium" style={{ color: colors.textPrimary }}>{user?.name}</p>
+                    <p className="text-xs text-gray-500">Auto-asignado (Propietario)</p>
+                  </div>
+                  <div className="px-2 py-1 bg-gray-200 rounded text-[10px] font-bold text-gray-600 uppercase">Fijo</div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-3">
+                  {AVAILABLE_COORDINATORS.map(coord => {
+                    const isSelected = settings.coordinators.includes(coord.name);
+                    return (
+                      <label 
+                        key={coord.id}
+                        className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all ${isSelected ? 'border-blue-900 bg-blue-50/50' : 'border-gray-200 hover:border-gray-300'}`}
+                      >
+                        <div 
+                          className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${isSelected ? 'bg-blue-900 border-blue-900' : 'bg-white border-gray-300'}`}
+                        >
+                          {isSelected && <Check size={14} className="text-white" strokeWidth={3} />}
+                          <input 
+                            type="checkbox" 
+                            className="hidden" 
+                            checked={isSelected}
+                            onChange={() => toggleCoordinator(coord.name)}
+                          />
+                        </div>
+                        <span className="text-sm font-medium" style={{ color: isSelected ? colors.primary : colors.textPrimary }}>
+                          {coord.name}
+                        </span>
+                      </label>
+                    );
+                  })}
+                </div>
               )}
-            />
-            <Toggle
-              label="Asignar a todos los empleados activos inmediatamente"
-              checked={settings.assignNow}
-              onChange={(v) =>
-                setSettings((p) => ({ ...p, assignNow: v }))
-              }
-            />
-            <Toggle
-              label="Notificar a los empleados al asignar"
-              checked={settings.notifyOnAssign}
-              onChange={(v) =>
-                setSettings((p) => ({
-                  ...p,
-                  notifyOnAssign: v,
-                }))
-              }
-            />
-            <Toggle
-              label="Enviar notificación de advertencia de caducidad"
-              checked={settings.notifyOnExpiry}
-              onChange={(v) =>
-                setSettings((p) => ({
-                  ...p,
-                  notifyOnExpiry: v,
-                }))
-              }
-            />
+              {!isCoordinator && (
+                <p className="mt-2 text-xs text-gray-500">
+                  Seleccione uno o más coordinadores para supervisar este programa.
+                </p>
+              )}
+            </div>
+
+            <div className="pt-4 border-t border-gray-100 space-y-4">
+              <Toggle
+                label="Asignar a todos los empleados activos inmediatamente"
+                checked={settings.assignNow}
+                onChange={(v) =>
+                  setSettings((p) => ({ ...p, assignNow: v }))
+                }
+              />
+              <Toggle
+                label="Notificar a los empleados al asignar"
+                checked={settings.notifyOnAssign}
+                onChange={(v) =>
+                  setSettings((p) => ({
+                    ...p,
+                    notifyOnAssign: v,
+                  }))
+                }
+              />
+              
+            </div>
           </div>
         </Card>
       )}
@@ -569,24 +772,27 @@ export function ProgramCreate() {
               >
                 Contenido ({content.length} elementos)
               </p>
-              {content.map((c) => (
-                <div
-                  key={c.id}
-                  className="flex items-center gap-2 text-sm mb-1"
-                >
-                  {c.type === "simulation" ? (
-                    <Play
-                      size={12}
-                      style={{ color: colors.primary }}
-                    />
-                  ) : (
-                    <FileText
-                      size={12}
-                      style={{ color: colors.secondary }}
-                    />
-                  )}
-                </div>
-              ))}
+              <div className="space-y-1">
+                {content.map((c) => (
+                  <div
+                    key={c.id}
+                    className="flex items-center gap-2 text-sm"
+                  >
+                    {c.type === "simulation" ? (
+                      <Play
+                        size={12}
+                        style={{ color: colors.primary }}
+                      />
+                    ) : (
+                      <FileText
+                        size={12}
+                        style={{ color: colors.secondary }}
+                      />
+                    )}
+                    <span style={{ color: colors.textPrimary }}>{c.name}</span>
+                  </div>
+                ))}
+              </div>
             </div>
             <div
               className="p-4 rounded-lg"
@@ -596,7 +802,7 @@ export function ProgramCreate() {
                 className="text-xs font-semibold uppercase tracking-wide mb-2"
                 style={{ color: colors.textSecondary }}
               >
-                Coordinador
+                {settings.coordinators.length > 1 ? "Coordinadores Asignados" : "Coordinador Asignado"}
               </p>
               <p
                 className="text-sm"
@@ -605,11 +811,11 @@ export function ProgramCreate() {
                 {settings.coordinators.join(", ")}
               </p>
             </div>
-            <div className="flex gap-3">
-              <OutlinedBtn onClick={() => handleSave(false)}>
+            <div className="flex gap-3 pt-2">
+              <OutlinedBtn className="flex-1" onClick={() => handleSave(false)}>
                 Guardar como Borrador
               </OutlinedBtn>
-              <PrimaryBtn onClick={() => handleSave(true)}>
+              <PrimaryBtn className="flex-1" onClick={() => handleSave(true)}>
                 Activar Programa
               </PrimaryBtn>
             </div>
@@ -620,11 +826,14 @@ export function ProgramCreate() {
       {/* Navigation */}
       <div className="flex justify-between mt-6">
         <OutlinedBtn
-          onClick={() =>
-            step === 0
-              ? navigate("/company/programs")
-              : setStep((s) => s - 1)
-          }
+          onClick={() => {
+            if (step === 0) {
+              const basePath = window.location.pathname.startsWith("/coordinator") ? "/coordinator" : "/company";
+              navigate(`${basePath}/programs`);
+            } else {
+              setStep((s) => s - 1);
+            }
+          }}
         >
           {step === 0 ? "Cancelar" : "← Atrás"}
         </OutlinedBtn>

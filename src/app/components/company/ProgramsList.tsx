@@ -119,15 +119,14 @@ export function ProgramsList() {
                     Editar
                   </button>
                 )}
-                {prog.status !== "cerrado" && (
-                  <button
-                    onClick={() => navigate(`/company/programs/${prog.id}/assign`)}
-                    className="px-3 py-1.5 rounded-lg text-xs font-medium text-white"
-                    style={{ backgroundColor: colors.secondary }}
-                  >
-                    Asignar
-                  </button>
-                )}
+                <button
+                  disabled={prog.status === "borrador" || prog.status === "cerrado"}
+                  onClick={() => navigate(`/company/programs/${prog.id}/assign`)}
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium text-white disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+                  style={{ backgroundColor: colors.secondary }}
+                >
+                  Asignar
+                </button>
                 <button
                   onClick={() => navigate(`/company/programs/${prog.id}/progress`)}
                   className="px-3 py-1.5 rounded-lg border text-xs font-medium transition-colors"

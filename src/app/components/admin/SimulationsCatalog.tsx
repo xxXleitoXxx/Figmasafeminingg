@@ -50,6 +50,9 @@ const DIFF_COLORS: Record<string, string> = {
 
 export function SimulationsCatalog() {
   const navigate = useNavigate();
+  const location = window.location;
+  const basePath = location.pathname.split("/")[1]; // "admin", "company", "coordinator"
+  const isAdmin = basePath === "admin";
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [difficultyFilter, setDifficultyFilter] = useState("All");
@@ -70,7 +73,7 @@ export function SimulationsCatalog() {
       <PageHeader
         title="Simulaciones VR"
         subtitle={`${SIMULATIONS.length} simulaciones en el catálogo`}
-        actions={<PrimaryBtn onClick={() => navigate("/admin/simulations/new")}><Plus size={16} /> Nueva Simulación</PrimaryBtn>}
+        actions={isAdmin && <PrimaryBtn onClick={() => navigate("/admin/simulations/new")}><Plus size={16} /> Nueva Simulación</PrimaryBtn>}
       />
 
       {/* Filters */}
@@ -141,10 +144,17 @@ export function SimulationsCatalog() {
                     <>
                       <div className="fixed inset-0 z-30" onClick={() => setOpenMenu(null)} />
                       <div className="absolute right-0 top-8 z-40 bg-white rounded-lg shadow-lg border py-1 w-36" style={{ borderColor: colors.border }}>
-                        {["Editar", "Gestionar Métricas", "Desactivar"].map(action => (
+                        <button
+                          onClick={() => { setOpenMenu(null); navigate(`/${basePath}/simulations/${sim.id}/view`); }}
+                          className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors"
+                          style={{ color: colors.textPrimary }}
+                        >
+                          Ver detalle
+                        </button>
+                        {isAdmin && ["Editar", "Gestionar Métricas", "Desactivar"].map(action => (
                           <button
                             key={action}
-                            onClick={() => { setOpenMenu(null); if (action === "Editar") navigate(`/admin/simulations/${sim.id}`); }}
+                            onClick={() => { setOpenMenu(null); if (action === "Editar") navigate(`/${basePath}/simulations/${sim.id}/edit`); }}
                             className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors"
                             style={{ color: action === "Desactivar" ? colors.error : colors.textPrimary }}
                           >
@@ -179,14 +189,14 @@ export function SimulationsCatalog() {
                 <span className="text-xs" style={{ color: colors.textSecondary }}>{sim.duration}</span>
                 <span className="text-xs" style={{ color: colors.textSecondary }}>{sim.version}</span>
               </div>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between mt-4">
                 <StatusBadge status={sim.status} />
                 <button
-                  onClick={() => navigate(`/admin/simulations/${sim.id}`)}
+                  onClick={() => navigate(`/${basePath}/simulations/${sim.id}/view`)}
                   className="text-xs font-medium hover:underline"
                   style={{ color: colors.primary }}
                 >
-                  Editar →
+                  Ver detalle →
                 </button>
               </div>
             </div>
