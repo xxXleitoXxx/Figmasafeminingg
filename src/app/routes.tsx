@@ -5,6 +5,13 @@ import { RoleSelectionScreen } from "./components/auth/RoleSelectionScreen";
 import { ForgotPasswordScreen } from "./components/auth/ForgotPasswordScreen";
 import { ResetPasswordScreen } from "./components/auth/ResetPasswordScreen";
 
+// System Admin
+import { HelpManagement } from "./components/admin/HelpManagement";
+
+// Shared Help Center
+import { HelpCenter } from "./components/shared/HelpCenter";
+import { AuditTrail } from "./components/shared/AuditTrail";
+
 // Admin
 import { AdminDashboard } from "./components/admin/AdminDashboard";
 import { CompaniesScreen } from "./components/admin/CompaniesScreen";
@@ -96,6 +103,8 @@ export const router = createBrowserRouter([
       { path: "roles", Component: RolesScreen },
       { path: "reports", Component: GlobalReports },
       { path: "config", Component: Configuration },
+      { path: "help", Component: HelpManagement },
+      { path: "audit", Component: AuditTrail },
     ],
   },
 
@@ -116,7 +125,9 @@ export const router = createBrowserRouter([
       { path: "simulations/:id", Component: SimulationView },
       { path: "simulations/:id/view", Component: SimulationView },
       { path: "reports", Component: CompanyReports },
+      { path: "audit", Component: AuditTrail },
       { path: "profile", Component: SharedProfile },
+      { path: "help", Component: HelpCenter },
     ],
   },
 
@@ -138,6 +149,7 @@ export const router = createBrowserRouter([
       { path: "exams", Component: ExamManagement },
       { path: "reports", Component: CoordReports },
       { path: "profile", Component: SharedProfile },
+      { path: "help", Component: HelpCenter },
     ],
   },
 
@@ -152,6 +164,7 @@ export const router = createBrowserRouter([
       { path: "simulations/:id/view", Component: SimulationView },
       { path: "certificates", Component: MyCertificates },
       { path: "profile", Component: MyProfile },
+      { path: "help", Component: HelpCenter },
     ],
   },
 

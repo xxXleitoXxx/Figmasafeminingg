@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router";
 import { useAuth, Role } from "../../context/AuthContext";
 import {
   LayoutDashboard, Building2, Users, Play, Shield, BarChart2, Settings,
-  Briefcase, ClipboardList, FileText, UserCircle, GraduationCap, BookOpen, Award
+  Briefcase, ClipboardList, FileText, UserCircle, GraduationCap, BookOpen, Award, HelpCircle, FileSearch
 } from "lucide-react";
 
 interface NavItem {
@@ -21,6 +21,8 @@ const navByRole: Record<Role, NavItem[]> = {
     { label: "Roles", icon: <Shield size={18} />, path: "/admin/roles" },
     { label: "Reportes", icon: <BarChart2 size={18} />, path: "/admin/reports" },
     { label: "Configuración", icon: <Settings size={18} />, path: "/admin/config" },
+    { label: "Auditoría", icon: <FileSearch size={18} />, path: "/admin/audit" },
+    { label: "Ayuda y Soporte", icon: <HelpCircle size={18} />, path: "/admin/help" },
   ],
   company: [
     { label: "Panel", icon: <LayoutDashboard size={18} />, path: "/company" },
@@ -29,7 +31,9 @@ const navByRole: Record<Role, NavItem[]> = {
     { label: "Programas", icon: <Briefcase size={18} />, path: "/company/programs" },
     { label: "Simulaciones", icon: <Play size={18} />, path: "/company/simulations" },
     { label: "Reportes", icon: <BarChart2 size={18} />, path: "/company/reports" },
+    { label: "Auditoría", icon: <FileSearch size={18} />, path: "/company/audit" },
     { label: "Mi Perfil", icon: <UserCircle size={18} />, path: "/company/profile" },
+    { label: "Ayuda", icon: <HelpCircle size={18} />, path: "/company/help" },
   ],
   coordinator: [
     { label: "Panel", icon: <LayoutDashboard size={18} />, path: "/coordinator" },
@@ -39,11 +43,13 @@ const navByRole: Record<Role, NavItem[]> = {
     { label: "Exámenes", icon: <ClipboardList size={18} />, path: "/coordinator/exams" },
     { label: "Reportes", icon: <BarChart2 size={18} />, path: "/coordinator/reports" },
     { label: "Mi Perfil", icon: <UserCircle size={18} />, path: "/coordinator/profile" },
+    { label: "Ayuda", icon: <HelpCircle size={18} />, path: "/coordinator/help" },
   ],
   employee: [
     { label: "Mi Entrenamiento", icon: <GraduationCap size={18} />, path: "/employee" },
     { label: "Mis Certificados", icon: <Award size={18} />, path: "/employee/certificates" },
     { label: "Mi Perfil", icon: <UserCircle size={18} />, path: "/employee/profile" },
+    { label: "Ayuda", icon: <HelpCircle size={18} />, path: "/employee/help" },
   ],
 };
 

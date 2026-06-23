@@ -1,0 +1,356 @@
+Se agregan las siguientes clases para aplicar el nuevo módulo de Auditoría:
+
+1. USUARIO_HISTORIAL
+
+Registra modificaciones realizadas sobre usuarios.
+
+Atributos
+idHistorialUsuario : Integer
+
+tipoEvento : String
+// MODIFICACION
+
+fechaEvento : DateTime
+
+atributoModificado : String
+
+valorAnterior : String
+
+valorNuevo : String
+Relaciones
+USUARIO_HISTORIAL -> USUARIO
+(Usuario afectado)
+
+USUARIO_HISTORIAL -> USUARIO
+(Usuario que realizó la acción)
+2. ROL_HISTORIAL
+
+Registra modificaciones realizadas sobre roles.
+
+Atributos
+idHistorialRol : Integer
+
+tipoEvento : String
+// MODIFICACION
+
+fechaEvento : DateTime
+
+atributoModificado : String
+
+valorAnterior : String
+
+valorNuevo : String
+Relaciones
+ROL_HISTORIAL -> ROL
+
+ROL_HISTORIAL -> USUARIO
+(Actor)
+3. PERMISO_HISTORIAL
+
+Registra modificaciones realizadas sobre permisos.
+
+Atributos
+idHistorialPermiso : Integer
+
+tipoEvento : String
+// MODIFICACION
+
+fechaEvento : DateTime
+
+atributoModificado : String
+
+valorAnterior : String
+
+valorNuevo : String
+Relaciones
+PERMISO_HISTORIAL -> Permiso
+
+PERMISO_HISTORIAL -> USUARIO
+(Actor)
+4. EMPRESA_HISTORIAL
+
+Registra modificaciones realizadas sobre empresas.
+
+Atributos
+idHistorialEmpresa : Integer
+
+tipoEvento : String
+// MODIFICACION
+
+fechaEvento : DateTime
+
+atributoModificado : String
+
+valorAnterior : String
+
+valorNuevo : String
+Relaciones
+EMPRESA_HISTORIAL -> Empresa
+
+EMPRESA_HISTORIAL -> USUARIO
+(Actor)
+5. CAPACITACION_HISTORIAL
+
+Recordemos que CAPACITACION representa las simulaciones VR.
+
+Registra modificaciones realizadas sobre simulaciones.
+
+Atributos
+idHistorialCapacitacion : Integer
+
+tipoEvento : String
+// MODIFICACION
+
+fechaEvento : DateTime
+
+atributoModificado : String
+
+valorAnterior : String
+
+valorNuevo : String
+
+versionAnterior : Integer
+
+versionNueva : Integer
+Relaciones
+CAPACITACION_HISTORIAL -> CAPACITACION
+
+CAPACITACION_HISTORIAL -> USUARIO
+(Actor)
+6. PROGRAMA_HISTORIAL
+
+Registra:
+
+modificaciones
+cierre de programa
+clonación
+Atributos
+idHistorialPrograma : Integer
+
+tipoEvento : String
+// MODIFICACION
+// CIERRE
+// CLONACION
+
+fechaEvento : DateTime
+
+atributoModificado : String
+
+valorAnterior : String
+
+valorNuevo : String
+Atributos adicionales para clonación
+programaOrigen : Integer
+
+programaDestino : Integer
+Relaciones
+PROGRAMA_HISTORIAL -> PROGRAMA
+
+PROGRAMA_HISTORIAL -> USUARIO
+(Actor)
+7. EXAMEN_HISTORIAL
+
+Registra:
+
+modificaciones
+versionado
+Atributos
+idHistorialExamen : Integer
+
+tipoEvento : String
+// MODIFICACION
+// VERSIONADO
+
+fechaEvento : DateTime
+
+atributoModificado : String
+
+valorAnterior : String
+
+valorNuevo : String
+
+versionAnterior : Integer
+
+versionNueva : Integer
+Relaciones
+EXAMEN_HISTORIAL -> EXAMEN
+
+EXAMEN_HISTORIAL -> USUARIO
+(Actor)
+8. PREGUNTA_HISTORIAL
+
+Registra modificaciones realizadas sobre preguntas.
+
+Atributos
+idHistorialPregunta : Integer
+
+tipoEvento : String
+// MODIFICACION
+
+fechaEvento : DateTime
+
+atributoModificado : String
+
+valorAnterior : String
+
+valorNuevo : String
+Relaciones
+PREGUNTA_HISTORIAL -> Pregunta
+
+PREGUNTA_HISTORIAL -> USUARIO
+(Actor)
+9. CONFIGURACION_HISTORIAL
+
+Para cumplir RN16 e I3.
+
+Registra todos los cambios de parámetros globales.
+
+Atributos
+idHistorialConfiguracion : Integer
+
+fechaEvento : DateTime
+
+nombreParametro : String
+
+valorAnterior : String
+
+valorNuevo : String
+
+motivoCambio : String
+Relaciones
+CONFIGURACION_HISTORIAL -> CONFIGURACION
+
+CONFIGURACION_HISTORIAL -> USUARIO
+(Actor)
+
+1. CONFIGURACION
+
+Representa el valor actual de cada parámetro configurable del sistema.
+
+Atributos
+idConfiguracion : Integer
+
+nombreParametro : String
+
+valorParametro : String
+
+descripcionParametro : String
+
+fechaModificacion : DateTime
+Ejemplos de registros
+jwt_web_expiration
+
+jwt_vr_expiration
+
+duracion_maxima_sesion
+
+plantilla_certificado
+
+correo_notificacion_asignacion
+
+correo_notificacion_aprobacion
+Relaciones
+CONFIGURACION_HISTORIAL -> CONFIGURACION
+[0..* → 1]
+
+No necesita más relaciones.
+
+2. EMPRESA_ADMINISTRADOR
+
+Permite registrar qué administrador administra qué empresa y mantener historial completo de asignaciones.
+
+Atributos
+fechaAsignacion : Date
+
+fechaRevocacion : Date
+
+asignadoPor : Usuario
+
+revocadoPor : Usuario
+Relaciones
+EMPRESA_ADMINISTRADOR -> Empresa
+[0..* → 1]
+
+EMPRESA_ADMINISTRADOR -> USUARIO
+[0..* → 1]
+
+Donde el USUARIO asociado debe ser un administrador de empresa.
+
+
+3. PERMISO_ENDPOINT
+
+Actualmente tienen:
+
+Permiso → Endpoint
+
+pero sin entidad asociativa.
+
+Esta clase permite auditar altas y bajas de permisos sobre endpoints.
+
+Atributos
+fechaAsignacion : DateTime
+
+fechaBaja : DateTime
+
+asignadoPor : Usuario
+
+revocadoPor : Usuario
+Relaciones
+PERMISO_ENDPOINT -> Permiso
+[0..* → 1]
+
+PERMISO_ENDPOINT -> ENDPOINT
+[0..* → 1]
+
+
+
+
+Además de las clases nuevas, para soportar correctamente la auditoría mediante entidades asociativas agregaría:
+
+USUARIO_ROL
+
+Ya tiene:
+
+fechaAsignacion
+fechaBaja
+AsignadoPor
+
+Agregar:
+
+RevocadoPor : Usuario
+COORDINADORPROGRAMA
+
+Agregar:
+
+asignadoPor : Usuario
+
+revocadoPor : Usuario
+CAPACITADOPROGRAMA
+
+Agregar:
+
+asignadoPor : Usuario
+
+revocadoPor : Usuario
+PROGRAMA-CAPACITACION
+
+Agregar:
+
+fechaAltaPC : Date
+
+fechaBajaPC : Date
+
+usuarioAltaPC : Usuario
+
+usuarioBajaPC : Usuario
+PROGRAMA-EXAMEN
+
+Agregar:
+
+fechaAltaPE : Date
+
+fechaBajaPE : Date
+
+usuarioAltaPE : Usuario
+
+usuarioBajaPE : Usuario
