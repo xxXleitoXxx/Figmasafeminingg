@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { Plus, Pencil, Trash2, Eye, X, Minus } from "lucide-react";
-import { PageHeader, PrimaryBtn, StatusBadge, colors, Card, EmptyState } from "../shared";
+import { useNavigate } from "react-router";
+import { Plus, Pencil, Trash2, Eye, X, Minus, Info } from "lucide-react";
+import { PageHeader, PrimaryBtn, StatusBadge, colors, EmptyState } from "../shared";
+import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from "@mui/material";
 
 const EXAMS = [
   { id: 1, name: "Examen Teórico de Seguridad contra Incendios", questions: 15, attempts: 3, usedIn: 2, status: "activo" },
@@ -9,13 +11,25 @@ const EXAMS = [
   { id: 4, name: "Cuestionario Previo Entrada Espacio Confinado", questions: 12, attempts: 2, usedIn: 0, status: "borrador" },
 ];
 
-const QUESTIONS = [
-  { id: 1, text: "¿Cuál es la primera acción a tomar cuando suena una alarma de incendio bajo tierra?", category: "Seguridad Incendios", options: 4, usedIn: 2 },
-  { id: 2, text: "¿Qué EPP es obligatorio al entrar en un espacio confinado?", category: "EPP", options: 4, usedIn: 1 },
-  { id: 3, text: "¿Cuántos pasos hay en el procedimiento estándar LOTO?", category: "Energía", options: 4, usedIn: 1 },
-  { id: 4, text: "¿Qué significa IDLH en las regulaciones de espacios confinados?", category: "Espacios Confinados", options: 4, usedIn: 1 },
-  { id: 5, text: "¿Cuándo se debe inspeccionar el EPP antes de su uso?", category: "EPP", options: 4, usedIn: 2 },
+const INITIAL_QUESTIONS = [
+  { id: 1, text: "¿Cuál es la primera acción a tomar cuando suena una alarma de incendio bajo tierra?", category: "Seguridad Incendios", options: 4, usedIn: 2, hasAttempts: true, optionsText: ["Llamar a emergencias", "Evacuar inmediatamente", "Buscar la fuente del incendio", "Esperar instrucciones"], correct: 1 },
+  { id: 2, text: "¿Qué EPP es obligatorio al entrar en un espacio confinado?", category: "EPP", options: 4, usedIn: 1, hasAttempts: true, optionsText: ["Casco y guantes", "Arnés y línea de vida", "Gafas de seguridad", "Mascarilla"], correct: 1 },
+  { id: 3, text: "¿Cuántos pasos hay en el procedimiento estándar LOTO?", category: "Energía", options: 4, usedIn: 1, hasAttempts: false, optionsText: ["4", "5", "6", "7"], correct: 2 },
+  { id: 4, text: "¿Qué significa IDLH en las regulaciones de espacios confinados?", category: "Espacios Confinados", options: 4, usedIn: 1, hasAttempts: false, optionsText: ["Peligro Inmediato para la Vida o la Salud", "Nivel de Peligro Determinado", "Índice de Daño Localizado", "Ninguna de las anteriores"], correct: 0 },
+  { id: 5, text: "¿Cuándo se debe inspeccionar el EPP antes de su uso?", category: "EPP", options: 4, usedIn: 0, hasAttempts: false, optionsText: ["Cada mes", "Cada semana", "Antes de cada uso", "Solo cuando se vea dañado"], correct: 2 },
+  { id: 6, text: "¿Cuál es el límite de oxígeno seguro en espacios confinados?", category: "Espacios Confinados", options: 4, usedIn: 0, hasAttempts: false, optionsText: ["19.5% - 23.5%", "15.0% - 20.0%", "21.0% - 25.0%", "18.0% - 21.0%"], correct: 0 },
 ];
+
+interface Question {
+  id: number;
+  text: string;
+  category: string;
+  options: number;
+  usedIn: number;
+  hasAttempts: boolean;
+  optionsText: string[];
+  correct: number;
+}
 
 interface QuestionForm {
   text: string;
@@ -24,12 +38,14 @@ interface QuestionForm {
   category: string;
 }
 
-function QuestionDrawer({ onClose }: { onClose: () => void }) {
+function QuestionDrawer({ onClose, questionToEdit, viewOnly = false }: { onClose: () => void, questionToEdit?: Question, viewOnly?: boolean }) {
+  const isReadOnly = viewOnly || (questionToEdit ? questionToEdit.hasAttempts : false);
+  
   const [form, setForm] = useState<QuestionForm>({
-    text: "",
-    options: ["", "", "", ""],
-    correct: 0,
-    category: "",
+    text: questionToEdit?.text || "",
+    options: questionToEdit?.optionsText || ["", "", "", ""],
+    correct: questionToEdit?.correct ?? 0,
+    category: questionToEdit?.category || "",
   });
 
   const addOption = () => { if (form.options.length < 5) setForm(p => ({ ...p, options: [...p.options, ""] })); };
@@ -41,28 +57,38 @@ function QuestionDrawer({ onClose }: { onClose: () => void }) {
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
       <div className="absolute right-0 top-0 bottom-0 w-[520px] bg-white shadow-2xl flex flex-col">
         <div className="flex items-center justify-between px-6 py-5 border-b" style={{ borderColor: colors.border }}>
-          <h3 className="font-semibold" style={{ color: colors.textPrimary }}>Nueva Pregunta</h3>
+          <h3 className="font-semibold" style={{ color: colors.textPrimary }}>
+            {viewOnly ? "Ver Pregunta" : (questionToEdit ? "Editar Pregunta" : "Nueva Pregunta")}
+          </h3>
           <button onClick={onClose}><X size={18} /></button>
         </div>
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
+          
+          {!viewOnly && isReadOnly && (
+            <div className="bg-blue-50 border border-blue-200 p-3 rounded-lg flex gap-3 text-sm text-blue-800">
+              <Info size={18} className="shrink-0 mt-0.5" />
+              <p>Esta pregunta tiene intentos de examen registrados. Para preservar la integridad de los registros, no se puede modificar el enunciado ni las opciones de respuesta. Si requieres hacer cambios, debes crear una nueva versión de la pregunta.</p>
+            </div>
+          )}
+
           <div>
             <label className="block text-sm font-medium mb-1" style={{ color: colors.textPrimary }}>Texto de la Pregunta *</label>
             <textarea value={form.text} onChange={e => setForm(p => ({ ...p, text: e.target.value }))}
-              rows={3} placeholder="Ingresa la pregunta aquí..."
-              className="w-full px-3 py-2.5 rounded-lg border text-sm outline-none resize-none" style={{ borderColor: colors.border }} />
+              rows={3} placeholder="Ingresa la pregunta aquí..." disabled={isReadOnly}
+              className={`w-full px-3 py-2.5 rounded-lg border text-sm outline-none resize-none ${isReadOnly ? 'bg-gray-50 text-gray-500 cursor-not-allowed' : ''}`} style={{ borderColor: colors.border }} />
           </div>
 
           <div>
             <label className="block text-sm font-medium mb-1" style={{ color: colors.textPrimary }}>Categoría</label>
             <input value={form.category} onChange={e => setForm(p => ({ ...p, category: e.target.value }))}
-              placeholder="ej. Seguridad Incendios, EPP, Energía"
-              className="w-full px-3 py-2.5 rounded-lg border text-sm outline-none" style={{ borderColor: colors.border }} />
+              placeholder="ej. Seguridad Incendios, EPP, Energía" disabled={viewOnly}
+              className={`w-full px-3 py-2.5 rounded-lg border text-sm outline-none ${viewOnly ? 'bg-gray-50 text-gray-500 cursor-not-allowed' : ''}`} style={{ borderColor: colors.border }} />
           </div>
 
           <div>
             <div className="flex items-center justify-between mb-2">
               <label className="text-sm font-medium" style={{ color: colors.textPrimary }}>Opciones de Respuesta *</label>
-              {form.options.length < 5 && (
+              {!isReadOnly && form.options.length < 5 && (
                 <button onClick={addOption} className="text-xs font-medium flex items-center gap-1" style={{ color: colors.primary }}>
                   <Plus size={12} /> Añadir opción
                 </button>
@@ -76,6 +102,7 @@ function QuestionDrawer({ onClose }: { onClose: () => void }) {
                     name="correct"
                     checked={form.correct === i}
                     onChange={() => setForm(p => ({ ...p, correct: i }))}
+                    disabled={isReadOnly}
                     style={{ accentColor: colors.success }}
                     title="Marcar como respuesta correcta"
                   />
@@ -83,10 +110,11 @@ function QuestionDrawer({ onClose }: { onClose: () => void }) {
                     value={opt}
                     onChange={e => updateOption(i, e.target.value)}
                     placeholder={`Opción ${i + 1}`}
-                    className="flex-1 px-3 py-2 rounded-lg border text-sm outline-none"
+                    disabled={isReadOnly}
+                    className={`flex-1 px-3 py-2 rounded-lg border text-sm outline-none ${isReadOnly ? 'bg-gray-50 text-gray-500 cursor-not-allowed' : ''}`}
                     style={{ borderColor: form.correct === i ? colors.success : colors.border }}
                   />
-                  {form.options.length > 2 && (
+                  {!isReadOnly && form.options.length > 2 && (
                     <button onClick={() => removeOption(i)} className="p-1 rounded hover:bg-red-50">
                       <Minus size={14} style={{ color: colors.error }} />
                     </button>
@@ -94,12 +122,18 @@ function QuestionDrawer({ onClose }: { onClose: () => void }) {
                 </div>
               ))}
             </div>
-            <p className="text-xs mt-2" style={{ color: colors.textSecondary }}>Selecciona el botón junto a la respuesta correcta</p>
+            {!isReadOnly && <p className="text-xs mt-2" style={{ color: colors.textSecondary }}>Selecciona el botón junto a la respuesta correcta</p>}
           </div>
         </div>
         <div className="px-6 py-4 border-t flex justify-end gap-3" style={{ borderColor: colors.border }}>
-          <button onClick={onClose} className="px-4 py-2 rounded-lg border text-sm font-medium" style={{ borderColor: colors.border, color: colors.textSecondary }}>Cancelar</button>
-          <PrimaryBtn onClick={onClose}>Guardar Pregunta</PrimaryBtn>
+          {viewOnly ? (
+            <PrimaryBtn onClick={onClose}>Cerrar</PrimaryBtn>
+          ) : (
+            <>
+              <button onClick={onClose} className="px-4 py-2 rounded-lg border text-sm font-medium" style={{ borderColor: colors.border, color: colors.textSecondary }}>Cancelar</button>
+              <PrimaryBtn onClick={onClose}>Guardar Cambios</PrimaryBtn>
+            </>
+          )}
         </div>
       </div>
     </div>
@@ -107,8 +141,34 @@ function QuestionDrawer({ onClose }: { onClose: () => void }) {
 }
 
 export function ExamManagement() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<"exams" | "questions">("exams");
   const [showQuestionDrawer, setShowQuestionDrawer] = useState(false);
+  
+  // State for Question Bank
+  const [questions, setQuestions] = useState<Question[]>(INITIAL_QUESTIONS);
+  const [questionToEdit, setQuestionToEdit] = useState<Question | undefined>(undefined);
+  const [viewOnlyDrawer, setViewOnlyDrawer] = useState(false);
+  const [deleteQuestionId, setDeleteQuestionId] = useState<number | null>(null);
+
+  const handleCreateQuestion = () => {
+    setQuestionToEdit(undefined);
+    setViewOnlyDrawer(false);
+    setShowQuestionDrawer(true);
+  };
+
+  const handleEditQuestion = (q: Question, viewOnly = false) => {
+    setQuestionToEdit(q);
+    setViewOnlyDrawer(viewOnly);
+    setShowQuestionDrawer(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (deleteQuestionId !== null) {
+      setQuestions(prev => prev.filter(q => q.id !== deleteQuestionId));
+      setDeleteQuestionId(null);
+    }
+  };
 
   return (
     <div>
@@ -116,8 +176,8 @@ export function ExamManagement() {
         title="Exámenes Teóricos"
         actions={
           activeTab === "exams"
-            ? <PrimaryBtn><Plus size={16} /> Nuevo Examen</PrimaryBtn>
-            : <PrimaryBtn onClick={() => setShowQuestionDrawer(true)}><Plus size={16} /> Nueva Pregunta</PrimaryBtn>
+            ? <PrimaryBtn onClick={() => navigate("new")}><Plus size={16} /> Nuevo Examen</PrimaryBtn>
+            : <PrimaryBtn onClick={handleCreateQuestion}><Plus size={16} /> Nueva Pregunta</PrimaryBtn>
         }
       />
 
@@ -177,10 +237,10 @@ export function ExamManagement() {
               </tr>
             </thead>
             <tbody>
-              {QUESTIONS.length === 0 ? (
-                <tr><td colSpan={5}><EmptyState title="No hay preguntas aún" subtitle="Crea tu primera pregunta usando el botón de arriba" action={<PrimaryBtn onClick={() => setShowQuestionDrawer(true)}><Plus size={16} /> Nueva Pregunta</PrimaryBtn>} /></td></tr>
-              ) : QUESTIONS.map((q, i) => (
-                <tr key={q.id} style={{ borderBottom: i < QUESTIONS.length - 1 ? `1px solid ${colors.border}` : "none" }}
+              {questions.length === 0 ? (
+                <tr><td colSpan={5}><EmptyState title="No hay preguntas aún" subtitle="Crea tu primera pregunta usando el botón de arriba" action={<PrimaryBtn onClick={handleCreateQuestion}><Plus size={16} /> Nueva Pregunta</PrimaryBtn>} /></td></tr>
+              ) : questions.map((q, i) => (
+                <tr key={q.id} style={{ borderBottom: i < questions.length - 1 ? `1px solid ${colors.border}` : "none" }}
                   onMouseEnter={el => (el.currentTarget as HTMLTableRowElement).style.backgroundColor = "#F8FAFC"}
                   onMouseLeave={el => (el.currentTarget as HTMLTableRowElement).style.backgroundColor = ""}>
                   <td className="px-5 py-3.5 max-w-xs">
@@ -193,8 +253,17 @@ export function ExamManagement() {
                   <td className="px-5 py-3.5" style={{ color: colors.textSecondary }}>{q.usedIn} examen{q.usedIn !== 1 ? "es" : ""}</td>
                   <td className="px-5 py-3.5">
                     <div className="flex items-center gap-2">
-                      <button className="p-1.5 rounded-lg hover:bg-gray-100"><Pencil size={15} style={{ color: colors.textSecondary }} /></button>
-                      {q.usedIn === 0 && <button className="p-1.5 rounded-lg hover:bg-red-50"><Trash2 size={15} style={{ color: colors.error }} /></button>}
+                      <button className="p-1.5 rounded-lg hover:bg-gray-100" title="Ver" onClick={() => handleEditQuestion(q, true)}>
+                        <Eye size={15} style={{ color: colors.textSecondary }} />
+                      </button>
+                      <button className="p-1.5 rounded-lg hover:bg-gray-100" title="Editar" onClick={() => handleEditQuestion(q, false)}>
+                        <Pencil size={15} style={{ color: colors.textSecondary }} />
+                      </button>
+                      {q.usedIn === 0 && !q.hasAttempts && (
+                        <button className="p-1.5 rounded-lg hover:bg-red-50" title="Eliminar" onClick={() => setDeleteQuestionId(q.id)}>
+                          <Trash2 size={15} style={{ color: colors.error }} />
+                        </button>
+                      )}
                     </div>
                   </td>
                 </tr>
@@ -204,7 +273,28 @@ export function ExamManagement() {
         </div>
       )}
 
-      {showQuestionDrawer && <QuestionDrawer onClose={() => setShowQuestionDrawer(false)} />}
+      {showQuestionDrawer && <QuestionDrawer onClose={() => setShowQuestionDrawer(false)} questionToEdit={questionToEdit} viewOnly={viewOnlyDrawer} />}
+
+      <Dialog 
+        open={!!deleteQuestionId} 
+        onClose={() => setDeleteQuestionId(null)}
+        PaperProps={{ style: { borderRadius: '12px' } }}
+      >
+        <DialogTitle className="font-semibold" style={{ color: colors.textPrimary }}>Eliminar Pregunta</DialogTitle>
+        <DialogContent>
+          <DialogContentText className="text-sm" style={{ color: colors.textSecondary, marginTop: '8px' }}>
+            ¿Estás seguro de que deseas eliminar esta pregunta? Esta acción no se puede deshacer.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions style={{ padding: '16px 24px' }}>
+          <Button onClick={() => setDeleteQuestionId(null)} style={{ color: colors.textSecondary, textTransform: 'none', fontWeight: 500 }}>
+            Cancelar
+          </Button>
+          <Button onClick={handleConfirmDelete} style={{ color: colors.error, textTransform: 'none', fontWeight: 600 }} autoFocus>
+            Eliminar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

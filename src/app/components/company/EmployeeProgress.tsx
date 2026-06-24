@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { Download, ChevronDown, ChevronUp } from "lucide-react";
+import { Download, ChevronDown, ChevronUp, MoreVertical } from "lucide-react";
 import { Breadcrumb, PageHeader, StatusBadge, ProgressBar, Avatar, colors, Card } from "../shared";
+import { IconButton, Menu, MenuItem } from "@mui/material";
+import { toast } from "sonner";
 
 const EMPLOYEES = [
   {
@@ -37,6 +39,26 @@ const EMPLOYEES = [
 export function EmployeeProgress() {
   const navigate = useNavigate();
   const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [selectedEmpId, setSelectedEmpId] = useState<number | null>(null);
+
+  const handleMenuOpen = (event: React.MouseEvent<HTMLButtonElement>, empId: number) => {
+    event.stopPropagation();
+    setAnchorEl(event.currentTarget);
+    setSelectedEmpId(empId);
+  };
+
+  const handleMenuClose = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setAnchorEl(null);
+    setSelectedEmpId(null);
+  };
+
+  const handleRevoke = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    toast.success("Asignación revocada exitosamente");
+    handleMenuClose();
+  };
 
   return (
     <div>
@@ -98,6 +120,9 @@ export function EmployeeProgress() {
                   </td>
                   <td className="px-5 py-3.5">
                     <div className="flex items-center gap-2">
+                      <IconButton onClick={(e) => handleMenuOpen(e, emp.id)} size="small" style={{ color: colors.textSecondary }}>
+                        <MoreVertical size={16} />
+                      </IconButton>
                       {expandedId === emp.id ? <ChevronUp size={16} style={{ color: colors.textSecondary }} /> : <ChevronDown size={16} style={{ color: colors.textSecondary }} />}
                     </div>
                   </td>
@@ -135,6 +160,26 @@ export function EmployeeProgress() {
           </tbody>
         </table>
       </div>
+
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={() => handleMenuClose()}
+        onClick={(e) => e.stopPropagation()}
+        PaperProps={{
+          style: {
+            boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.05)",
+            border: `1px solid ${colors.border}`,
+            borderRadius: "8px",
+          }
+        }}
+      >
+        {selectedEmpId && EMPLOYEES.find(e => e.id === selectedEmpId)?.status !== "completado" && (
+          <MenuItem onClick={handleRevoke} sx={{ color: colors.error, fontSize: "14px" }}>
+            Revocar asignación
+          </MenuItem>
+        )}
+      </Menu>
     </div>
   );
 }

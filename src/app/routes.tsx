@@ -38,6 +38,7 @@ import { CompanyReports } from "./components/company/CompanyReports";
 // Coordinator
 import { CoordinatorDashboard } from "./components/coordinator/CoordinatorDashboard";
 import { ExamManagement } from "./components/coordinator/ExamManagement";
+import { ExamCreate } from "./components/coordinator/ExamCreate";
 
 // Employee
 import { EmployeeDashboard } from "./components/employee/EmployeeDashboard";
@@ -62,6 +63,9 @@ const CoordEmployees = () => <EmployeeProgress />;
 // Shared simulations for company admin (reuse catalog)
 const CompanySimulations = () => <SimulationsCatalog />;
 const CoordSimulations = () => <SimulationsCatalog />;
+
+// Shared exams for company admin (reuse ExamManagement)
+const CompanyExams = () => <ExamManagement />;
 
 export const router = createBrowserRouter([
   {
@@ -124,6 +128,8 @@ export const router = createBrowserRouter([
       { path: "simulations", Component: CompanySimulations },
       { path: "simulations/:id", Component: SimulationView },
       { path: "simulations/:id/view", Component: SimulationView },
+      { path: "exams", Component: CompanyExams },
+      { path: "exams/new", Component: ExamCreate },
       { path: "reports", Component: CompanyReports },
       { path: "audit", Component: AuditTrail },
       { path: "profile", Component: SharedProfile },
@@ -147,6 +153,7 @@ export const router = createBrowserRouter([
       { path: "simulations/:id/view", Component: SimulationView },
       { path: "employees", Component: CoordEmployees },
       { path: "exams", Component: ExamManagement },
+      { path: "exams/new", Component: ExamCreate },
       { path: "reports", Component: CoordReports },
       { path: "profile", Component: SharedProfile },
       { path: "help", Component: HelpCenter },

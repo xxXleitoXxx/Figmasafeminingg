@@ -30,6 +30,7 @@ const navByRole: Record<Role, NavItem[]> = {
     { label: "Roles", icon: <Shield size={18} />, path: "/company/roles" },
     { label: "Programas", icon: <Briefcase size={18} />, path: "/company/programs" },
     { label: "Simulaciones", icon: <Play size={18} />, path: "/company/simulations" },
+    { label: "Exámenes", icon: <ClipboardList size={18} />, path: "/company/exams" },
     { label: "Reportes", icon: <BarChart2 size={18} />, path: "/company/reports" },
     { label: "Auditoría", icon: <FileSearch size={18} />, path: "/company/audit" },
     { label: "Mi Perfil", icon: <UserCircle size={18} />, path: "/company/profile" },

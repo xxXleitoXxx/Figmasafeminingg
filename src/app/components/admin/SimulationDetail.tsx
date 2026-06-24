@@ -93,6 +93,7 @@ export function SimulationDetail() {
     number[]
   >([]);
   const [toast, setToast] = useState<string | null>(null);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const totalWeight = metrics.reduce(
     (sum, m) => sum + m.weight,
@@ -149,6 +150,20 @@ export function SimulationDetail() {
   const deselectAll = () => setSelectedCompanies([]);
 
   const handleSave = () => {
+    const newErrors: Record<string, string> = {};
+    if (!form.name.trim()) newErrors.name = "El nombre de la simulación es obligatorio";
+    if (!form.description.trim()) newErrors.description = "La descripción es obligatoria";
+    if (!form.duration) newErrors.duration = "La duración es obligatoria";
+    if (!form.version.trim()) newErrors.version = "La versión es obligatoria";
+    if (!form.sceneId.trim()) newErrors.sceneId = "El ID de la escena Unity es obligatorio";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      setToast("Corrige los errores del formulario");
+      return;
+    }
+    setErrors({});
+
     if (metrics.length > 0 && !weightOk) {
       setToast("Los pesos de las métricas deben sumar 100%");
       return;
@@ -175,7 +190,11 @@ export function SimulationDetail() {
         items={[
           {
             label: "Simulaciones",
-            onClick: () => navigate("/admin/simulations"),
+            onClick: () => {
+              if (confirm("¿Estás seguro de que deseas salir? Se perderán los cambios no guardados.")) {
+                navigate("/admin/simulations");
+              }
+            },
           },
           {
             label: isNew
@@ -188,8 +207,8 @@ export function SimulationDetail() {
       <PageHeader
         title={
           isNew
-            ? "Nueva Simulación"
-            : "Evacuación de Incendios – Subterráneo"
+            ? (form.name || "Nueva Simulación")
+            : (form.name || "Evacuación de Incendios – Subterráneo")
         }
         actions={
           <>
@@ -216,6 +235,7 @@ export function SimulationDetail() {
                 setForm((p) => ({ ...p, name: v }))
               }
               required
+              error={errors.name}
               className="col-span-2"
             />
             <div className="col-span-2">
@@ -223,7 +243,7 @@ export function SimulationDetail() {
                 className="block text-sm font-medium mb-1"
                 style={{ color: colors.textPrimary }}
               >
-                Descripción
+                Descripción <span className="text-red-500 ml-1">*</span>
               </label>
               <textarea
                 value={form.description}
@@ -236,20 +256,19 @@ export function SimulationDetail() {
                 rows={3}
                 className="w-full px-3 py-2.5 rounded-lg border text-sm outline-none resize-none transition-all"
                 style={{
-                  borderColor: colors.border,
+                  borderColor: errors.description ? colors.error : colors.border,
                   color: colors.textPrimary,
                 }}
                 onFocus={(e) => {
-                  e.currentTarget.style.borderColor =
-                    colors.primary;
-                  e.currentTarget.style.boxShadow = `0 0 0 2px ${colors.primary}30`;
+                  e.currentTarget.style.borderColor = errors.description ? colors.error : colors.primary;
+                  e.currentTarget.style.boxShadow = `0 0 0 2px ${errors.description ? colors.error : colors.primary}30`;
                 }}
                 onBlur={(e) => {
-                  e.currentTarget.style.borderColor =
-                    colors.border;
+                  e.currentTarget.style.borderColor = errors.description ? colors.error : colors.border;
                   e.currentTarget.style.boxShadow = "none";
                 }}
               />
+              {errors.description && <p className="text-xs text-red-500 mt-1">{errors.description}</p>}
             </div>
 
             <SelectField
@@ -269,6 +288,8 @@ export function SimulationDetail() {
               onChange={(v) =>
                 setForm((p) => ({ ...p, duration: v }))
               }
+              required
+              error={errors.duration}
             />
             <InputField
               label="Versión"
@@ -277,6 +298,8 @@ export function SimulationDetail() {
                 setForm((p) => ({ ...p, version: v }))
               }
               placeholder="1.0"
+              required
+              error={errors.version}
             />
             <InputField
               label="ID de Escena Unity"
@@ -285,19 +308,19 @@ export function SimulationDetail() {
                 setForm((p) => ({ ...p, sceneId: v }))
               }
               placeholder="unity_scene_id"
+              required
+              error={errors.sceneId}
             />
           </div>
-          {!isNew && (
-            <div className="mt-5">
-              <Toggle
-                label="Simulación activa"
-                checked={form.status}
-                onChange={(v) =>
-                  setForm((p) => ({ ...p, status: v }))
-                }
-              />
-            </div>
-          )}
+          <div className="mt-5">
+            <Toggle
+              label="Simulación activa"
+              checked={form.status}
+              onChange={(v) =>
+                setForm((p) => ({ ...p, status: v }))
+              }
+            />
+          </div>
         </Card>
 
         {/* CA10: Checklist of companies */}
